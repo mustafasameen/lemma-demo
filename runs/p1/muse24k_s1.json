@@ -1,0 +1,421 @@
+{
+ "meta": {
+  "scenario": "p1",
+  "arm": "muse24k",
+  "arm_title": "General agent (Muse Glimmer 30B, chat only, 24k reasoning budget)",
+  "seed": 1,
+  "title": "The $250 gap",
+  "short": "Four friends, lake weekend",
+  "prompt": "A group of friends has agreed on a trip budget of $1,500. However, one member has unexpectedly reduced their maximum contribution from $400 to $150, while the remaining members are unwilling to increase their contributions. Can you help the group renegotiate the budget, explore feasible alternatives, and reach an agreement that respects everyone's financial constraints?",
+  "context": "Four friends (Ana, Ben, Cara, Dev) planned a lake weekend. Original pledges: Ana $400, Ben $400, Cara $400, Dev $300 (total $1,500). Ana now says she can give only $150. The others will not raise their pledges, so $1,250 is available. The original plan was the top option in every category.",
+  "kind": "budget",
+  "members": [
+   {
+    "id": "ana",
+    "name": "Ana",
+    "color_index": 0,
+    "public_max": 150
+   },
+   {
+    "id": "ben",
+    "name": "Ben",
+    "color_index": 1,
+    "public_max": 400
+   },
+   {
+    "id": "cara",
+    "name": "Cara",
+    "color_index": 2,
+    "public_max": 400
+   },
+   {
+    "id": "dev",
+    "name": "Dev",
+    "color_index": 3,
+    "public_max": 300
+   }
+  ],
+  "options": {
+   "money": 1250,
+   "original_budget": 1500,
+   "categories": [
+    {
+     "key": "lodging",
+     "label": "Lodging",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "lakeside cabin",
+       "cost": 650,
+       "satisfies": [
+        "no_camping"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "motel, 2 rooms",
+       "cost": 420,
+       "satisfies": [
+        "no_camping"
+       ]
+      },
+      {
+       "tier": "C",
+       "label": "campsite + gear",
+       "cost": 180,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "transport",
+     "label": "Transport",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "rental SUV",
+       "cost": 250,
+       "satisfies": []
+      },
+      {
+       "tier": "B",
+       "label": "Cara's car (gas, parking)",
+       "cost": 120,
+       "satisfies": []
+      },
+      {
+       "tier": "C",
+       "label": "bus",
+       "cost": 180,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "food",
+     "label": "Food",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "restaurants",
+       "cost": 350,
+       "satisfies": []
+      },
+      {
+       "tier": "B",
+       "label": "groceries + one dinner out",
+       "cost": 210,
+       "satisfies": []
+      },
+      {
+       "tier": "C",
+       "label": "groceries only",
+       "cost": 130,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "activities",
+     "label": "Activities",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "kayak tour + winery",
+       "cost": 250,
+       "satisfies": [
+        "kayak"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "kayak rental",
+       "cost": 110,
+       "satisfies": [
+        "kayak"
+       ]
+      },
+      {
+       "tier": "C",
+       "label": "hiking",
+       "cost": 0,
+       "satisfies": []
+      }
+     ]
+    }
+   ],
+   "hard_constraints": {
+    "no_camping": {
+     "member": "dev",
+     "category": "lodging",
+     "label": "cannot camp (back problem)",
+     "mention": "camp|tent|back|ground|cabin|motel|bed"
+    },
+    "kayak": {
+     "member": "ben",
+     "category": "activities",
+     "label": "needs a kayak activity",
+     "mention": "kayak|paddl"
+    }
+   }
+  },
+  "model": "llama-3.3-70b-instruct",
+  "policy": "general agent",
+  "moderator_model": "meta-muse-glimmer-30b",
+  "max_member_turns": 24,
+  "created": "2026-11-20T00:12:37",
+  "dry": false,
+  "fact_labels": {
+   "max": "Max contribution",
+   "hard": "Hard constraint",
+   "top_priority": "Top priority",
+   "arrive_by": "Arrive by",
+   "leave_at": "Leaves work",
+   "flex_min": "Flexibility (min)",
+   "dislikes_bus": "Dislikes the bus",
+   "appt_start": "Appointment starts",
+   "appt_end": "Appointment ends",
+   "no_transit": "Cannot take bus or walk"
+  },
+  "contract": "app-v1"
+ },
+ "events": [
+  {
+   "i": 0,
+   "turn": 0,
+   "kind": "message",
+   "actor": "lemma",
+   "to": null,
+   "text": "Hey all, thanks for the update Ana. With Ana at $150 and the rest holding at Ben $400, Cara $400, Dev $300 we have $1,250 total for the weekend. Original top-top-top-top plan was $1,500, so we need to trim about $250. Quick recap of options: - Lodging: A lakeside cabin $650 / B motel 2 rooms $420 / C campsite + gear $180 - Transport: A rental SUV $250 / B Cara's car gas+parking $120 / C bus $180 - Food: A restaurants $350 / B groceries + one dinner out $210 / C groceries only $130 - Activities: A kayak tour + winery $250 / B kayak rental $110 / C hiking $0 A few combos that fit the $1,250 budget: 1. Keep cabin + rental SUV + restaurants + hiking = $1,250 2. Keep cabin + Cara's car + restaurants + kayak rental = $1,230 3. Motel + rental SUV + restaurants + kayak tour = $1,270 too high What matters most to each of you? Cabin vs cheaper lodging, keeping restaurants, kayak tour vs rental vs hike, and transport preference? Once we know priorities I can put a concrete split on the table that respects Ana's $150 cap and the others' max pledges.",
+   "data": {}
+  },
+  {
+   "i": 1,
+   "turn": 0,
+   "kind": "message",
+   "actor": "cara",
+   "to": null,
+   "text": "For me, lodging is the top priority, I'd love to stay in the cabin if possible, but I'm also okay with the motel. I'm flexible on transport as long as gas and parking are shared if we use my car.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 2,
+   "turn": 1,
+   "kind": "message",
+   "actor": "lemma",
+   "to": null,
+   "text": "Thanks Cara — cabin is a great anchor and noted you’re flexible on transport as long as gas/parking are shared if we use your car. With Ana at $150 max and Ben $400, Cara $400, Dev $300 we have $1,250 total to work with. Two cabin-keeping combos that fit the budget are: Option 1: Lodging A cabin $650 + Transport A rental SUV $250 + Food A restaurants $350 + Activities C hiking $0 = $1,250. Clean split: Ana $150, Ben $400, Cara $400, Dev $300. Option 2: Lodging A cabin $650 + Transport B Cara’s car $120 + Food A restaurants $350 + Activities B kayak rental $110 = $1,230. Example split: Ana $150, Ben $400, Cara $400, Dev $280. Both keep the cabin and restaurants. Option 1 keeps a rental SUV and drops paid activities; Option 2 keeps kayak rental and uses Cara’s car. Ana, Ben, Dev — what’s your priority trade-off: keeping a paid activity like kayak rental vs hiking, rental SUV vs Cara’s car, or would you prefer to downgrade lodging to motel to keep more activity/transport? Once we know, I’ll put a concrete plan with shares on the table that respects Ana’s $150 cap and everyone’s max pledges.",
+   "data": {}
+  },
+  {
+   "i": 3,
+   "turn": 1,
+   "kind": "message",
+   "actor": "dev",
+   "to": null,
+   "text": "For me, food is the top priority, I'd love to keep the restaurants option if possible.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 4,
+   "turn": 2,
+   "kind": "propose",
+   "actor": "lemma",
+   "to": null,
+   "text": "Thanks Cara and Dev for clarifying priorities — cabin is top for Cara and restaurants are top for Dev, both noted. Here’s a concrete proposal that keeps those two anchors, stays within the $1,250 available and Ana’s $150 cap, and respects everyone’s max pledges: Lodging A lakeside cabin $650 Transport B Cara’s car gas+parking $120 Food A restaurants $350 Activities B kayak rental $110 Total = $1,230 Proposed shares: Ana $150 Ben $400 Cara $400 Dev $280 This keeps the cabin and restaurants you both want, adds a paid activity with kayak rental, and uses Cara’s car so gas/parking are shared as you requested. It leaves a small $20 buffer. Ana, Ben — does this trade-off work for you, rental SUV + hiking vs Cara’s car + kayak rental? If you’re good with this, please accept and we can lock it in.",
+   "data": {
+    "plan": {
+     "choices": {
+      "lodging": "A",
+      "transport": "B",
+      "food": "A",
+      "activities": "B"
+     },
+     "labels": {
+      "lodging": "lakeside cabin",
+      "transport": "Cara's car (gas, parking)",
+      "food": "restaurants",
+      "activities": "kayak rental"
+     },
+     "cost": 1230,
+     "shares": {
+      "ana": 150.0,
+      "ben": 400.0,
+      "cara": 400.0,
+      "dev": 280.0
+     },
+     "id": 1
+    },
+    "plan_id": 1,
+    "reason": "general agent proposal"
+   }
+  },
+  {
+   "i": 5,
+   "turn": 2,
+   "kind": "message",
+   "actor": "ben",
+   "to": null,
+   "text": "I'm okay with this plan, it includes a kayak activity which is important to me.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "hard": [
+      "kayak"
+     ],
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 6,
+   "turn": 3,
+   "kind": "message",
+   "actor": "lemma",
+   "to": null,
+   "text": "Thanks Ben, glad the kayak rental works for you. Ana, Cara, Dev — the plan currently on the table is: Lodging A lakeside cabin $650, Transport B Cara's car gas+parking $120, Food A restaurants $350, Activities B kayak rental $110. Total $1,230. Proposed shares: Ana $150, Ben $400, Cara $400, Dev $280. This keeps the cabin Cara prioritized, keeps restaurants Dev prioritized, keeps a paid activity Ben prioritized, and respects Ana's $150 cap with a $20 buffer. Ana, Cara, Dev — can you confirm you're good to lock this in?",
+   "data": {}
+  },
+  {
+   "i": 7,
+   "turn": 3,
+   "kind": "message",
+   "actor": "ana",
+   "to": null,
+   "text": "I'm okay with the plan, it works for me and I'm glad we can still do the kayak rental. I was a bit worried I'd have to miss out on everything!",
+   "data": {
+    "accept": "yes",
+    "stated": {}
+   }
+  },
+  {
+   "i": 8,
+   "turn": 4,
+   "kind": "message",
+   "actor": "lemma",
+   "to": null,
+   "text": "Awesome, Ana and Ben are on board with the cabin + Cara's car + restaurants + kayak rental plan. Cara, Dev — can you both confirm you're good to lock this in? Shares would be Ana $150, Ben $400, Cara $400, Dev $280 for a $1,230 total with $20 buffer. Once we have your confirmations we can finalize the booking.",
+   "data": {}
+  },
+  {
+   "i": 9,
+   "turn": 4,
+   "kind": "message",
+   "actor": "cara",
+   "to": null,
+   "text": "I'm good with this plan, it meets my top priority of lodging and I'm flexible on transport as long as gas and parking are shared, which they are in this case.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "lodging",
+     "prefers": {
+      "lodging": "A",
+      "transport": "B"
+     }
+    }
+   }
+  },
+  {
+   "i": 10,
+   "turn": 5,
+   "kind": "message",
+   "actor": "lemma",
+   "to": null,
+   "text": "Great, Ana, Ben and Cara are confirmed on the cabin + Cara's car + restaurants + kayak rental plan. Dev, can you confirm you're good to lock this in? Shares would be Ana $150, Ben $400, Cara $400, Dev $280 for a $1,230 total with $20 buffer, keeping the cabin Cara prioritized and restaurants you prioritized.",
+   "data": {}
+  },
+  {
+   "i": 11,
+   "turn": 5,
+   "kind": "message",
+   "actor": "dev",
+   "to": null,
+   "text": "I'm good with this plan, it keeps the restaurants option which is my top priority. However, I'd like to note that I'm paying $280, which is $20 below my maximum pledge of $300.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "max": 300,
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 12,
+   "turn": 5,
+   "kind": "close",
+   "actor": "system",
+   "to": null,
+   "text": "All members accepted plan 1.",
+   "data": {}
+  }
+ ],
+ "private": {
+  "ana": {
+   "max": 150,
+   "hard": "none",
+   "top_priority": "lodging"
+  },
+  "ben": {
+   "max": 400,
+   "hard": "needs a kayak activity",
+   "top_priority": "activities"
+  },
+  "cara": {
+   "max": 400,
+   "hard": "none",
+   "top_priority": "lodging"
+  },
+  "dev": {
+   "max": 300,
+   "hard": "cannot camp (back problem)",
+   "top_priority": "food"
+  }
+ },
+ "outcome": {
+  "agreed": true,
+  "unanimous": true,
+  "plan": {
+   "choices": {
+    "lodging": "A",
+    "transport": "B",
+    "food": "A",
+    "activities": "B"
+   },
+   "labels": {
+    "lodging": "lakeside cabin",
+    "transport": "Cara's car (gas, parking)",
+    "food": "restaurants",
+    "activities": "kayak rental"
+   },
+   "cost": 1230,
+   "shares": {
+    "ana": 150.0,
+    "ben": 400.0,
+    "cara": 400.0,
+    "dev": 280.0
+   },
+   "id": 1
+  },
+  "violations": [],
+  "fairness": 0.9952,
+  "min_utility": 7.0,
+  "moderator_actions": 6,
+  "turns": 6,
+  "member_utility": {
+   "ana": 7.75,
+   "ben": 7.0,
+   "cara": 8.5,
+   "dev": 8.0
+  }
+ }
+}

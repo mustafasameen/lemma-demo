@@ -1,0 +1,340 @@
+{
+ "meta": {
+  "scenario": "p2",
+  "arm": "none",
+  "arm_title": "No moderator",
+  "seed": 1,
+  "title": "One car, two roommates",
+  "short": "Jordan and Riley, tomorrow",
+  "prompt": "Two roommates share a single car. One needs it for work tomorrow, while the other needs it for an appointment. Neither has specified their timing, locations, travel durations, or scheduling flexibility. Can you help them identify the necessary information, resolve potential conflicts, and agree on a feasible schedule?",
+  "context": "Jordan and Riley share one car. Places: home, office, clinic. Drive times (minutes): home-office 25, home-clinic 15, office-clinic 20. The bus runs home-office only (55 minutes). A rideshare home-clinic costs $18 each way.",
+  "kind": "car",
+  "members": [
+   {
+    "id": "jordan",
+    "name": "Jordan",
+    "color_index": 0
+   },
+   {
+    "id": "riley",
+    "name": "Riley",
+    "color_index": 1
+   }
+  ],
+  "options": {
+   "places": [
+    "home",
+    "office",
+    "clinic"
+   ],
+   "drive_min": {
+    "home-office": 25,
+    "home-clinic": 15,
+    "office-clinic": 20
+   },
+   "bus_min": {
+    "home-office": 55
+   },
+   "rideshare_usd": {
+    "home-clinic": 18,
+    "home-office": 24,
+    "office-clinic": 20
+   },
+   "day_start": "07:00",
+   "day_end": "19:00"
+  },
+  "model": "llama-3.3-70b-instruct",
+  "policy": "none",
+  "max_member_turns": 18,
+  "created": "2026-11-16T22:59:39",
+  "dry": false,
+  "fact_labels": {
+   "max": "Max contribution",
+   "hard": "Hard constraint",
+   "top_priority": "Top priority",
+   "arrive_by": "Arrive by",
+   "leave_at": "Leaves work",
+   "flex_min": "Flexibility (min)",
+   "dislikes_bus": "Dislikes the bus",
+   "appt_start": "Appointment starts",
+   "appt_end": "Appointment ends",
+   "no_transit": "Cannot take bus or walk"
+  },
+  "contract": "app-v1"
+ },
+ "events": [
+  {
+   "i": 0,
+   "turn": 0,
+   "kind": "message",
+   "actor": "jordan",
+   "to": null,
+   "text": "I need the car for work tomorrow, so I'd prefer to drive myself to the office.",
+   "data": {
+    "accept": null,
+    "stated": {}
+   }
+  },
+  {
+   "i": 1,
+   "turn": 1,
+   "kind": "message",
+   "actor": "riley",
+   "to": null,
+   "text": "I need the car tomorrow and prefer not to take a rideshare",
+   "data": {
+    "accept": null,
+    "stated": {}
+   }
+  },
+  {
+   "i": 2,
+   "turn": 2,
+   "kind": "message",
+   "actor": "jordan",
+   "to": null,
+   "text": "I'd really like to drive myself to the office tomorrow, can we work out a plan that lets me do that?",
+   "data": {
+    "accept": null,
+    "stated": {}
+   }
+  },
+  {
+   "i": 3,
+   "turn": 3,
+   "kind": "message",
+   "actor": "riley",
+   "to": null,
+   "text": "Maybe Jordan could take the bus to the office?",
+   "data": {
+    "accept": null,
+    "stated": {
+     "no_transit": false
+    }
+   }
+  },
+  {
+   "i": 4,
+   "turn": 4,
+   "kind": "message",
+   "actor": "jordan",
+   "to": null,
+   "text": "I'm not a fan of taking the bus, is there another way we could work this out? I really need to get to the office on time and reliably.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "dislikes_bus": true
+    }
+   }
+  },
+  {
+   "i": 5,
+   "turn": 5,
+   "kind": "message",
+   "actor": "riley",
+   "to": null,
+   "text": "I need the car tomorrow and prefer not to take a rideshare",
+   "data": {
+    "accept": null,
+    "stated": {}
+   }
+  },
+  {
+   "i": 6,
+   "turn": 6,
+   "kind": "message",
+   "actor": "jordan",
+   "to": null,
+   "text": "I need to get to the office by 08:30 and prefer to drive myself, but am open to a drop-off or pick-up",
+   "data": {
+    "accept": null,
+    "stated": {
+     "arrive_by": 510
+    }
+   }
+  },
+  {
+   "i": 7,
+   "turn": 7,
+   "kind": "message",
+   "actor": "riley",
+   "to": null,
+   "text": "I need the car tomorrow",
+   "data": {
+    "accept": null,
+    "stated": {}
+   }
+  },
+  {
+   "i": 8,
+   "turn": 8,
+   "kind": "message",
+   "actor": "jordan",
+   "to": null,
+   "text": "I really need to get to the office by 08:30 and would prefer to drive myself, but I'm open to a drop-off or pick-up if that works for you, Riley",
+   "data": {
+    "accept": null,
+    "stated": {
+     "arrive_by": 510
+    }
+   }
+  },
+  {
+   "i": 9,
+   "turn": 9,
+   "kind": "message",
+   "actor": "riley",
+   "to": null,
+   "text": "I really need the car tomorrow for a physical therapy appointment, can we please figure out a way for me to have it then?",
+   "data": {
+    "accept": null,
+    "stated": {}
+   }
+  },
+  {
+   "i": 10,
+   "turn": 10,
+   "kind": "message",
+   "actor": "jordan",
+   "to": null,
+   "text": "I really need to get to the office by 08:30 and I'd prefer not to take the bus, can we figure out a drop-off or pick-up that works for both of us?",
+   "data": {
+    "accept": null,
+    "stated": {
+     "arrive_by": 510,
+     "dislikes_bus": true
+    }
+   }
+  },
+  {
+   "i": 11,
+   "turn": 11,
+   "kind": "message",
+   "actor": "riley",
+   "to": null,
+   "text": "I have a physical therapy appointment tomorrow that I really need the car for, can we please prioritize that?",
+   "data": {
+    "accept": null,
+    "stated": {}
+   }
+  },
+  {
+   "i": 12,
+   "turn": 12,
+   "kind": "message",
+   "actor": "jordan",
+   "to": null,
+   "text": "I understand Riley has a physical therapy appointment, but I also have a critical meeting at 8:30 AM and really need a reliable way to get to the office on time. Can we consider a plan where Riley drops me off at the office and then takes the car to their appointment?",
+   "data": {
+    "accept": null,
+    "stated": {
+     "arrive_by": 510
+    }
+   }
+  },
+  {
+   "i": 13,
+   "turn": 13,
+   "kind": "message",
+   "actor": "riley",
+   "to": null,
+   "text": "I'd rather not drop Jordan off and then head to my appointment, it's a bit tight for me. Can we figure something else out?",
+   "data": {
+    "accept": null,
+    "stated": {}
+   }
+  },
+  {
+   "i": 14,
+   "turn": 14,
+   "kind": "message",
+   "actor": "jordan",
+   "to": null,
+   "text": "I really need to get to the office by 08:30 and I'd prefer not to take the bus. How about Riley picks me up from the office after their appointment and drops me back home?",
+   "data": {
+    "accept": null,
+    "stated": {
+     "arrive_by": 510,
+     "dislikes_bus": true
+    }
+   }
+  },
+  {
+   "i": 15,
+   "turn": 15,
+   "kind": "message",
+   "actor": "riley",
+   "to": null,
+   "text": "I'm not sure that will work for me, can you tell me what time you need to head home from the office?",
+   "data": {
+    "accept": null,
+    "stated": {}
+   }
+  },
+  {
+   "i": 16,
+   "turn": 16,
+   "kind": "message",
+   "actor": "jordan",
+   "to": null,
+   "text": "I usually leave the office at 5:30 pm, but I could leave as early as 5:00 pm if needed",
+   "data": {
+    "accept": null,
+    "stated": {
+     "leave_at": 1050,
+     "flex_min": 30
+    }
+   }
+  },
+  {
+   "i": 17,
+   "turn": 17,
+   "kind": "message",
+   "actor": "riley",
+   "to": null,
+   "text": "I'm getting a bit worried that we won't figure something out, my appointment is pretty inflexible. Can we please focus on finding a solution that lets me use the car when I need it?",
+   "data": {
+    "accept": null,
+    "stated": {}
+   }
+  },
+  {
+   "i": 18,
+   "turn": 18,
+   "kind": "close",
+   "actor": "system",
+   "to": null,
+   "text": "Stopped after 18 member turns without everyone accepting.",
+   "data": {
+    "reason": "turn limit"
+   }
+  }
+ ],
+ "private": {
+  "jordan": {
+   "arrive_by": "08:30",
+   "leave_at": "17:30",
+   "flex_min": 30,
+   "dislikes_bus": true
+  },
+  "riley": {
+   "appt_start": "10:00",
+   "appt_end": "11:00",
+   "no_transit": true
+  }
+ },
+ "outcome": {
+  "agreed": false,
+  "unanimous": false,
+  "plan": null,
+  "violations": [],
+  "fairness": 0.0,
+  "min_utility": 0.0,
+  "moderator_actions": 0,
+  "turns": 18,
+  "member_utility": {
+   "jordan": 0.0,
+   "riley": 0.0
+  }
+ }
+}

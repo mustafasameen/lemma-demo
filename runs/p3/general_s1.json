@@ -1,0 +1,1021 @@
+{
+ "meta": {
+  "scenario": "p3",
+  "arm": "general",
+  "arm_title": "General agent (Muse Glimmer 30B, prompted)",
+  "seed": 1,
+  "title": "Six friends, $1,800",
+  "short": "Six friends, weekend trip",
+  "prompt": "Six friends are planning a weekend trip with a total budget of $1,800. Each person has different preferences regarding accommodation, transportation, food, and activities, but nobody has fully disclosed their priorities or maximum contribution. Can you moderate the discussion, gather everyone's constraints, and help negotiate a fair budget allocation that all six members can accept?",
+  "context": "Six friends (Maya, Leo, Sofia, Omar, Priya, Theo) are planning a weekend trip with a total budget of $1,800. Nobody has said what they can contribute or what they need.",
+  "kind": "budget",
+  "members": [
+   {
+    "id": "maya",
+    "name": "Maya",
+    "color_index": 0
+   },
+   {
+    "id": "leo",
+    "name": "Leo",
+    "color_index": 1
+   },
+   {
+    "id": "sofia",
+    "name": "Sofia",
+    "color_index": 2
+   },
+   {
+    "id": "omar",
+    "name": "Omar",
+    "color_index": 3
+   },
+   {
+    "id": "priya",
+    "name": "Priya",
+    "color_index": 4
+   },
+   {
+    "id": "theo",
+    "name": "Theo",
+    "color_index": 5
+   }
+  ],
+  "options": {
+   "money": 1800,
+   "original_budget": 1800,
+   "categories": [
+    {
+     "key": "lodging",
+     "label": "Lodging",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "house with 4 rooms",
+       "cost": 780,
+       "satisfies": [
+        "own_room"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "2 hotel rooms + 1 single",
+       "cost": 690,
+       "satisfies": [
+        "own_room"
+       ]
+      },
+      {
+       "tier": "C",
+       "label": "hostel dorm",
+       "cost": 360,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "transport",
+     "label": "Transport",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "train",
+       "cost": 480,
+       "satisfies": [
+        "no_long_drive"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "two rental cars, 5-hour drive",
+       "cost": 300,
+       "satisfies": []
+      },
+      {
+       "tier": "C",
+       "label": "one van, 5-hour drive",
+       "cost": 240,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "food",
+     "label": "Food",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "restaurants every meal",
+       "cost": 600,
+       "satisfies": [
+        "vegetarian"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "cook + 2 dinners out (vegetarian-friendly)",
+       "cost": 380,
+       "satisfies": [
+        "vegetarian"
+       ]
+      },
+      {
+       "tier": "C",
+       "label": "cook every meal (shared barbecue plan)",
+       "cost": 220,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "activities",
+     "label": "Activities",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "guided hike + concert",
+       "cost": 420,
+       "satisfies": []
+      },
+      {
+       "tier": "B",
+       "label": "concert only",
+       "cost": 240,
+       "satisfies": []
+      },
+      {
+       "tier": "C",
+       "label": "free trails",
+       "cost": 0,
+       "satisfies": []
+      }
+     ]
+    }
+   ],
+   "hard_constraints": {
+    "vegetarian": {
+     "member": "priya",
+     "category": "food",
+     "label": "is vegetarian",
+     "mention": "vegetarian|vegan|meat|veg\\b"
+    },
+    "no_long_drive": {
+     "member": "omar",
+     "category": "transport",
+     "label": "gets carsick on long drives",
+     "mention": "carsick|car sick|motion|long drive|5.hour|five.hour|nause|queasy|drive|train"
+    },
+    "own_room": {
+     "member": "sofia",
+     "category": "lodging",
+     "label": "needs her own room",
+     "mention": "own room|private room|own space|room to myself|privacy|dorm|hostel|sharing|share a room|my own"
+    }
+   }
+  },
+  "model": "llama-3.3-70b-instruct",
+  "policy": "general agent",
+  "moderator_model": "meta-muse-glimmer-30b",
+  "max_member_turns": 30,
+  "created": "2026-11-19T23:26:29",
+  "dry": false,
+  "fact_labels": {
+   "max": "Max contribution",
+   "hard": "Hard constraint",
+   "top_priority": "Top priority",
+   "arrive_by": "Arrive by",
+   "leave_at": "Leaves work",
+   "flex_min": "Flexibility (min)",
+   "dislikes_bus": "Dislikes the bus",
+   "appt_start": "Appointment starts",
+   "appt_end": "Appointment ends",
+   "no_transit": "Cannot take bus or walk"
+  },
+  "contract": "app-v1"
+ },
+ "events": [
+  {
+   "i": 0,
+   "turn": 0,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "maya",
+   "text": "Hi Maya! To find a plan everyone can accept, could you share your max contribution for the weekend and any must-haves or deal-breakers? e.g., need private room, vegetarian-friendly food, no long drives, etc.",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 1,
+   "turn": 0,
+   "kind": "message",
+   "actor": "maya",
+   "to": null,
+   "text": "I can contribute up to $450 and I don't have any hard constraints, I just really care about the activities",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 450,
+     "hard": [],
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 2,
+   "turn": 1,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "leo",
+   "text": "Hi Leo! To find a plan everyone can accept, could you share your max contribution for the weekend and any must-haves or deal-breakers? e.g., need private room, vegetarian-friendly food, no long drives, etc.",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 3,
+   "turn": 1,
+   "kind": "message",
+   "actor": "leo",
+   "to": null,
+   "text": "I can contribute up to $400 and I don't have any hard constraints, but I do care about getting there comfortably, so transport is my top priority",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 400,
+     "hard": [],
+     "top_priority": "transport"
+    }
+   }
+  },
+  {
+   "i": 4,
+   "turn": 2,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "sofia",
+   "text": "Hi Sofia! To find a plan everyone can accept, could you share your max contribution for the weekend and any must-haves or deal-breakers? e.g., need private room, vegetarian-friendly food, no long drives, etc.",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 5,
+   "turn": 2,
+   "kind": "message",
+   "actor": "sofia",
+   "to": null,
+   "text": "I can contribute up to $350 and I really need my own room, lodging matters most to me",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 350,
+     "hard": [
+      "own_room"
+     ],
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 6,
+   "turn": 3,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "omar",
+   "text": "Hi Omar! To find a plan everyone can accept, could you share your max contribution for the weekend and any must-haves or deal-breakers? e.g., need private room, vegetarian-friendly food, no long drives, etc.",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 7,
+   "turn": 3,
+   "kind": "message",
+   "actor": "omar",
+   "to": null,
+   "text": "I can contribute up to $250 and I care about food the most, but I should mention I get carsick on long drives.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 250,
+     "hard": [
+      "no_long_drive"
+     ],
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 8,
+   "turn": 4,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "priya",
+   "text": "Hi Priya! To find a plan everyone can accept, could you share your max contribution for the weekend and any must-haves or deal-breakers? e.g., need private room, vegetarian-friendly food, no long drives, etc.",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 9,
+   "turn": 4,
+   "kind": "message",
+   "actor": "priya",
+   "to": null,
+   "text": "I can contribute up to $200 and I'm vegetarian, so I need vegetarian-friendly food. Activities are my top priority.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 200,
+     "hard": [
+      "vegetarian"
+     ],
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 10,
+   "turn": 5,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "theo",
+   "text": "Hi Theo! To find a plan everyone can accept, could you share your max contribution for the weekend and any must-haves or deal-breakers? e.g., need private room, vegetarian-friendly food, no long drives, etc.",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 11,
+   "turn": 5,
+   "kind": "message",
+   "actor": "theo",
+   "to": null,
+   "text": "I can contribute up to $150 and I don't have any hard constraints, but food matters most to me",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 150,
+     "hard": [],
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 12,
+   "turn": 6,
+   "kind": "propose",
+   "actor": "lemma",
+   "to": null,
+   "text": "Here's a plan that fits the $1,800 budget and respects the constraints shared so far: Transport by train to avoid long drives for Omar, lodging with 2 hotel rooms + 1 single so Sofia can have her own room, vegetarian-friendly food with cooking + 2 dinners out for Priya, and concert only for activities to keep Maya and Priya happy while staying in budget. Total cost $1,790. Proposed split: Maya $440, Leo $400, Sofia $350, Omar $250, Priya $200, Theo $150. All shares are at or below your stated max contributions.",
+   "data": {
+    "plan": {
+     "choices": {
+      "lodging": "B",
+      "transport": "A",
+      "food": "B",
+      "activities": "B"
+     },
+     "labels": {
+      "lodging": "2 hotel rooms + 1 single",
+      "transport": "train",
+      "food": "cook + 2 dinners out (vegetarian-friendly)",
+      "activities": "concert only"
+     },
+     "cost": 1790,
+     "shares": {
+      "maya": 440.0,
+      "leo": 400.0,
+      "sofia": 350.0,
+      "omar": 250.0,
+      "priya": 200.0,
+      "theo": 150.0
+     },
+     "id": 1
+    },
+    "plan_id": 1,
+    "reason": "general agent proposal"
+   }
+  },
+  {
+   "i": 13,
+   "turn": 6,
+   "kind": "message",
+   "actor": "priya",
+   "to": null,
+   "text": "I'm happy with the vegetarian-friendly food option, but I was really looking forward to the guided hike, so I'm a bit disappointed with the concert only activities. Can we consider adding the hike to the plan?",
+   "data": {
+    "accept": null,
+    "stated": {
+     "hard": [
+      "vegetarian"
+     ],
+     "top_priority": "activities",
+     "prefers": {
+      "activities": "A"
+     }
+    }
+   }
+  },
+  {
+   "i": 14,
+   "turn": 7,
+   "kind": "wait",
+   "actor": "lemma",
+   "to": null,
+   "text": "",
+   "data": {
+    "reason": "no readable action from the general agent"
+   }
+  },
+  {
+   "i": 15,
+   "turn": 7,
+   "kind": "message",
+   "actor": "theo",
+   "to": null,
+   "text": "I'm okay with the current plan, but I'd love it if we could upgrade the food to restaurants every meal, that sounds amazing to me",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 16,
+   "turn": 8,
+   "kind": "wait",
+   "actor": "lemma",
+   "to": null,
+   "text": "",
+   "data": {
+    "reason": "no readable action from the general agent"
+   }
+  },
+  {
+   "i": 17,
+   "turn": 8,
+   "kind": "message",
+   "actor": "sofia",
+   "to": null,
+   "text": "I'm okay with the current plan, it meets my need for my own room and I can live with the other choices, so I accept it",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "hard": [
+      "own_room"
+     ],
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 18,
+   "turn": 9,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "priya",
+   "text": "You mentioned you'd love the guided hike but are okay with the vegetarian-friendly food option. Would you be willing to switch to cook every meal (shared barbecue plan) if we can make it vegetarian-friendly, to afford the guided hike + concert? Or is keeping the cook + 2 dinners out vegetarian-friendly food with concert only more important to you?",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 19,
+   "turn": 9,
+   "kind": "message",
+   "actor": "priya",
+   "to": null,
+   "text": "I'd be willing to switch to cook every meal if it's vegetarian-friendly to afford the guided hike + concert, activities are my top priority",
+   "data": {
+    "accept": null,
+    "stated": {
+     "hard": [
+      "vegetarian"
+     ],
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 20,
+   "turn": 10,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "omar",
+   "text": "You mentioned you get carsick on long drives and food is your top priority. Would you be willing to take a 5-hour drive in two rental cars with frequent stops if we can keep vegetarian-friendly food with cooking + 2 dinners out, keep Sofia’s own room, and add the guided hike + concert for activities?",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 21,
+   "turn": 10,
+   "kind": "message",
+   "actor": "omar",
+   "to": null,
+   "text": "I'm not willing to take a 5-hour drive, I get carsick and it's a hard constraint for me. Food is my top priority, but not at the cost of my health.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "hard": [
+      "no_long_drive"
+     ],
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 22,
+   "turn": 11,
+   "kind": "wait",
+   "actor": "lemma",
+   "to": null,
+   "text": "",
+   "data": {
+    "reason": "no readable action from the general agent"
+   }
+  },
+  {
+   "i": 23,
+   "turn": 11,
+   "kind": "message",
+   "actor": "leo",
+   "to": null,
+   "text": "I'm comfortable with the current plan, it meets my transport priority with the train option",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "transport"
+    }
+   }
+  },
+  {
+   "i": 24,
+   "turn": 12,
+   "kind": "wait",
+   "actor": "lemma",
+   "to": null,
+   "text": "",
+   "data": {
+    "reason": "no readable action from the general agent"
+   }
+  },
+  {
+   "i": 25,
+   "turn": 12,
+   "kind": "message",
+   "actor": "omar",
+   "to": null,
+   "text": "I'm glad we're taking the train, that's a big relief for me. I also think the food option could be better, but I can live with cook + 2 dinners out. If we could upgrade to restaurants every meal, that would be amazing, but I know it's not in the budget.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "hard": [
+      "no_long_drive"
+     ],
+     "top_priority": "food",
+     "prefers": {
+      "food": "A"
+     }
+    }
+   }
+  },
+  {
+   "i": 26,
+   "turn": 13,
+   "kind": "wait",
+   "actor": "lemma",
+   "to": null,
+   "text": "",
+   "data": {
+    "reason": "no readable action from the general agent"
+   }
+  },
+  {
+   "i": 27,
+   "turn": 13,
+   "kind": "message",
+   "actor": "maya",
+   "to": null,
+   "text": "I'm glad we're discussing changes, I'd love to see the guided hike added to our activities, it's my top priority and I think it would make the trip more enjoyable for everyone",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities",
+     "prefers": {
+      "activities": "A"
+     }
+    }
+   }
+  },
+  {
+   "i": 28,
+   "turn": 14,
+   "kind": "wait",
+   "actor": "lemma",
+   "to": null,
+   "text": "",
+   "data": {
+    "reason": "no readable action from the general agent"
+   }
+  },
+  {
+   "i": 29,
+   "turn": 14,
+   "kind": "message",
+   "actor": "priya",
+   "to": null,
+   "text": "I'm glad we're considering changes, I still think adding the guided hike would be amazing and I'm willing to adjust food to make it work",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 30,
+   "turn": 15,
+   "kind": "wait",
+   "actor": "lemma",
+   "to": null,
+   "text": "",
+   "data": {
+    "reason": "no readable action from the general agent"
+   }
+  },
+  {
+   "i": 31,
+   "turn": 15,
+   "kind": "message",
+   "actor": "theo",
+   "to": null,
+   "text": "I still think upgrading to restaurants every meal would be great, but I'm also okay with the current plan if it means everyone else is happy",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "food",
+     "prefers": {
+      "food": "A"
+     }
+    }
+   }
+  },
+  {
+   "i": 32,
+   "turn": 16,
+   "kind": "wait",
+   "actor": "lemma",
+   "to": null,
+   "text": "",
+   "data": {
+    "reason": "no readable action from the general agent"
+   }
+  },
+  {
+   "i": 33,
+   "turn": 16,
+   "kind": "message",
+   "actor": "sofia",
+   "to": null,
+   "text": "I'm still okay with the current plan, but I'd like to reiterate that having my own room is a must for me, so let's not change the lodging option",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "hard": [
+      "own_room"
+     ],
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 34,
+   "turn": 17,
+   "kind": "wait",
+   "actor": "lemma",
+   "to": null,
+   "text": "",
+   "data": {
+    "reason": "no readable action from the general agent"
+   }
+  },
+  {
+   "i": 35,
+   "turn": 17,
+   "kind": "message",
+   "actor": "leo",
+   "to": null,
+   "text": "I'm still comfortable with the current plan, it meets my transport priority with the train option and I can live with the other choices",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "transport"
+    }
+   }
+  },
+  {
+   "i": 36,
+   "turn": 18,
+   "kind": "wait",
+   "actor": "lemma",
+   "to": null,
+   "text": "",
+   "data": {
+    "reason": "no readable action from the general agent"
+   }
+  },
+  {
+   "i": 37,
+   "turn": 18,
+   "kind": "message",
+   "actor": "omar",
+   "to": null,
+   "text": "I'm glad we're taking the train and I can live with the current food option, but I still think restaurants every meal would be great if we could afford it.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 38,
+   "turn": 19,
+   "kind": "wait",
+   "actor": "lemma",
+   "to": null,
+   "text": "",
+   "data": {
+    "reason": "no readable action from the general agent"
+   }
+  },
+  {
+   "i": 39,
+   "turn": 19,
+   "kind": "message",
+   "actor": "maya",
+   "to": null,
+   "text": "I'm glad we're discussing changes, I think adding the guided hike to our activities would be a great idea and I'm willing to adjust my contribution if needed",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 40,
+   "turn": 20,
+   "kind": "wait",
+   "actor": "lemma",
+   "to": null,
+   "text": "",
+   "data": {
+    "reason": "no readable action from the general agent"
+   }
+  },
+  {
+   "i": 41,
+   "turn": 20,
+   "kind": "message",
+   "actor": "priya",
+   "to": null,
+   "text": "I'm glad we're discussing changes, I still think adding the guided hike would be amazing and I'm willing to adjust food to make it work",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 42,
+   "turn": 21,
+   "kind": "wait",
+   "actor": "lemma",
+   "to": null,
+   "text": "",
+   "data": {
+    "reason": "no readable action from the general agent"
+   }
+  },
+  {
+   "i": 43,
+   "turn": 21,
+   "kind": "message",
+   "actor": "theo",
+   "to": null,
+   "text": "I'm still happy with the current plan, but I think we should consider Priya's suggestion to add the guided hike and Maya's willingness to adjust their contribution to make it work, maybe we can find a way to make it fit within our budget",
+   "data": {
+    "accept": null,
+    "stated": {}
+   }
+  },
+  {
+   "i": 44,
+   "turn": 22,
+   "kind": "wait",
+   "actor": "lemma",
+   "to": null,
+   "text": "",
+   "data": {
+    "reason": "no readable action from the general agent"
+   }
+  },
+  {
+   "i": 45,
+   "turn": 22,
+   "kind": "message",
+   "actor": "sofia",
+   "to": null,
+   "text": "I'm glad we're discussing changes, but I want to reiterate that having my own room is non-negotiable for me. I'm happy with the current lodging option, so let's not change it.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "hard": [
+      "own_room"
+     ],
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 46,
+   "turn": 23,
+   "kind": "message",
+   "actor": "lemma",
+   "to": null,
+   "text": "Thanks everyone for the honest feedback so far. Here’s where we stand with the hard constraints we’ve heard: • Sofia needs her own room → lodging must be B 2 hotel rooms + 1 single $690 or A house $780 • Omar cannot do a 5-hour drive → transport must be A train $480 • Priya needs vegetarian-friendly food → food must be B cook + 2 dinners out vegetarian-friendly $380 or C cook every meal vegetarian-friendly $220 With those three non-negotiables the cheapest we can do is: Lodging B $690 + Transport A $480 + Food C $220 = $1,390 That leaves $410 for activities within the $1,800 total budget. Guided hike + concert A is $420, which is $10 over even with the cheapest vegetarian-friendly food and the cheapest own-room lodging. Any attempt to add the hike forces us to break Sofia’s own-room need, Omar’s no-long-drive need, or Priya’s vegetarian need, or to go over the $1,800 total. The plan on the table right now is: Lodging B 2 hotel rooms + 1 single $690 Transport A train $480 Food B cook + 2 dinners out vegetarian-friendly $380 Activities B concert only $240 Total $1,790 Shares: Maya $440, Leo $400, Sofia $350, Omar $250, Priya $200, Theo $150 Leo, Sofia, Omar and Theo have indicated they can live with this. Maya, you’ve said you’d love the guided hike and are willing to adjust your contribution. Priya, you’ve said you’re happy with vegetarian-friendly food but would prefer the guided hike and you’re willing to switch to cook every meal to try to afford it. Given the math above, we can’t have guided hike + concert together with own room, train, and vegetarian-friendly food inside $1,800. Can Maya and Priya accept concert only with the current vegetarian-friendly food, own-room lodging and train, so we can lock the plan for everyone?",
+   "data": {}
+  },
+  {
+   "i": 47,
+   "turn": 23,
+   "kind": "message",
+   "actor": "leo",
+   "to": null,
+   "text": "I'm still comfortable with the current plan, it meets my transport priority with the train option and I can live with the other choices",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "transport"
+    }
+   }
+  },
+  {
+   "i": 48,
+   "turn": 24,
+   "kind": "poll",
+   "actor": "lemma",
+   "to": null,
+   "text": "Private poll on plan 1: does it work for you, yes or no?",
+   "data": {
+    "members": [
+     "maya",
+     "priya"
+    ],
+    "plan_id": 1
+   }
+  },
+  {
+   "i": 49,
+   "turn": 24,
+   "kind": "poll_reply",
+   "actor": "maya",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "activities",
+     "prefers": {
+      "activities": "A"
+     }
+    },
+    "private_message": "I'd prefer activities tier A, but I can live with the plan on the table.",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 50,
+   "turn": 24,
+   "kind": "poll_reply",
+   "actor": "priya",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "hard": [
+      "vegetarian"
+     ],
+     "top_priority": "activities"
+    },
+    "private_message": "I'm disappointed the guided hike couldn't be added, but I accept the plan since it meets my hard constraint of vegetarian-friendly food and doesn't exceed my max contribution.",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 51,
+   "turn": 24,
+   "kind": "close",
+   "actor": "system",
+   "to": null,
+   "text": "All members accepted plan 1.",
+   "data": {}
+  }
+ ],
+ "private": {
+  "maya": {
+   "max": 450,
+   "hard": "none",
+   "top_priority": "activities"
+  },
+  "leo": {
+   "max": 400,
+   "hard": "none",
+   "top_priority": "transport"
+  },
+  "sofia": {
+   "max": 350,
+   "hard": "needs her own room",
+   "top_priority": "lodging"
+  },
+  "omar": {
+   "max": 250,
+   "hard": "gets carsick on long drives",
+   "top_priority": "food"
+  },
+  "priya": {
+   "max": 200,
+   "hard": "is vegetarian",
+   "top_priority": "activities"
+  },
+  "theo": {
+   "max": 150,
+   "hard": "none",
+   "top_priority": "food"
+  }
+ },
+ "outcome": {
+  "agreed": true,
+  "unanimous": true,
+  "plan": {
+   "choices": {
+    "lodging": "B",
+    "transport": "A",
+    "food": "B",
+    "activities": "B"
+   },
+   "labels": {
+    "lodging": "2 hotel rooms + 1 single",
+    "transport": "train",
+    "food": "cook + 2 dinners out (vegetarian-friendly)",
+    "activities": "concert only"
+   },
+   "cost": 1790,
+   "shares": {
+    "maya": 440.0,
+    "leo": 400.0,
+    "sofia": 350.0,
+    "omar": 250.0,
+    "priya": 200.0,
+    "theo": 150.0
+   },
+   "id": 1
+  },
+  "violations": [],
+  "fairness": 0.9954,
+  "min_utility": 6.4,
+  "moderator_actions": 11,
+  "turns": 24,
+  "member_utility": {
+   "maya": 6.6,
+   "leo": 7.8,
+   "sofia": 6.4,
+   "omar": 6.8,
+   "priya": 6.6,
+   "theo": 6.6
+  }
+ }
+}

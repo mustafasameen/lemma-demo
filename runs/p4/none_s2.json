@@ -1,0 +1,827 @@
+{
+ "meta": {
+  "scenario": "p4",
+  "arm": "none",
+  "arm_title": "No moderator",
+  "seed": 2,
+  "title": "Eight friends, $2,600",
+  "short": "Eight friends, long weekend",
+  "prompt": "Eight friends are planning a long weekend with a total budget of $2,600. Each person has a private limit on what they can pay and some things they cannot do, and nobody has said them yet. Can you moderate the discussion, gather everyone's constraints, and reach a plan and a split that all eight members can accept?",
+  "context": "Eight friends (Hana, Kofi, Lena, Raj, Mei, Sam, Ines, Tom) are planning a long weekend with a total budget of $2,600. Nobody has said what they can contribute or what they need.",
+  "kind": "budget",
+  "members": [
+   {
+    "id": "hana",
+    "name": "Hana",
+    "color_index": 0
+   },
+   {
+    "id": "kofi",
+    "name": "Kofi",
+    "color_index": 1
+   },
+   {
+    "id": "lena",
+    "name": "Lena",
+    "color_index": 2
+   },
+   {
+    "id": "raj",
+    "name": "Raj",
+    "color_index": 3
+   },
+   {
+    "id": "mei",
+    "name": "Mei",
+    "color_index": 4
+   },
+   {
+    "id": "sam",
+    "name": "Sam",
+    "color_index": 5
+   },
+   {
+    "id": "ines",
+    "name": "Ines",
+    "color_index": 6
+   },
+   {
+    "id": "tom",
+    "name": "Tom",
+    "color_index": 7
+   }
+  ],
+  "options": {
+   "money": 2600,
+   "original_budget": 2600,
+   "categories": [
+    {
+     "key": "lodging",
+     "label": "Lodging",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "lake house, 5 bedrooms, step-free",
+       "cost": 1100,
+       "satisfies": [
+        "step_free"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "4 hotel rooms, step-free",
+       "cost": 800,
+       "satisfies": [
+        "step_free"
+       ]
+      },
+      {
+       "tier": "C",
+       "label": "campground cabins (steps, gravel paths)",
+       "cost": 420,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "transport",
+     "label": "Transport",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "train",
+       "cost": 640,
+       "satisfies": [
+        "no_long_drive"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "two rental cars, 4-hour drive",
+       "cost": 380,
+       "satisfies": []
+      },
+      {
+       "tier": "C",
+       "label": "one 12-seat van, 4-hour drive",
+       "cost": 300,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "food",
+     "label": "Food",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "restaurants every meal (gluten-free and vegan menus)",
+       "cost": 800,
+       "satisfies": [
+        "vegan",
+        "celiac"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "cook + 2 dinners out (vegan options)",
+       "cost": 480,
+       "satisfies": [
+        "vegan"
+       ]
+      },
+      {
+       "tier": "C",
+       "label": "cook every meal (shared grill plan)",
+       "cost": 260,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "activities",
+     "label": "Activities",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "boat tour + concert",
+       "cost": 560,
+       "satisfies": [
+        "boat"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "boat tour only",
+       "cost": 280,
+       "satisfies": [
+        "boat"
+       ]
+      },
+      {
+       "tier": "C",
+       "label": "free trails",
+       "cost": 0,
+       "satisfies": []
+      }
+     ]
+    }
+   ],
+   "hard_constraints": {
+    "step_free": {
+     "member": "hana",
+     "category": "lodging",
+     "label": "uses a wheelchair (step-free lodging)",
+     "mention": "wheelchair|step.free|steps|stairs|accessib|ramp"
+    },
+    "vegan": {
+     "member": "lena",
+     "category": "food",
+     "label": "is vegan",
+     "mention": "vegan|plant.based|animal|meat|dairy"
+    },
+    "no_long_drive": {
+     "member": "raj",
+     "category": "transport",
+     "label": "gets carsick on long drives",
+     "mention": "carsick|car sick|motion|long drive|4.hour|four.hour|nause|queasy|drive|train"
+    },
+    "boat": {
+     "member": "mei",
+     "category": "activities",
+     "label": "needs the boat tour",
+     "mention": "boat|lake tour|cruise|on the water"
+    },
+    "celiac": {
+     "member": "sam",
+     "category": "food",
+     "label": "has celiac disease (restaurants only)",
+     "mention": "celiac|coeliac|gluten|wheat|cross.contact|kitchen|restaurant"
+    }
+   }
+  },
+  "model": "llama-3.3-70b-instruct",
+  "policy": "none",
+  "max_member_turns": 36,
+  "created": "2026-11-20T00:09:43",
+  "dry": false,
+  "fact_labels": {
+   "max": "Max contribution",
+   "hard": "Hard constraint",
+   "top_priority": "Top priority",
+   "arrive_by": "Arrive by",
+   "leave_at": "Leaves work",
+   "flex_min": "Flexibility (min)",
+   "dislikes_bus": "Dislikes the bus",
+   "appt_start": "Appointment starts",
+   "appt_end": "Appointment ends",
+   "no_transit": "Cannot take bus or walk"
+  },
+  "contract": "app-v1"
+ },
+ "events": [
+  {
+   "i": 0,
+   "turn": 0,
+   "kind": "message",
+   "actor": "sam",
+   "to": null,
+   "text": "I think we should prioritize food, I'd love to eat out at restaurants with gluten-free menus every meal.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 1,
+   "turn": 1,
+   "kind": "message",
+   "actor": "tom",
+   "to": null,
+   "text": "I'm with Sam on prioritizing food, let's aim for restaurants every meal, it's worth it to me",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 2,
+   "turn": 2,
+   "kind": "message",
+   "actor": "mei",
+   "to": null,
+   "text": "I really want to make sure we include the boat tour in our plans, it's the main reason I'm excited for this trip",
+   "data": {
+    "accept": null,
+    "stated": {
+     "hard": [
+      "boat"
+     ]
+    }
+   }
+  },
+  {
+   "i": 3,
+   "turn": 3,
+   "kind": "message",
+   "actor": "kofi",
+   "to": null,
+   "text": "I think we should focus on activities, the boat tour and concert sound like a great experience",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 4,
+   "turn": 4,
+   "kind": "message",
+   "actor": "raj",
+   "to": null,
+   "text": "I think we should consider taking the train, it's a more comfortable option for me and avoids a long drive",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "transport",
+     "prefers": {
+      "transport": "A"
+     }
+    }
+   }
+  },
+  {
+   "i": 5,
+   "turn": 5,
+   "kind": "message",
+   "actor": "ines",
+   "to": null,
+   "text": "I think we should prioritize lodging, it's really important to me that we have a comfortable place to stay",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 6,
+   "turn": 6,
+   "kind": "message",
+   "actor": "lena",
+   "to": null,
+   "text": "I'm excited about the trip, but I want to make sure we have vegan options for food. I think we should consider the restaurants every meal plan, it sounds great to me.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 7,
+   "turn": 7,
+   "kind": "message",
+   "actor": "hana",
+   "to": null,
+   "text": "I think we should prioritize lodging, it's crucial for me to have a comfortable and accessible place to stay. Let's consider the lake house or hotel rooms, they both seem step-free.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 8,
+   "turn": 8,
+   "kind": "message",
+   "actor": "sam",
+   "to": null,
+   "text": "I'm glad we're discussing food, I think restaurants every meal is the way to go, especially with gluten-free options",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 9,
+   "turn": 9,
+   "kind": "message",
+   "actor": "tom",
+   "to": null,
+   "text": "I think we should focus on food and aim for the restaurants every meal plan, it's my top priority and I'd be willing to contribute a bit more for it",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 10,
+   "turn": 10,
+   "kind": "message",
+   "actor": "mei",
+   "to": null,
+   "text": "I'm excited to hear everyone's thoughts, but I want to reiterate that the boat tour is a must for me, so let's make sure it's included in our plans. I think activities should be our top priority.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "hard": [
+      "boat"
+     ],
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 11,
+   "turn": 11,
+   "kind": "message",
+   "actor": "kofi",
+   "to": null,
+   "text": "I still think activities should be our top priority, the boat tour and concert sound like an amazing experience",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 12,
+   "turn": 12,
+   "kind": "message",
+   "actor": "raj",
+   "to": null,
+   "text": "I'd like to reiterate that taking the train is my top priority, it's the most comfortable option for me and I'd hate to deal with a long drive. Let's consider the train for transport.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "transport",
+     "prefers": {
+      "transport": "A"
+     }
+    }
+   }
+  },
+  {
+   "i": 13,
+   "turn": 13,
+   "kind": "message",
+   "actor": "ines",
+   "to": null,
+   "text": "I think we should consider the lake house for lodging, it seems like the most comfortable option and I'd love to have a step-free place to stay",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 14,
+   "turn": 14,
+   "kind": "message",
+   "actor": "lena",
+   "to": null,
+   "text": "I'm glad we're discussing priorities, for me, food is the most important, and I'd love it if we could go with the restaurants every meal plan, it sounds like it would have great vegan options",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 15,
+   "turn": 15,
+   "kind": "message",
+   "actor": "hana",
+   "to": null,
+   "text": "I'm glad we're discussing priorities, for me, lodging is the most important, and I'd love it if we could go with the lake house, it seems like the perfect step-free option",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging",
+     "prefers": {
+      "lodging": "A"
+     }
+    }
+   }
+  },
+  {
+   "i": 16,
+   "turn": 16,
+   "kind": "message",
+   "actor": "sam",
+   "to": null,
+   "text": "I'm glad to see we're all discussing our priorities, for me, food is the top priority and I think we should aim for the restaurants every meal plan, it's the only way to ensure I can eat safely with my celiac disease",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food",
+     "hard": [
+      "celiac"
+     ]
+    }
+   }
+  },
+  {
+   "i": 17,
+   "turn": 17,
+   "kind": "message",
+   "actor": "tom",
+   "to": null,
+   "text": "I think we should focus on food, it's my top priority and I'd love to go with the restaurants every meal plan, let's see if we can make it work",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 18,
+   "turn": 18,
+   "kind": "message",
+   "actor": "mei",
+   "to": null,
+   "text": "I think we should prioritize activities and make sure the boat tour is included, it's the main reason I'm excited for this trip. Let's consider the boat tour + concert option, it sounds like a great experience.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 19,
+   "turn": 19,
+   "kind": "message",
+   "actor": "kofi",
+   "to": null,
+   "text": "I think we should focus on activities, the boat tour and concert sound like a great experience. Let's consider the boat tour + concert option for activities.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 20,
+   "turn": 20,
+   "kind": "message",
+   "actor": "raj",
+   "to": null,
+   "text": "I'd like to propose we take the train for transport, it's the most comfortable option for me and avoids a long drive. Let's consider the train for transport and see what other options we can pair with it.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "transport",
+     "prefers": {
+      "transport": "A"
+     }
+    }
+   }
+  },
+  {
+   "i": 21,
+   "turn": 21,
+   "kind": "message",
+   "actor": "ines",
+   "to": null,
+   "text": "I think we should prioritize lodging and consider the lake house, it's the most comfortable option and I'd love to have a step-free place to stay. Let's see if we can make it work with our budget.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 22,
+   "turn": 22,
+   "kind": "message",
+   "actor": "lena",
+   "to": null,
+   "text": "I'm glad we're discussing priorities, for me, food is the most important, and I'd love it if we could go with the restaurants every meal plan, it sounds like it would have great vegan options",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 23,
+   "turn": 23,
+   "kind": "message",
+   "actor": "hana",
+   "to": null,
+   "text": "I think we should focus on finding a step-free lodging option, it's crucial for me to have a comfortable and accessible place to stay. Let's consider the lake house or hotel rooms.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 24,
+   "turn": 24,
+   "kind": "message",
+   "actor": "sam",
+   "to": null,
+   "text": "I'm glad we're all discussing our priorities, I think we should aim for the restaurants every meal plan, it's the only way to ensure I can eat safely with my celiac disease. Let's consider pairing it with other options that fit our budget.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food",
+     "hard": [
+      "celiac"
+     ]
+    }
+   }
+  },
+  {
+   "i": 25,
+   "turn": 25,
+   "kind": "message",
+   "actor": "tom",
+   "to": null,
+   "text": "I think we should focus on food, it's my top priority and I'd love to go with the restaurants every meal plan. Let's see if we can make it work with our budget.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 26,
+   "turn": 26,
+   "kind": "message",
+   "actor": "mei",
+   "to": null,
+   "text": "I think we should prioritize activities and make sure the boat tour is included, it's the main reason I'm excited for this trip. Let's consider the boat tour + concert option, it sounds like a great experience.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 27,
+   "turn": 27,
+   "kind": "message",
+   "actor": "kofi",
+   "to": null,
+   "text": "I still think we should prioritize activities, the boat tour and concert sound like an amazing experience. Let's consider the boat tour + concert option for activities.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 28,
+   "turn": 28,
+   "kind": "message",
+   "actor": "raj",
+   "to": null,
+   "text": "I'd like to reiterate that taking the train is my top priority for transport, it's the most comfortable option for me. Let's consider pairing it with other options that fit our budget.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "transport",
+     "prefers": {
+      "transport": "A"
+     }
+    }
+   }
+  },
+  {
+   "i": 29,
+   "turn": 29,
+   "kind": "message",
+   "actor": "ines",
+   "to": null,
+   "text": "I think we should prioritize lodging and consider the lake house, it's the most comfortable option and I'd love to have a step-free place to stay. Let's see if we can make it work with our budget.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 30,
+   "turn": 30,
+   "kind": "message",
+   "actor": "lena",
+   "to": null,
+   "text": "I'm excited to start planning, and I think we should consider the restaurants every meal plan for food, it sounds like it would have great vegan options. Let's see if we can make it work with our budget.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 31,
+   "turn": 31,
+   "kind": "message",
+   "actor": "hana",
+   "to": null,
+   "text": "I think we should prioritize lodging and consider the lake house or hotel rooms, both of which are step-free. Let's make sure our lodging is comfortable and accessible before deciding on other options.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 32,
+   "turn": 32,
+   "kind": "message",
+   "actor": "sam",
+   "to": null,
+   "text": "I'm glad we're discussing priorities, for me, food is the top priority and I think we should aim for the restaurants every meal plan, it's the only way to ensure I can eat safely with my celiac disease. Let's consider pairing it with other options that fit our budget.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 33,
+   "turn": 33,
+   "kind": "message",
+   "actor": "tom",
+   "to": null,
+   "text": "I think we should focus on food, it's my top priority and I'd love to go with the restaurants every meal plan. Let's see if we can make it work with our budget.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 34,
+   "turn": 34,
+   "kind": "message",
+   "actor": "mei",
+   "to": null,
+   "text": "I think we should focus on activities and make sure the boat tour is included, it's the main reason I'm excited for this trip. Let's consider the boat tour + concert option, it sounds like a great experience.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 35,
+   "turn": 35,
+   "kind": "message",
+   "actor": "kofi",
+   "to": null,
+   "text": "I think we should focus on activities, the boat tour and concert sound like a great experience. Let's consider the boat tour + concert option for activities.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 36,
+   "turn": 36,
+   "kind": "close",
+   "actor": "system",
+   "to": null,
+   "text": "Stopped after 36 member turns without everyone accepting.",
+   "data": {
+    "reason": "turn limit"
+   }
+  }
+ ],
+ "private": {
+  "hana": {
+   "max": 400,
+   "hard": "uses a wheelchair (step-free lodging)",
+   "top_priority": "lodging"
+  },
+  "kofi": {
+   "max": 500,
+   "hard": "none",
+   "top_priority": "activities"
+  },
+  "lena": {
+   "max": 350,
+   "hard": "is vegan",
+   "top_priority": "food"
+  },
+  "raj": {
+   "max": 250,
+   "hard": "gets carsick on long drives",
+   "top_priority": "transport"
+  },
+  "mei": {
+   "max": 450,
+   "hard": "needs the boat tour",
+   "top_priority": "activities"
+  },
+  "sam": {
+   "max": 200,
+   "hard": "has celiac disease (restaurants only)",
+   "top_priority": "food"
+  },
+  "ines": {
+   "max": 300,
+   "hard": "none",
+   "top_priority": "lodging"
+  },
+  "tom": {
+   "max": 150,
+   "hard": "none",
+   "top_priority": "food"
+  }
+ },
+ "outcome": {
+  "agreed": false,
+  "unanimous": false,
+  "plan": null,
+  "violations": [],
+  "fairness": 0.0,
+  "min_utility": 0.0,
+  "moderator_actions": 0,
+  "turns": 36,
+  "member_utility": {
+   "hana": 0.0,
+   "kofi": 0.0,
+   "lena": 0.0,
+   "raj": 0.0,
+   "mei": 0.0,
+   "sam": 0.0,
+   "ines": 0.0,
+   "tom": 0.0
+  }
+ }
+}

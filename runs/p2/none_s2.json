@@ -1,0 +1,358 @@
+{
+ "meta": {
+  "scenario": "p2",
+  "arm": "none",
+  "arm_title": "No moderator",
+  "seed": 2,
+  "title": "One car, two roommates",
+  "short": "Jordan and Riley, tomorrow",
+  "prompt": "Two roommates share a single car. One needs it for work tomorrow, while the other needs it for an appointment. Neither has specified their timing, locations, travel durations, or scheduling flexibility. Can you help them identify the necessary information, resolve potential conflicts, and agree on a feasible schedule?",
+  "context": "Jordan and Riley share one car. Places: home, office, clinic. Drive times (minutes): home-office 25, home-clinic 15, office-clinic 20. The bus runs home-office only (55 minutes). A rideshare home-clinic costs $18 each way.",
+  "kind": "car",
+  "members": [
+   {
+    "id": "jordan",
+    "name": "Jordan",
+    "color_index": 0
+   },
+   {
+    "id": "riley",
+    "name": "Riley",
+    "color_index": 1
+   }
+  ],
+  "options": {
+   "places": [
+    "home",
+    "office",
+    "clinic"
+   ],
+   "drive_min": {
+    "home-office": 25,
+    "home-clinic": 15,
+    "office-clinic": 20
+   },
+   "bus_min": {
+    "home-office": 55
+   },
+   "rideshare_usd": {
+    "home-clinic": 18,
+    "home-office": 24,
+    "office-clinic": 20
+   },
+   "day_start": "07:00",
+   "day_end": "19:00"
+  },
+  "model": "llama-3.3-70b-instruct",
+  "policy": "none",
+  "max_member_turns": 18,
+  "created": "2026-11-16T22:59:31",
+  "dry": false,
+  "fact_labels": {
+   "max": "Max contribution",
+   "hard": "Hard constraint",
+   "top_priority": "Top priority",
+   "arrive_by": "Arrive by",
+   "leave_at": "Leaves work",
+   "flex_min": "Flexibility (min)",
+   "dislikes_bus": "Dislikes the bus",
+   "appt_start": "Appointment starts",
+   "appt_end": "Appointment ends",
+   "no_transit": "Cannot take bus or walk"
+  },
+  "contract": "app-v1"
+ },
+ "events": [
+  {
+   "i": 0,
+   "turn": 0,
+   "kind": "message",
+   "actor": "riley",
+   "to": null,
+   "text": "I need the car tomorrow for a physical therapy appointment at the clinic",
+   "data": {
+    "accept": null,
+    "stated": {}
+   }
+  },
+  {
+   "i": 1,
+   "turn": 1,
+   "kind": "message",
+   "actor": "jordan",
+   "to": null,
+   "text": "I need the car for work tomorrow, can we figure out a way to make that work?",
+   "data": {
+    "accept": null,
+    "stated": {}
+   }
+  },
+  {
+   "i": 2,
+   "turn": 2,
+   "kind": "message",
+   "actor": "riley",
+   "to": null,
+   "text": "I really need the car to get to my appointment, can we work out a schedule where I can use it?",
+   "data": {
+    "accept": null,
+    "stated": {}
+   }
+  },
+  {
+   "i": 3,
+   "turn": 3,
+   "kind": "message",
+   "actor": "jordan",
+   "to": null,
+   "text": "Maybe Riley could drop me off on their way to the clinic?",
+   "data": {
+    "accept": null,
+    "stated": {}
+   }
+  },
+  {
+   "i": 4,
+   "turn": 4,
+   "kind": "message",
+   "actor": "riley",
+   "to": null,
+   "text": "I can drop Jordan off on the way to the clinic, but I need to ensure I arrive at the clinic on time",
+   "data": {
+    "accept": null,
+    "stated": {}
+   }
+  },
+  {
+   "i": 5,
+   "turn": 5,
+   "kind": "message",
+   "actor": "jordan",
+   "to": null,
+   "text": "That sounds like a good idea, Riley can drop me off at the office on the way to the clinic, I just need to be at the office by 08:30",
+   "data": {
+    "accept": null,
+    "stated": {
+     "arrive_by": 510
+    }
+   }
+  },
+  {
+   "i": 6,
+   "turn": 6,
+   "kind": "message",
+   "actor": "riley",
+   "to": null,
+   "text": "discuss timing to ensure arrival on time",
+   "data": {
+    "accept": null,
+    "stated": {}
+   }
+  },
+  {
+   "i": 7,
+   "turn": 7,
+   "kind": "message",
+   "actor": "jordan",
+   "to": null,
+   "text": "I need to be at the office by 08:30, so we should work out a departure time from home that allows us to arrive on time, considering the drive takes 25 minutes",
+   "data": {
+    "accept": null,
+    "stated": {
+     "arrive_by": 510
+    }
+   }
+  },
+  {
+   "i": 8,
+   "turn": 8,
+   "kind": "message",
+   "actor": "riley",
+   "to": null,
+   "text": "figure out departure time from home",
+   "data": {
+    "accept": null,
+    "stated": {}
+   }
+  },
+  {
+   "i": 9,
+   "turn": 9,
+   "kind": "message",
+   "actor": "jordan",
+   "to": null,
+   "text": "Let's plan the drop-off, considering the 25-minute drive from home to office, we should leave home by 08:05 to arrive on time",
+   "data": {
+    "accept": null,
+    "stated": {}
+   }
+  },
+  {
+   "i": 10,
+   "turn": 10,
+   "kind": "message",
+   "actor": "riley",
+   "to": null,
+   "text": "That sounds good, leaving home by 08:05 should give us enough time to drop Jordan off at the office, and then I can head to the clinic",
+   "data": {
+    "accept": null,
+    "stated": {}
+   }
+  },
+  {
+   "i": 11,
+   "turn": 10,
+   "kind": "propose",
+   "actor": "riley",
+   "to": null,
+   "text": "Proposal 1 from Riley.",
+   "data": {
+    "plan": {
+     "trips": [
+      {
+       "id": "t1",
+       "who": [
+        "riley",
+        "jordan"
+       ],
+       "mode": "car",
+       "from": "home",
+       "to": "office",
+       "start": "08:05",
+       "end": "08:30",
+       "label": "Riley drives Jordan"
+      },
+      {
+       "id": "t2",
+       "who": [
+        "riley"
+       ],
+       "mode": "car",
+       "from": "office",
+       "to": "clinic",
+       "start": "08:30",
+       "end": "08:50",
+       "label": "Riley drives"
+      }
+     ],
+     "blocks": [
+      {
+       "who": "jordan",
+       "kind": "work",
+       "label": "At the office",
+       "start": "08:30",
+       "end": "19:00"
+      },
+      {
+       "who": "riley",
+       "kind": "appointment",
+       "label": "At the clinic",
+       "start": "08:50",
+       "end": "19:00"
+      }
+     ],
+     "extra_minutes": 70,
+     "dollars": 0,
+     "id": 1
+    },
+    "plan_id": 1,
+    "reason": "member proposal",
+    "accept": "yes"
+   }
+  },
+  {
+   "i": 12,
+   "turn": 11,
+   "kind": "message",
+   "actor": "jordan",
+   "to": null,
+   "text": "That plan works for me, I'll get to the office on time and Riley can make their appointment",
+   "data": {
+    "accept": "yes",
+    "stated": {}
+   }
+  },
+  {
+   "i": 13,
+   "turn": 11,
+   "kind": "close",
+   "actor": "system",
+   "to": null,
+   "text": "All members accepted plan 1.",
+   "data": {}
+  }
+ ],
+ "private": {
+  "jordan": {
+   "arrive_by": "08:30",
+   "leave_at": "17:30",
+   "flex_min": 30,
+   "dislikes_bus": true
+  },
+  "riley": {
+   "appt_start": "10:00",
+   "appt_end": "11:00",
+   "no_transit": true
+  }
+ },
+ "outcome": {
+  "agreed": true,
+  "unanimous": true,
+  "plan": {
+   "trips": [
+    {
+     "id": "t1",
+     "who": [
+      "riley",
+      "jordan"
+     ],
+     "mode": "car",
+     "from": "home",
+     "to": "office",
+     "start": "08:05",
+     "end": "08:30",
+     "label": "Riley drives Jordan"
+    },
+    {
+     "id": "t2",
+     "who": [
+      "riley"
+     ],
+     "mode": "car",
+     "from": "office",
+     "to": "clinic",
+     "start": "08:30",
+     "end": "08:50",
+     "label": "Riley drives"
+    }
+   ],
+   "blocks": [
+    {
+     "who": "jordan",
+     "kind": "work",
+     "label": "At the office",
+     "start": "08:30",
+     "end": "19:00"
+    },
+    {
+     "who": "riley",
+     "kind": "appointment",
+     "label": "At the clinic",
+     "start": "08:50",
+     "end": "19:00"
+    }
+   ],
+   "extra_minutes": 70,
+   "dollars": 0
+  },
+  "violations": [],
+  "fairness": 0.9986,
+  "min_utility": 8.5,
+  "moderator_actions": 0,
+  "turns": 12,
+  "member_utility": {
+   "jordan": 9.167,
+   "riley": 8.5
+  }
+ }
+}

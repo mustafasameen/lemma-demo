@@ -1,0 +1,685 @@
+{
+ "meta": {
+  "scenario": "p2",
+  "arm": "general",
+  "arm_title": "General agent (Muse Glimmer 30B, prompted)",
+  "seed": 2,
+  "title": "One car, two roommates",
+  "short": "Jordan and Riley, tomorrow",
+  "prompt": "Two roommates share a single car. One needs it for work tomorrow, while the other needs it for an appointment. Neither has specified their timing, locations, travel durations, or scheduling flexibility. Can you help them identify the necessary information, resolve potential conflicts, and agree on a feasible schedule?",
+  "context": "Jordan and Riley share one car. Places: home, office, clinic. Drive times (minutes): home-office 25, home-clinic 15, office-clinic 20. The bus runs home-office only (55 minutes). A rideshare home-clinic costs $18 each way.",
+  "kind": "car",
+  "members": [
+   {
+    "id": "jordan",
+    "name": "Jordan",
+    "color_index": 0
+   },
+   {
+    "id": "riley",
+    "name": "Riley",
+    "color_index": 1
+   }
+  ],
+  "options": {
+   "places": [
+    "home",
+    "office",
+    "clinic"
+   ],
+   "drive_min": {
+    "home-office": 25,
+    "home-clinic": 15,
+    "office-clinic": 20
+   },
+   "bus_min": {
+    "home-office": 55
+   },
+   "rideshare_usd": {
+    "home-clinic": 18,
+    "home-office": 24,
+    "office-clinic": 20
+   },
+   "day_start": "07:00",
+   "day_end": "19:00"
+  },
+  "model": "llama-3.3-70b-instruct",
+  "policy": "general agent",
+  "moderator_model": "meta-muse-glimmer-30b",
+  "max_member_turns": 18,
+  "created": "2026-11-19T23:15:19",
+  "dry": false,
+  "fact_labels": {
+   "max": "Max contribution",
+   "hard": "Hard constraint",
+   "top_priority": "Top priority",
+   "arrive_by": "Arrive by",
+   "leave_at": "Leaves work",
+   "flex_min": "Flexibility (min)",
+   "dislikes_bus": "Dislikes the bus",
+   "appt_start": "Appointment starts",
+   "appt_end": "Appointment ends",
+   "no_transit": "Cannot take bus or walk"
+  },
+  "contract": "app-v1"
+ },
+ "events": [
+  {
+   "i": 0,
+   "turn": 0,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "jordan",
+   "text": "What time do you need to be at the office tomorrow, and are there any constraints on when you can leave home or who drives the car?",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 1,
+   "turn": 0,
+   "kind": "message",
+   "actor": "jordan",
+   "to": null,
+   "text": "I need to be at the office by 08:30 and I usually leave at 17:30, but I can leave as early as 17:00 if needed.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "arrive_by": 510,
+     "leave_at": 1050,
+     "flex_min": 30
+    }
+   }
+  },
+  {
+   "i": 2,
+   "turn": 1,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "riley",
+   "text": "What time is your clinic appointment tomorrow, and do you have any constraints on when you can leave home, arrive back home, or who drives the car?",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 3,
+   "turn": 1,
+   "kind": "message",
+   "actor": "riley",
+   "to": null,
+   "text": "My clinic appointment is tomorrow from 10:00 to 11:00, and I have a constraint that I cannot take the bus or walk far due to my knee.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "appt_start": 600,
+     "appt_end": 660,
+     "no_transit": true
+    }
+   }
+  },
+  {
+   "i": 4,
+   "turn": 2,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "riley",
+   "text": "Do you need a ride home after your 11:00 appointment, and would you be comfortable using a rideshare for the trip to and from the clinic given your knee constraint?",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 5,
+   "turn": 2,
+   "kind": "message",
+   "actor": "riley",
+   "to": null,
+   "text": "Yes, I need a ride home after 11:00, and I would rather avoid using a rideshare if possible. Given my knee, I need a reliable ride to and from the clinic.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "appt_end": 660,
+     "no_transit": true
+    }
+   }
+  },
+  {
+   "i": 6,
+   "turn": 3,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "jordan",
+   "text": "Would you be willing to take the bus from home to the office tomorrow, departing around 07:35 to arrive by 08:30, so the car can stay home for Riley's clinic appointment?",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 7,
+   "turn": 3,
+   "kind": "message",
+   "actor": "jordan",
+   "to": null,
+   "text": "I'd rather not take the bus, to be honest. I dislike the bus.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "dislikes_bus": true
+    }
+   }
+  },
+  {
+   "i": 8,
+   "turn": 4,
+   "kind": "propose",
+   "actor": "lemma",
+   "to": null,
+   "text": "Plan 1:\nJordan: 07:35 you take the bus from home to the office (arrive 08:30); 17:00 Riley drives you from the office to home (arrive 17:25).\nRiley: 09:45 you take the car from home to the clinic (arrive 10:00); 11:00 you take the car from the clinic to home (arrive 11:15); 16:35 you take the car from home to the office (arrive 17:00); 17:00 you drive Jordan from the office to home (arrive 17:25).\nOne car, never in two places. Travel 160 person-minutes, $0 in rideshares.",
+   "data": {
+    "plan": {
+     "trips": [
+      {
+       "id": "t1",
+       "who": [
+        "jordan"
+       ],
+       "mode": "bus",
+       "from": "home",
+       "to": "office",
+       "start": "07:35",
+       "end": "08:30",
+       "label": "Jordan takes the bus"
+      },
+      {
+       "id": "t2",
+       "who": [
+        "riley"
+       ],
+       "mode": "car",
+       "from": "home",
+       "to": "clinic",
+       "start": "09:45",
+       "end": "10:00",
+       "label": "Riley drives"
+      },
+      {
+       "id": "t3",
+       "who": [
+        "riley"
+       ],
+       "mode": "car",
+       "from": "clinic",
+       "to": "home",
+       "start": "11:00",
+       "end": "11:15",
+       "label": "Riley drives"
+      },
+      {
+       "id": "t4",
+       "who": [
+        "riley"
+       ],
+       "mode": "car",
+       "from": "home",
+       "to": "office",
+       "start": "16:35",
+       "end": "17:00",
+       "label": "Riley drives"
+      },
+      {
+       "id": "t5",
+       "who": [
+        "riley",
+        "jordan"
+       ],
+       "mode": "car",
+       "from": "office",
+       "to": "home",
+       "start": "17:00",
+       "end": "17:25",
+       "label": "Riley drives Jordan"
+      }
+     ],
+     "blocks": [
+      {
+       "who": "jordan",
+       "kind": "work",
+       "label": "At the office",
+       "start": "08:30",
+       "end": "17:00"
+      },
+      {
+       "who": "riley",
+       "kind": "appointment",
+       "label": "At the clinic",
+       "start": "10:00",
+       "end": "11:00"
+      }
+     ],
+     "extra_minutes": 160,
+     "dollars": 0,
+     "id": 1
+    },
+    "plan_id": 1,
+    "reason": "general agent proposal"
+   }
+  },
+  {
+   "i": 9,
+   "turn": 4,
+   "kind": "message",
+   "actor": "riley",
+   "to": null,
+   "text": "I'm okay with Plan 1, it gets me to and from the clinic without having to take the bus or use a rideshare, which is a big plus for me given my knee issues.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "no_transit": true
+    }
+   }
+  },
+  {
+   "i": 10,
+   "turn": 5,
+   "kind": "propose",
+   "actor": "lemma",
+   "to": null,
+   "text": "Here's an alternative that avoids the bus for you, Jordan, and keeps Riley out of the bus with only one rideshare. Jordan drives Riley to the clinic on the way to work, Riley waits for the 10:00 appointment and takes a rideshare home after 11:00, and Jordan drives home from the office at 17:00.",
+   "data": {
+    "plan": {
+     "trips": [
+      {
+       "id": "t1",
+       "who": [
+        "jordan",
+        "riley"
+       ],
+       "mode": "car",
+       "from": "home",
+       "to": "clinic",
+       "start": "07:55",
+       "end": "08:10",
+       "label": "Jordan drives Riley"
+      },
+      {
+       "id": "t2",
+       "who": [
+        "jordan"
+       ],
+       "mode": "car",
+       "from": "clinic",
+       "to": "office",
+       "start": "08:10",
+       "end": "08:30",
+       "label": "Jordan drives"
+      },
+      {
+       "id": "t3",
+       "who": [
+        "riley"
+       ],
+       "mode": "rideshare",
+       "from": "clinic",
+       "to": "home",
+       "start": "11:00",
+       "end": "11:15",
+       "label": "Riley takes a rideshare"
+      },
+      {
+       "id": "t4",
+       "who": [
+        "jordan"
+       ],
+       "mode": "car",
+       "from": "office",
+       "to": "home",
+       "start": "17:00",
+       "end": "17:25",
+       "label": "Jordan drives"
+      }
+     ],
+     "blocks": [
+      {
+       "who": "jordan",
+       "kind": "work",
+       "label": "At the office",
+       "start": "08:30",
+       "end": "17:00"
+      },
+      {
+       "who": "riley",
+       "kind": "appointment",
+       "label": "At the clinic",
+       "start": "08:10",
+       "end": "11:00"
+      }
+     ],
+     "extra_minutes": 90,
+     "dollars": 18,
+     "id": 2
+    },
+    "plan_id": 2,
+    "reason": "general agent proposal"
+   }
+  },
+  {
+   "i": 11,
+   "turn": 5,
+   "kind": "message",
+   "actor": "jordan",
+   "to": null,
+   "text": "I'm not a fan of Plan 2 since I have to leave a bit earlier than usual and Riley still has to take a rideshare, but it's better than taking the bus myself.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "dislikes_bus": true
+    }
+   }
+  },
+  {
+   "i": 12,
+   "turn": 6,
+   "kind": "propose",
+   "actor": "lemma",
+   "to": null,
+   "text": "Here's a plan that avoids the bus for Jordan and avoids any rideshares for Riley, with Riley driving the one car all day.",
+   "data": {
+    "plan": {
+     "trips": [
+      {
+       "id": "t1",
+       "who": [
+        "riley",
+        "jordan"
+       ],
+       "mode": "car",
+       "from": "home",
+       "to": "office",
+       "start": "08:05",
+       "end": "08:30",
+       "label": "Riley drives Jordan"
+      },
+      {
+       "id": "t2",
+       "who": [
+        "riley"
+       ],
+       "mode": "car",
+       "from": "office",
+       "to": "home",
+       "start": "08:30",
+       "end": "08:55",
+       "label": "Riley drives"
+      },
+      {
+       "id": "t3",
+       "who": [
+        "riley"
+       ],
+       "mode": "car",
+       "from": "home",
+       "to": "clinic",
+       "start": "09:45",
+       "end": "10:00",
+       "label": "Riley drives"
+      },
+      {
+       "id": "t4",
+       "who": [
+        "riley"
+       ],
+       "mode": "car",
+       "from": "clinic",
+       "to": "home",
+       "start": "11:00",
+       "end": "11:15",
+       "label": "Riley drives"
+      },
+      {
+       "id": "t5",
+       "who": [
+        "riley"
+       ],
+       "mode": "car",
+       "from": "home",
+       "to": "office",
+       "start": "16:35",
+       "end": "17:00",
+       "label": "Riley drives"
+      },
+      {
+       "id": "t6",
+       "who": [
+        "riley",
+        "jordan"
+       ],
+       "mode": "car",
+       "from": "office",
+       "to": "home",
+       "start": "17:00",
+       "end": "17:25",
+       "label": "Riley drives Jordan"
+      }
+     ],
+     "blocks": [
+      {
+       "who": "jordan",
+       "kind": "work",
+       "label": "At the office",
+       "start": "08:30",
+       "end": "17:00"
+      },
+      {
+       "who": "riley",
+       "kind": "appointment",
+       "label": "At the clinic",
+       "start": "10:00",
+       "end": "11:00"
+      }
+     ],
+     "extra_minutes": 180,
+     "dollars": 0,
+     "id": 3
+    },
+    "plan_id": 3,
+    "reason": "general agent proposal"
+   }
+  },
+  {
+   "i": 13,
+   "turn": 6,
+   "kind": "message",
+   "actor": "riley",
+   "to": null,
+   "text": "I'm good with Plan 3, it gets me to and from the clinic without having to take the bus or use a rideshare, which is great for my knee.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "no_transit": true
+    }
+   }
+  },
+  {
+   "i": 14,
+   "turn": 7,
+   "kind": "poll",
+   "actor": "lemma",
+   "to": null,
+   "text": "Private poll on plan 3: does it work for you, yes or no?",
+   "data": {
+    "members": [
+     "jordan"
+    ],
+    "plan_id": 3
+   }
+  },
+  {
+   "i": 15,
+   "turn": 7,
+   "kind": "poll_reply",
+   "actor": "jordan",
+   "to": "lemma",
+   "text": "no",
+   "data": {
+    "accept": "no",
+    "stated": {},
+    "private_message": "I don't like the plan because I need the car for work and this plan has Riley driving me, but I haven't said that out loud yet.",
+    "answer": "no"
+   }
+  },
+  {
+   "i": 16,
+   "turn": 7,
+   "kind": "message",
+   "actor": "jordan",
+   "to": null,
+   "text": "I'm okay with Plan 3, it gets me to the office on time and I don't have to take the bus, which I dislike.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "dislikes_bus": true
+    }
+   }
+  },
+  {
+   "i": 17,
+   "turn": 7,
+   "kind": "close",
+   "actor": "system",
+   "to": null,
+   "text": "All members accepted plan 3.",
+   "data": {}
+  }
+ ],
+ "private": {
+  "jordan": {
+   "arrive_by": "08:30",
+   "leave_at": "17:30",
+   "flex_min": 30,
+   "dislikes_bus": true
+  },
+  "riley": {
+   "appt_start": "10:00",
+   "appt_end": "11:00",
+   "no_transit": true
+  }
+ },
+ "outcome": {
+  "agreed": true,
+  "unanimous": true,
+  "plan": {
+   "trips": [
+    {
+     "id": "t1",
+     "who": [
+      "riley",
+      "jordan"
+     ],
+     "mode": "car",
+     "from": "home",
+     "to": "office",
+     "start": "08:05",
+     "end": "08:30",
+     "label": "Riley drives Jordan"
+    },
+    {
+     "id": "t2",
+     "who": [
+      "riley"
+     ],
+     "mode": "car",
+     "from": "office",
+     "to": "home",
+     "start": "08:30",
+     "end": "08:55",
+     "label": "Riley drives"
+    },
+    {
+     "id": "t3",
+     "who": [
+      "riley"
+     ],
+     "mode": "car",
+     "from": "home",
+     "to": "clinic",
+     "start": "09:45",
+     "end": "10:00",
+     "label": "Riley drives"
+    },
+    {
+     "id": "t4",
+     "who": [
+      "riley"
+     ],
+     "mode": "car",
+     "from": "clinic",
+     "to": "home",
+     "start": "11:00",
+     "end": "11:15",
+     "label": "Riley drives"
+    },
+    {
+     "id": "t5",
+     "who": [
+      "riley"
+     ],
+     "mode": "car",
+     "from": "home",
+     "to": "office",
+     "start": "16:35",
+     "end": "17:00",
+     "label": "Riley drives"
+    },
+    {
+     "id": "t6",
+     "who": [
+      "riley",
+      "jordan"
+     ],
+     "mode": "car",
+     "from": "office",
+     "to": "home",
+     "start": "17:00",
+     "end": "17:25",
+     "label": "Riley drives Jordan"
+    }
+   ],
+   "blocks": [
+    {
+     "who": "jordan",
+     "kind": "work",
+     "label": "At the office",
+     "start": "08:30",
+     "end": "17:00"
+    },
+    {
+     "who": "riley",
+     "kind": "appointment",
+     "label": "At the clinic",
+     "start": "10:00",
+     "end": "11:00"
+    }
+   ],
+   "extra_minutes": 180,
+   "dollars": 0
+  },
+  "violations": [],
+  "fairness": 0.9838,
+  "min_utility": 5.667,
+  "moderator_actions": 8,
+  "turns": 8,
+  "member_utility": {
+   "jordan": 7.333,
+   "riley": 5.667
+  }
+ }
+}

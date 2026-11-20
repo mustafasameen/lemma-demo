@@ -1,0 +1,1020 @@
+{
+ "meta": {
+  "scenario": "p1",
+  "arm": "general",
+  "arm_title": "General agent (Muse Glimmer 30B, prompted)",
+  "seed": 2,
+  "title": "The $250 gap",
+  "short": "Four friends, lake weekend",
+  "prompt": "A group of friends has agreed on a trip budget of $1,500. However, one member has unexpectedly reduced their maximum contribution from $400 to $150, while the remaining members are unwilling to increase their contributions. Can you help the group renegotiate the budget, explore feasible alternatives, and reach an agreement that respects everyone's financial constraints?",
+  "context": "Four friends (Ana, Ben, Cara, Dev) planned a lake weekend. Original pledges: Ana $400, Ben $400, Cara $400, Dev $300 (total $1,500). Ana now says she can give only $150. The others will not raise their pledges, so $1,250 is available. The original plan was the top option in every category.",
+  "kind": "budget",
+  "members": [
+   {
+    "id": "ana",
+    "name": "Ana",
+    "color_index": 0,
+    "public_max": 150
+   },
+   {
+    "id": "ben",
+    "name": "Ben",
+    "color_index": 1,
+    "public_max": 400
+   },
+   {
+    "id": "cara",
+    "name": "Cara",
+    "color_index": 2,
+    "public_max": 400
+   },
+   {
+    "id": "dev",
+    "name": "Dev",
+    "color_index": 3,
+    "public_max": 300
+   }
+  ],
+  "options": {
+   "money": 1250,
+   "original_budget": 1500,
+   "categories": [
+    {
+     "key": "lodging",
+     "label": "Lodging",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "lakeside cabin",
+       "cost": 650,
+       "satisfies": [
+        "no_camping"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "motel, 2 rooms",
+       "cost": 420,
+       "satisfies": [
+        "no_camping"
+       ]
+      },
+      {
+       "tier": "C",
+       "label": "campsite + gear",
+       "cost": 180,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "transport",
+     "label": "Transport",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "rental SUV",
+       "cost": 250,
+       "satisfies": []
+      },
+      {
+       "tier": "B",
+       "label": "Cara's car (gas, parking)",
+       "cost": 120,
+       "satisfies": []
+      },
+      {
+       "tier": "C",
+       "label": "bus",
+       "cost": 180,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "food",
+     "label": "Food",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "restaurants",
+       "cost": 350,
+       "satisfies": []
+      },
+      {
+       "tier": "B",
+       "label": "groceries + one dinner out",
+       "cost": 210,
+       "satisfies": []
+      },
+      {
+       "tier": "C",
+       "label": "groceries only",
+       "cost": 130,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "activities",
+     "label": "Activities",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "kayak tour + winery",
+       "cost": 250,
+       "satisfies": [
+        "kayak"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "kayak rental",
+       "cost": 110,
+       "satisfies": [
+        "kayak"
+       ]
+      },
+      {
+       "tier": "C",
+       "label": "hiking",
+       "cost": 0,
+       "satisfies": []
+      }
+     ]
+    }
+   ],
+   "hard_constraints": {
+    "no_camping": {
+     "member": "dev",
+     "category": "lodging",
+     "label": "cannot camp (back problem)",
+     "mention": "camp|tent|back|ground|cabin|motel|bed"
+    },
+    "kayak": {
+     "member": "ben",
+     "category": "activities",
+     "label": "needs a kayak activity",
+     "mention": "kayak|paddl"
+    }
+   }
+  },
+  "model": "llama-3.3-70b-instruct",
+  "policy": "general agent",
+  "moderator_model": "meta-muse-glimmer-30b",
+  "max_member_turns": 24,
+  "created": "2026-11-19T23:18:07",
+  "dry": false,
+  "fact_labels": {
+   "max": "Max contribution",
+   "hard": "Hard constraint",
+   "top_priority": "Top priority",
+   "arrive_by": "Arrive by",
+   "leave_at": "Leaves work",
+   "flex_min": "Flexibility (min)",
+   "dislikes_bus": "Dislikes the bus",
+   "appt_start": "Appointment starts",
+   "appt_end": "Appointment ends",
+   "no_transit": "Cannot take bus or walk"
+  },
+  "contract": "app-v1"
+ },
+ "events": [
+  {
+   "i": 0,
+   "turn": 0,
+   "kind": "message",
+   "actor": "lemma",
+   "to": null,
+   "text": "Hi everyone, with Ana now able to contribute $150 we have $1,250 total available for the whole trip. The original all-top-options plan was $1,500, so we need to adjust. Before we pick a combo, can you each share any must-haves, deal-breakers, or limits for lodging, transport, food and activities? That will help us find a plan that fits the budget and works for all of you.",
+   "data": {}
+  },
+  {
+   "i": 1,
+   "turn": 0,
+   "kind": "message",
+   "actor": "cara",
+   "to": null,
+   "text": "I'm okay with adjusting, but I'd really prefer not to camp and I'd love it if we could use my car for transport, as long as we share the gas and parking costs.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "prefers": {
+      "transport": "B"
+     }
+    }
+   }
+  },
+  {
+   "i": 2,
+   "turn": 1,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "ana",
+   "text": "Thanks for updating us on your contribution to $150. To find a plan that fits the $1,250 total and works for everyone, could you share any must-haves, deal-breakers, or limits you have for lodging, transport, food and activities? For example, are there options you can't do, or a category you really want to keep at the top option?",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 3,
+   "turn": 1,
+   "kind": "message",
+   "actor": "ana",
+   "to": null,
+   "text": "I'd really like to stick with lodging tier A if possible, and I'm also interested in activities tier B. My main limit is that I can only contribute $150, so we'll need to find a combination that fits within the $1,250 total.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 150,
+     "top_priority": "lodging",
+     "prefers": {
+      "lodging": "A",
+      "activities": "B"
+     }
+    }
+   }
+  },
+  {
+   "i": 4,
+   "turn": 2,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "ben",
+   "text": "Hi Ben, to find a plan that fits the $1,250 total and works for everyone, could you share any must-haves, deal-breakers, or limits you have for lodging, transport, food and activities? For example, are there options you can't do, or a category you really want to keep at the top option? Also please confirm your contribution limit is $400.",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 5,
+   "turn": 2,
+   "kind": "message",
+   "actor": "ben",
+   "to": null,
+   "text": "I can contribute up to $400 and I really need a kayak activity, so either the kayak tour or kayak rental is a must for me. My top priority is the activities.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 400,
+     "hard": [
+      "kayak"
+     ],
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 6,
+   "turn": 3,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "dev",
+   "text": "Hi Dev, to find a plan that fits the $1,250 total and works for everyone, could you share any must-haves, deal-breakers, or limits you have for lodging, transport, food and activities? For example, are there options you can't do, or a category you really want to keep at the top option? Also please confirm your contribution is $300.",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 7,
+   "turn": 3,
+   "kind": "message",
+   "actor": "dev",
+   "to": null,
+   "text": "I confirm my contribution is $300, and I have a back problem that prevents me from camping. Food is my top priority.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 300,
+     "hard": [
+      "no_camping"
+     ],
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 8,
+   "turn": 4,
+   "kind": "propose",
+   "actor": "lemma",
+   "to": null,
+   "text": "Plan 1: lodging lakeside cabin, transport Cara's car (gas, parking), food restaurants, activities kayak rental.\nAna pays $150.\nBen pays $400.\nCara pays $380.\nDev pays $300.\nTotal $1,230 of $1,250.",
+   "data": {
+    "plan": {
+     "choices": {
+      "lodging": "A",
+      "transport": "B",
+      "food": "A",
+      "activities": "B"
+     },
+     "labels": {
+      "lodging": "lakeside cabin",
+      "transport": "Cara's car (gas, parking)",
+      "food": "restaurants",
+      "activities": "kayak rental"
+     },
+     "cost": 1230,
+     "shares": {
+      "ana": 150.0,
+      "ben": 400.0,
+      "cara": 380.0,
+      "dev": 300.0
+     },
+     "id": 1
+    },
+    "plan_id": 1,
+    "reason": "general agent proposal"
+   }
+  },
+  {
+   "i": 9,
+   "turn": 4,
+   "kind": "message",
+   "actor": "ana",
+   "to": null,
+   "text": "I'm happy with Plan 1, it fits my budget and includes my preferred lodging and activity options.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "lodging",
+     "prefers": {
+      "lodging": "A",
+      "activities": "B"
+     }
+    }
+   }
+  },
+  {
+   "i": 10,
+   "turn": 5,
+   "kind": "poll",
+   "actor": "lemma",
+   "to": null,
+   "text": "Private poll on plan 1: does it work for you, yes or no?",
+   "data": {
+    "members": [
+     "ben",
+     "cara",
+     "dev"
+    ],
+    "plan_id": 1
+   }
+  },
+  {
+   "i": 11,
+   "turn": 5,
+   "kind": "poll_reply",
+   "actor": "ben",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "hard": [
+      "kayak"
+     ],
+     "top_priority": "activities"
+    },
+    "private_message": "I'm okay with the plan, it includes a kayak activity which is my top priority.",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 12,
+   "turn": 5,
+   "kind": "poll_reply",
+   "actor": "cara",
+   "to": "lemma",
+   "text": "no",
+   "data": {
+    "accept": "no",
+    "stated": {},
+    "private_message": "I don't accept this plan because it exceeds my maximum contribution.",
+    "answer": "no"
+   }
+  },
+  {
+   "i": 13,
+   "turn": 5,
+   "kind": "poll_reply",
+   "actor": "dev",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {},
+    "private_message": "I'm okay with the plan, it meets my needs.",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 14,
+   "turn": 5,
+   "kind": "message",
+   "actor": "ben",
+   "to": null,
+   "text": "I'm okay with Plan 1, it includes a kayak activity which is my top priority",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "hard": [
+      "kayak"
+     ],
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 15,
+   "turn": 6,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "cara",
+   "text": "Thanks for your feedback on Plan 1. You mentioned it exceeds your maximum contribution. Could you share what your maximum contribution is for the trip, and confirm your preferences for lodging (no camping) and transport (using your car)? That will help us find a plan that fits everyone's budget and needs.",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 16,
+   "turn": 6,
+   "kind": "message",
+   "actor": "cara",
+   "to": null,
+   "text": "My maximum contribution is $400, and I have no hard constraints. I prefer lodging tier A and transport tier B, which is using my car with shared gas and parking costs.",
+   "data": {
+    "accept": "no",
+    "stated": {
+     "max": 400,
+     "hard": [],
+     "top_priority": "lodging",
+     "prefers": {
+      "lodging": "A",
+      "transport": "B"
+     }
+    }
+   }
+  },
+  {
+   "i": 17,
+   "turn": 7,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "cara",
+   "text": "Thanks for confirming your maximum contribution is $400 and your preferences for lodging tier A and transport tier B using your car. Plan 1 is lodging lakeside cabin, transport Cara's car with shared gas/parking, food restaurants, activities kayak rental, with you paying $380. Does this plan work for you now?",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 18,
+   "turn": 7,
+   "kind": "message",
+   "actor": "cara",
+   "to": null,
+   "text": "No, the plan doesn't work for me because it exceeds my maximum contribution of $400. I'd like to revisit the options to find a combination that fits within my budget.",
+   "data": {
+    "accept": "no",
+    "stated": {
+     "max": 400
+    }
+   }
+  },
+  {
+   "i": 19,
+   "turn": 8,
+   "kind": "propose",
+   "actor": "lemma",
+   "to": null,
+   "text": "Plan 2: lodging lakeside cabin, transport Cara's car (gas, parking), food groceries + one dinner out, activities kayak rental.\nAna pays $150.\nBen pays $400.\nCara pays $240.\nDev pays $300.\nTotal $1,090 of $1,250.",
+   "data": {
+    "plan": {
+     "choices": {
+      "lodging": "A",
+      "transport": "B",
+      "food": "B",
+      "activities": "B"
+     },
+     "labels": {
+      "lodging": "lakeside cabin",
+      "transport": "Cara's car (gas, parking)",
+      "food": "groceries + one dinner out",
+      "activities": "kayak rental"
+     },
+     "cost": 1090,
+     "shares": {
+      "ana": 150.0,
+      "ben": 400.0,
+      "cara": 240.0,
+      "dev": 300.0
+     },
+     "id": 2
+    },
+    "plan_id": 2,
+    "reason": "general agent proposal"
+   }
+  },
+  {
+   "i": 20,
+   "turn": 8,
+   "kind": "message",
+   "actor": "dev",
+   "to": null,
+   "text": "I'm okay with Plan 2, but I'd really prefer food tier A, restaurants, if possible. It's my top priority.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food",
+     "prefers": {
+      "food": "A"
+     }
+    }
+   }
+  },
+  {
+   "i": 21,
+   "turn": 9,
+   "kind": "poll",
+   "actor": "lemma",
+   "to": null,
+   "text": "Private poll on plan 2: does it work for you, yes or no?",
+   "data": {
+    "members": [
+     "ana",
+     "ben",
+     "cara",
+     "dev"
+    ],
+    "plan_id": 2
+   }
+  },
+  {
+   "i": 22,
+   "turn": 9,
+   "kind": "poll_reply",
+   "actor": "ana",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "lodging",
+     "prefers": {
+      "lodging": "A",
+      "activities": "B"
+     }
+    },
+    "private_message": "I accept the plan as it fits my budget and includes my preferred lodging and activity options",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 23,
+   "turn": 9,
+   "kind": "poll_reply",
+   "actor": "ben",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "hard": [
+      "kayak"
+     ],
+     "top_priority": "activities"
+    },
+    "private_message": "I'm okay with Plan 2 as it includes a kayak activity.",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 24,
+   "turn": 9,
+   "kind": "poll_reply",
+   "actor": "cara",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "lodging",
+     "prefers": {
+      "lodging": "A",
+      "transport": "B"
+     }
+    },
+    "private_message": "I'm okay with the plan, it's within my budget and meets my preferences for lodging and transport.",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 25,
+   "turn": 9,
+   "kind": "poll_reply",
+   "actor": "dev",
+   "to": "lemma",
+   "text": "no",
+   "data": {
+    "accept": "no",
+    "stated": {
+     "top_priority": "food",
+     "prefers": {
+      "food": "A"
+     }
+    },
+    "private_message": "I don't accept the plan because it doesn't meet my preference for food tier A, restaurants.",
+    "answer": "no"
+   }
+  },
+  {
+   "i": 26,
+   "turn": 9,
+   "kind": "message",
+   "actor": "ana",
+   "to": null,
+   "text": "I'm happy with Plan 2, it fits my budget and includes my preferred lodging and activity options. I think we should try to keep this plan if possible, as it seems to work for most of us.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "lodging",
+     "prefers": {
+      "lodging": "A",
+      "activities": "B"
+     }
+    }
+   }
+  },
+  {
+   "i": 27,
+   "turn": 10,
+   "kind": "wait",
+   "actor": "lemma",
+   "to": null,
+   "text": "",
+   "data": {
+    "reason": "no readable action from the general agent"
+   }
+  },
+  {
+   "i": 28,
+   "turn": 10,
+   "kind": "message",
+   "actor": "ben",
+   "to": null,
+   "text": "I'm good with Plan 2, it includes a kayak activity which is my top priority and I can afford the $400 payment.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "max": 400,
+     "hard": [
+      "kayak"
+     ],
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 29,
+   "turn": 11,
+   "kind": "wait",
+   "actor": "lemma",
+   "to": null,
+   "text": "",
+   "data": {
+    "reason": "no readable action from the general agent"
+   }
+  },
+  {
+   "i": 30,
+   "turn": 11,
+   "kind": "message",
+   "actor": "cara",
+   "to": null,
+   "text": "I'm okay with Plan 2, it fits my budget and I like the idea of using my car for transport with shared costs. My top priority is lodging, and I'm glad we're looking at the lakeside cabin option.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "lodging",
+     "prefers": {
+      "lodging": "A",
+      "transport": "B"
+     }
+    }
+   }
+  },
+  {
+   "i": 31,
+   "turn": 12,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "ana",
+   "text": "You mentioned you'd really like lodging tier A if possible, and you're interested in activities tier B. Would you be willing to accept lodging tier B (motel, 2 rooms $420) if it allows us to upgrade food to tier A (restaurants $350) which is Dev's top priority, while keeping transport as Cara's car with shared gas/parking and activities as kayak rental? This would keep the total cost within the $1,250 budget and fit everyone's contribution limits.",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 32,
+   "turn": 12,
+   "kind": "message",
+   "actor": "ana",
+   "to": null,
+   "text": "I'd rather stick with lodging tier A if possible, but I can be flexible. However, I must emphasize that my maximum contribution is $150, so any changes should keep that in mind. I prefer lodging tier A and activities tier B.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 150,
+     "hard": [],
+     "top_priority": "lodging",
+     "prefers": {
+      "lodging": "A",
+      "activities": "B"
+     }
+    }
+   }
+  },
+  {
+   "i": 33,
+   "turn": 13,
+   "kind": "propose",
+   "actor": "lemma",
+   "to": null,
+   "text": "Plan 3: lodging lakeside cabin, transport Cara's car (gas, parking), food restaurants, activities kayak rental.\nAna pays $150.\nBen pays $400.\nCara pays $380.\nDev pays $300.\nTotal $1,230 of $1,250.",
+   "data": {
+    "plan": {
+     "choices": {
+      "lodging": "A",
+      "transport": "B",
+      "food": "A",
+      "activities": "B"
+     },
+     "labels": {
+      "lodging": "lakeside cabin",
+      "transport": "Cara's car (gas, parking)",
+      "food": "restaurants",
+      "activities": "kayak rental"
+     },
+     "cost": 1230,
+     "shares": {
+      "ana": 150.0,
+      "ben": 400.0,
+      "cara": 380.0,
+      "dev": 300.0
+     },
+     "id": 3
+    },
+    "plan_id": 3,
+    "reason": "general agent proposal"
+   }
+  },
+  {
+   "i": 34,
+   "turn": 13,
+   "kind": "message",
+   "actor": "dev",
+   "to": null,
+   "text": "I'm happy with Plan 3, it meets my top priority of food tier A and doesn't require camping, which I'm unable to do due to my back problem.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "hard": [
+      "no_camping"
+     ],
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 35,
+   "turn": 14,
+   "kind": "wait",
+   "actor": "lemma",
+   "to": null,
+   "text": "",
+   "data": {
+    "reason": "no readable action from the general agent"
+   }
+  },
+  {
+   "i": 36,
+   "turn": 14,
+   "kind": "message",
+   "actor": "ana",
+   "to": null,
+   "text": "I'm happy with the lakeside cabin and kayak rental, but I want to confirm that I can only contribute $150, so let's make sure any final plan doesn't exceed that for me.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "max": 150,
+     "top_priority": "lodging",
+     "prefers": {
+      "lodging": "A",
+      "activities": "B"
+     }
+    }
+   }
+  },
+  {
+   "i": 37,
+   "turn": 15,
+   "kind": "propose",
+   "actor": "lemma",
+   "to": null,
+   "text": "Plan 4: lodging motel, 2 rooms, transport Cara's car (gas, parking), food restaurants, activities kayak rental.\nAna pays $150.\nBen pays $275.\nCara pays $275.\nDev pays $300.\nTotal $1,000 of $1,250.",
+   "data": {
+    "plan": {
+     "choices": {
+      "lodging": "B",
+      "transport": "B",
+      "food": "A",
+      "activities": "B"
+     },
+     "labels": {
+      "lodging": "motel, 2 rooms",
+      "transport": "Cara's car (gas, parking)",
+      "food": "restaurants",
+      "activities": "kayak rental"
+     },
+     "cost": 1000,
+     "shares": {
+      "ana": 150.0,
+      "ben": 275.0,
+      "cara": 275.0,
+      "dev": 300.0
+     },
+     "id": 4
+    },
+    "plan_id": 4,
+    "reason": "general agent proposal"
+   }
+  },
+  {
+   "i": 38,
+   "turn": 15,
+   "kind": "message",
+   "actor": "ben",
+   "to": null,
+   "text": "I'm good with Plan 4, it includes a kayak activity which is my top priority and I can afford the $275 payment. My maximum contribution is $400, and my top priority is activities.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "max": 400,
+     "hard": [
+      "kayak"
+     ],
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 39,
+   "turn": 16,
+   "kind": "poll",
+   "actor": "lemma",
+   "to": null,
+   "text": "Private poll on plan 4: does it work for you, yes or no?",
+   "data": {
+    "members": [
+     "ana",
+     "cara",
+     "dev"
+    ],
+    "plan_id": 4
+   }
+  },
+  {
+   "i": 40,
+   "turn": 16,
+   "kind": "poll_reply",
+   "actor": "ana",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "max": 150,
+     "prefers": {
+      "activities": "B"
+     }
+    },
+    "private_message": "I accept the plan as it fits my budget of $150 and includes kayak rental, which I prefer.",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 41,
+   "turn": 16,
+   "kind": "poll_reply",
+   "actor": "cara",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "prefers": {
+      "transport": "B"
+     }
+    },
+    "private_message": "I accept the plan because it fits my budget and meets my preferences for transport and does not require camping, which I prefer to avoid.",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 42,
+   "turn": 16,
+   "kind": "poll_reply",
+   "actor": "dev",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "food"
+    },
+    "private_message": "I accept the plan on the table, it meets my requirements for food and lodging.",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 43,
+   "turn": 16,
+   "kind": "close",
+   "actor": "system",
+   "to": null,
+   "text": "All members accepted plan 4.",
+   "data": {}
+  }
+ ],
+ "private": {
+  "ana": {
+   "max": 150,
+   "hard": "none",
+   "top_priority": "lodging"
+  },
+  "ben": {
+   "max": 400,
+   "hard": "needs a kayak activity",
+   "top_priority": "activities"
+  },
+  "cara": {
+   "max": 400,
+   "hard": "none",
+   "top_priority": "lodging"
+  },
+  "dev": {
+   "max": 300,
+   "hard": "cannot camp (back problem)",
+   "top_priority": "food"
+  }
+ },
+ "outcome": {
+  "agreed": true,
+  "unanimous": true,
+  "plan": {
+   "choices": {
+    "lodging": "B",
+    "transport": "B",
+    "food": "A",
+    "activities": "B"
+   },
+   "labels": {
+    "lodging": "motel, 2 rooms",
+    "transport": "Cara's car (gas, parking)",
+    "food": "restaurants",
+    "activities": "kayak rental"
+   },
+   "cost": 1000,
+   "shares": {
+    "ana": 150.0,
+    "ben": 275.0,
+    "cara": 275.0,
+    "dev": 300.0
+   },
+   "id": 4
+  },
+  "violations": [],
+  "fairness": 0.9972,
+  "min_utility": 7.0,
+  "moderator_actions": 14,
+  "turns": 16,
+  "member_utility": {
+   "ana": 7.25,
+   "ben": 7.0,
+   "cara": 8.0,
+   "dev": 7.75
+  }
+ }
+}

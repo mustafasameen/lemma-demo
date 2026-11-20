@@ -1,0 +1,2089 @@
+{
+ "meta": {
+  "scenario": "p3",
+  "arm": "lemma",
+  "arm_title": "LEMMA (scripted policy)",
+  "seed": 0,
+  "title": "Six friends, $1,800",
+  "short": "Six friends, weekend trip",
+  "prompt": "Six friends are planning a weekend trip with a total budget of $1,800. Each person has different preferences regarding accommodation, transportation, food, and activities, but nobody has fully disclosed their priorities or maximum contribution. Can you moderate the discussion, gather everyone's constraints, and help negotiate a fair budget allocation that all six members can accept?",
+  "context": "Six friends (Maya, Leo, Sofia, Omar, Priya, Theo) are planning a weekend trip with a total budget of $1,800. Nobody has said what they can contribute or what they need.",
+  "kind": "budget",
+  "members": [
+   {
+    "id": "maya",
+    "name": "Maya",
+    "color_index": 0
+   },
+   {
+    "id": "leo",
+    "name": "Leo",
+    "color_index": 1
+   },
+   {
+    "id": "sofia",
+    "name": "Sofia",
+    "color_index": 2
+   },
+   {
+    "id": "omar",
+    "name": "Omar",
+    "color_index": 3
+   },
+   {
+    "id": "priya",
+    "name": "Priya",
+    "color_index": 4
+   },
+   {
+    "id": "theo",
+    "name": "Theo",
+    "color_index": 5
+   }
+  ],
+  "options": {
+   "money": 1800,
+   "original_budget": 1800,
+   "categories": [
+    {
+     "key": "lodging",
+     "label": "Lodging",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "house with 4 rooms",
+       "cost": 780,
+       "satisfies": [
+        "own_room"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "2 hotel rooms + 1 single",
+       "cost": 690,
+       "satisfies": [
+        "own_room"
+       ]
+      },
+      {
+       "tier": "C",
+       "label": "hostel dorm",
+       "cost": 360,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "transport",
+     "label": "Transport",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "train",
+       "cost": 480,
+       "satisfies": [
+        "no_long_drive"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "two rental cars, 5-hour drive",
+       "cost": 300,
+       "satisfies": []
+      },
+      {
+       "tier": "C",
+       "label": "one van, 5-hour drive",
+       "cost": 240,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "food",
+     "label": "Food",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "restaurants every meal",
+       "cost": 600,
+       "satisfies": [
+        "vegetarian"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "cook + 2 dinners out (vegetarian-friendly)",
+       "cost": 380,
+       "satisfies": [
+        "vegetarian"
+       ]
+      },
+      {
+       "tier": "C",
+       "label": "cook every meal (shared barbecue plan)",
+       "cost": 220,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "activities",
+     "label": "Activities",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "guided hike + concert",
+       "cost": 420,
+       "satisfies": []
+      },
+      {
+       "tier": "B",
+       "label": "concert only",
+       "cost": 240,
+       "satisfies": []
+      },
+      {
+       "tier": "C",
+       "label": "free trails",
+       "cost": 0,
+       "satisfies": []
+      }
+     ]
+    }
+   ],
+   "hard_constraints": {
+    "vegetarian": {
+     "member": "priya",
+     "category": "food",
+     "label": "is vegetarian",
+     "mention": "vegetarian|vegan|meat|veg\\b"
+    },
+    "no_long_drive": {
+     "member": "omar",
+     "category": "transport",
+     "label": "gets carsick on long drives",
+     "mention": "carsick|car sick|motion|long drive|5.hour|five.hour|nause|queasy|drive|train"
+    },
+    "own_room": {
+     "member": "sofia",
+     "category": "lodging",
+     "label": "needs her own room",
+     "mention": "own room|private room|own space|room to myself|privacy|dorm|hostel|sharing|share a room|my own"
+    }
+   }
+  },
+  "model": "llama-3.3-70b-instruct",
+  "policy": "scripted",
+  "max_member_turns": 30,
+  "created": "2026-11-16T23:06:10",
+  "dry": false,
+  "fact_labels": {
+   "max": "Max contribution",
+   "hard": "Hard constraint",
+   "top_priority": "Top priority",
+   "arrive_by": "Arrive by",
+   "leave_at": "Leaves work",
+   "flex_min": "Flexibility (min)",
+   "dislikes_bus": "Dislikes the bus",
+   "appt_start": "Appointment starts",
+   "appt_end": "Appointment ends",
+   "no_transit": "Cannot take bus or walk"
+  },
+  "contract": "app-v1"
+ },
+ "events": [
+  {
+   "i": 0,
+   "turn": 0,
+   "kind": "message",
+   "actor": "lemma",
+   "to": null,
+   "text": "The goal: agree on a weekend plan within $1,800 and a split that each of the six members can accept.",
+   "data": {}
+  },
+  {
+   "i": 1,
+   "turn": 0,
+   "kind": "state",
+   "actor": "lemma",
+   "to": null,
+   "text": "Facts known at the start.",
+   "data": {
+    "known": {
+     "maya": {},
+     "leo": {},
+     "sofia": {},
+     "omar": {},
+     "priya": {},
+     "theo": {}
+    },
+    "unknown": {
+     "maya": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "leo": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "sofia": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "omar": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "priya": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "theo": [
+      "max",
+      "hard",
+      "top_priority"
+     ]
+    }
+   }
+  },
+  {
+   "i": 2,
+   "turn": 0,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "maya",
+   "text": "Maya, I cannot build a plan that works for everyone without a few facts from you. Could you tell me your maximum contribution, any hard constraint (something that rules a plan out) and which of lodging, transport, food and activities matters most to you?",
+   "data": {
+    "facts": [
+     "max",
+     "hard",
+     "top_priority"
+    ]
+   }
+  },
+  {
+   "i": 3,
+   "turn": 0,
+   "kind": "message",
+   "actor": "maya",
+   "to": null,
+   "text": "I can contribute up to $450, I have no hard constraints, and activities are my top priority.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 450,
+     "hard": [],
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 4,
+   "turn": 0,
+   "kind": "state",
+   "actor": "lemma",
+   "to": null,
+   "text": "Maya stated a fact.",
+   "data": {
+    "known": {
+     "maya": {
+      "max": 450,
+      "hard": [],
+      "top_priority": "activities"
+     },
+     "leo": {},
+     "sofia": {},
+     "omar": {},
+     "priya": {},
+     "theo": {}
+    },
+    "unknown": {
+     "maya": [],
+     "leo": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "sofia": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "omar": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "priya": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "theo": [
+      "max",
+      "hard",
+      "top_priority"
+     ]
+    }
+   }
+  },
+  {
+   "i": 5,
+   "turn": 1,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "leo",
+   "text": "Leo, I cannot build a plan that works for everyone without a few facts from you. Could you tell me your maximum contribution, any hard constraint (something that rules a plan out) and which of lodging, transport, food and activities matters most to you?",
+   "data": {
+    "facts": [
+     "max",
+     "hard",
+     "top_priority"
+    ]
+   }
+  },
+  {
+   "i": 6,
+   "turn": 1,
+   "kind": "message",
+   "actor": "leo",
+   "to": null,
+   "text": "I can contribute up to $400, I have no hard constraints, and transport is my top priority.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 400,
+     "hard": [],
+     "top_priority": "transport"
+    }
+   }
+  },
+  {
+   "i": 7,
+   "turn": 1,
+   "kind": "state",
+   "actor": "lemma",
+   "to": null,
+   "text": "Leo stated a fact.",
+   "data": {
+    "known": {
+     "maya": {
+      "max": 450,
+      "hard": [],
+      "top_priority": "activities"
+     },
+     "leo": {
+      "max": 400,
+      "hard": [],
+      "top_priority": "transport"
+     },
+     "sofia": {},
+     "omar": {},
+     "priya": {},
+     "theo": {}
+    },
+    "unknown": {
+     "maya": [],
+     "leo": [],
+     "sofia": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "omar": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "priya": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "theo": [
+      "max",
+      "hard",
+      "top_priority"
+     ]
+    }
+   }
+  },
+  {
+   "i": 8,
+   "turn": 2,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "sofia",
+   "text": "Sofia, I cannot build a plan that works for everyone without a few facts from you. Could you tell me your maximum contribution, any hard constraint (something that rules a plan out) and which of lodging, transport, food and activities matters most to you?",
+   "data": {
+    "facts": [
+     "max",
+     "hard",
+     "top_priority"
+    ]
+   }
+  },
+  {
+   "i": 9,
+   "turn": 2,
+   "kind": "message",
+   "actor": "sofia",
+   "to": null,
+   "text": "I can contribute up to $350, I need my own room, and lodging matters most to me.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 350,
+     "hard": [
+      "own_room"
+     ],
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 10,
+   "turn": 2,
+   "kind": "state",
+   "actor": "lemma",
+   "to": null,
+   "text": "Sofia stated a fact.",
+   "data": {
+    "known": {
+     "maya": {
+      "max": 450,
+      "hard": [],
+      "top_priority": "activities"
+     },
+     "leo": {
+      "max": 400,
+      "hard": [],
+      "top_priority": "transport"
+     },
+     "sofia": {
+      "max": 350,
+      "hard": [
+       "own_room"
+      ],
+      "top_priority": "lodging"
+     },
+     "omar": {},
+     "priya": {},
+     "theo": {}
+    },
+    "unknown": {
+     "maya": [],
+     "leo": [],
+     "sofia": [],
+     "omar": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "priya": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "theo": [
+      "max",
+      "hard",
+      "top_priority"
+     ]
+    }
+   }
+  },
+  {
+   "i": 11,
+   "turn": 3,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "omar",
+   "text": "Omar, I cannot build a plan that works for everyone without a few facts from you. Could you tell me your maximum contribution, any hard constraint (something that rules a plan out) and which of lodging, transport, food and activities matters most to you?",
+   "data": {
+    "facts": [
+     "max",
+     "hard",
+     "top_priority"
+    ]
+   }
+  },
+  {
+   "i": 12,
+   "turn": 3,
+   "kind": "message",
+   "actor": "omar",
+   "to": null,
+   "text": "I can contribute up to $250, I get carsick on long drives, and food matters most to me.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 250,
+     "hard": [
+      "no_long_drive"
+     ],
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 13,
+   "turn": 3,
+   "kind": "state",
+   "actor": "lemma",
+   "to": null,
+   "text": "Omar stated a fact.",
+   "data": {
+    "known": {
+     "maya": {
+      "max": 450,
+      "hard": [],
+      "top_priority": "activities"
+     },
+     "leo": {
+      "max": 400,
+      "hard": [],
+      "top_priority": "transport"
+     },
+     "sofia": {
+      "max": 350,
+      "hard": [
+       "own_room"
+      ],
+      "top_priority": "lodging"
+     },
+     "omar": {
+      "max": 250,
+      "hard": [
+       "no_long_drive"
+      ],
+      "top_priority": "food"
+     },
+     "priya": {},
+     "theo": {}
+    },
+    "unknown": {
+     "maya": [],
+     "leo": [],
+     "sofia": [],
+     "omar": [],
+     "priya": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "theo": [
+      "max",
+      "hard",
+      "top_priority"
+     ]
+    }
+   }
+  },
+  {
+   "i": 14,
+   "turn": 4,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "priya",
+   "text": "Priya, I cannot build a plan that works for everyone without a few facts from you. Could you tell me your maximum contribution, any hard constraint (something that rules a plan out) and which of lodging, transport, food and activities matters most to you?",
+   "data": {
+    "facts": [
+     "max",
+     "hard",
+     "top_priority"
+    ]
+   }
+  },
+  {
+   "i": 15,
+   "turn": 4,
+   "kind": "message",
+   "actor": "priya",
+   "to": null,
+   "text": "I can contribute up to $200, I'm vegetarian so the food plan must be vegetarian-friendly, and activities are my top priority.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 200,
+     "hard": [
+      "vegetarian"
+     ],
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 16,
+   "turn": 4,
+   "kind": "state",
+   "actor": "lemma",
+   "to": null,
+   "text": "Priya stated a fact.",
+   "data": {
+    "known": {
+     "maya": {
+      "max": 450,
+      "hard": [],
+      "top_priority": "activities"
+     },
+     "leo": {
+      "max": 400,
+      "hard": [],
+      "top_priority": "transport"
+     },
+     "sofia": {
+      "max": 350,
+      "hard": [
+       "own_room"
+      ],
+      "top_priority": "lodging"
+     },
+     "omar": {
+      "max": 250,
+      "hard": [
+       "no_long_drive"
+      ],
+      "top_priority": "food"
+     },
+     "priya": {
+      "max": 200,
+      "hard": [
+       "vegetarian"
+      ],
+      "top_priority": "activities"
+     },
+     "theo": {}
+    },
+    "unknown": {
+     "maya": [],
+     "leo": [],
+     "sofia": [],
+     "omar": [],
+     "priya": [],
+     "theo": [
+      "max",
+      "hard",
+      "top_priority"
+     ]
+    }
+   }
+  },
+  {
+   "i": 17,
+   "turn": 5,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "theo",
+   "text": "Theo, I cannot build a plan that works for everyone without a few facts from you. Could you tell me your maximum contribution, any hard constraint (something that rules a plan out) and which of lodging, transport, food and activities matters most to you?",
+   "data": {
+    "facts": [
+     "max",
+     "hard",
+     "top_priority"
+    ]
+   }
+  },
+  {
+   "i": 18,
+   "turn": 5,
+   "kind": "message",
+   "actor": "theo",
+   "to": null,
+   "text": "I can contribute up to $150, I have no hard constraints, and food matters most to me.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 150,
+     "hard": [],
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 19,
+   "turn": 5,
+   "kind": "state",
+   "actor": "lemma",
+   "to": null,
+   "text": "Theo stated a fact.",
+   "data": {
+    "known": {
+     "maya": {
+      "max": 450,
+      "hard": [],
+      "top_priority": "activities"
+     },
+     "leo": {
+      "max": 400,
+      "hard": [],
+      "top_priority": "transport"
+     },
+     "sofia": {
+      "max": 350,
+      "hard": [
+       "own_room"
+      ],
+      "top_priority": "lodging"
+     },
+     "omar": {
+      "max": 250,
+      "hard": [
+       "no_long_drive"
+      ],
+      "top_priority": "food"
+     },
+     "priya": {
+      "max": 200,
+      "hard": [
+       "vegetarian"
+      ],
+      "top_priority": "activities"
+     },
+     "theo": {
+      "max": 150,
+      "hard": [],
+      "top_priority": "food"
+     }
+    },
+    "unknown": {
+     "maya": [],
+     "leo": [],
+     "sofia": [],
+     "omar": [],
+     "priya": [],
+     "theo": []
+    }
+   }
+  },
+  {
+   "i": 20,
+   "turn": 6,
+   "kind": "tool",
+   "actor": "lemma",
+   "to": null,
+   "text": "Exact solver on the stated facts.",
+   "data": {
+    "inputs": {
+     "money": 1800,
+     "known": {
+      "maya": {
+       "max": 450,
+       "hard": [],
+       "top_priority": "activities"
+      },
+      "leo": {
+       "max": 400,
+       "hard": [],
+       "top_priority": "transport"
+      },
+      "sofia": {
+       "max": 350,
+       "hard": [
+        "own_room"
+       ],
+       "top_priority": "lodging"
+      },
+      "omar": {
+       "max": 250,
+       "hard": [
+        "no_long_drive"
+       ],
+       "top_priority": "food"
+      },
+      "priya": {
+       "max": 200,
+       "hard": [
+        "vegetarian"
+       ],
+       "top_priority": "activities"
+      },
+      "theo": {
+       "max": 150,
+       "hard": [],
+       "top_priority": "food"
+      }
+     },
+     "hard_stated": [
+      "no_long_drive",
+      "own_room",
+      "vegetarian"
+     ],
+     "caps_stated": {
+      "maya": 450,
+      "leo": 400,
+      "sofia": 350,
+      "omar": 250,
+      "priya": 200,
+      "theo": 150
+     },
+     "musts_stated": {},
+     "prefers_stated": {}
+    },
+    "n_candidates": 81,
+    "n_feasible": 4,
+    "plan": {
+     "choices": {
+      "lodging": "B",
+      "transport": "A",
+      "food": "A",
+      "activities": "C"
+     },
+     "labels": {
+      "lodging": "2 hotel rooms + 1 single",
+      "transport": "train",
+      "food": "restaurants every meal",
+      "activities": "free trails"
+     },
+     "cost": 1770,
+     "shares": {
+      "maya": 420.0,
+      "leo": 400.0,
+      "sofia": 350.0,
+      "omar": 250.0,
+      "priya": 200.0,
+      "theo": 150.0
+     },
+     "assignments": [
+      {
+       "member": "sofia",
+       "item": "single room"
+      }
+     ]
+    },
+    "score": 7.172,
+    "why": "Highest Nash product (2125992960) among 4 of 81 combinations that fit $1,800 and 3 stated hard constraints.",
+    "alternatives": [
+     {
+      "tiers": {
+       "lodging": "A",
+       "transport": "A",
+       "food": "B",
+       "activities": "C"
+      },
+      "cost": 1640,
+      "score": 1907942400
+     },
+     {
+      "tiers": {
+       "lodging": "B",
+       "transport": "A",
+       "food": "B",
+       "activities": "B"
+      },
+      "cost": 1790,
+      "score": 1726546112
+     },
+     {
+      "tiers": {
+       "lodging": "B",
+       "transport": "A",
+       "food": "B",
+       "activities": "C"
+      },
+      "cost": 1550,
+      "score": 817465040
+     }
+    ],
+    "unmet_musts": [],
+    "tool": "solver"
+   }
+  },
+  {
+   "i": 21,
+   "turn": 6,
+   "kind": "propose",
+   "actor": "lemma",
+   "to": null,
+   "text": "Plan 1: lodging 2 hotel rooms + 1 single, transport train, food restaurants every meal, activities free trails.\nMaya pays $420.\nLeo pays $400 (at their max).\nSofia: the single room is yours; you pay $350 (at their max).\nOmar pays $250 (at their max).\nPriya pays $200 (at their max).\nTheo pays $150 (at their max).\nTotal $1,770 of $1,800.",
+   "data": {
+    "plan": {
+     "choices": {
+      "lodging": "B",
+      "transport": "A",
+      "food": "A",
+      "activities": "C"
+     },
+     "labels": {
+      "lodging": "2 hotel rooms + 1 single",
+      "transport": "train",
+      "food": "restaurants every meal",
+      "activities": "free trails"
+     },
+     "cost": 1770,
+     "shares": {
+      "maya": 420.0,
+      "leo": 400.0,
+      "sofia": 350.0,
+      "omar": 250.0,
+      "priya": 200.0,
+      "theo": 150.0
+     },
+     "assignments": [
+      {
+       "member": "sofia",
+       "item": "single room"
+      }
+     ],
+     "id": 1
+    },
+    "plan_id": 1,
+    "reason": "Highest Nash product (2125992960) among 4 of 81 combinations that fit $1,800 and 3 stated hard constraints."
+   }
+  },
+  {
+   "i": 22,
+   "turn": 6,
+   "kind": "message",
+   "actor": "maya",
+   "to": null,
+   "text": "I'd like to spend my money on better activities, this plan doesn't meet my preferences.",
+   "data": {
+    "accept": "no",
+    "stated": {
+     "top_priority": "activities",
+     "prefers": {
+      "activities": "A"
+     }
+    }
+   }
+  },
+  {
+   "i": 23,
+   "turn": 6,
+   "kind": "state",
+   "actor": "lemma",
+   "to": null,
+   "text": "Maya stated a fact.",
+   "data": {
+    "known": {
+     "maya": {
+      "max": 450,
+      "hard": [],
+      "top_priority": "activities",
+      "prefers": {
+       "activities": "A"
+      }
+     },
+     "leo": {
+      "max": 400,
+      "hard": [],
+      "top_priority": "transport"
+     },
+     "sofia": {
+      "max": 350,
+      "hard": [
+       "own_room"
+      ],
+      "top_priority": "lodging"
+     },
+     "omar": {
+      "max": 250,
+      "hard": [
+       "no_long_drive"
+      ],
+      "top_priority": "food"
+     },
+     "priya": {
+      "max": 200,
+      "hard": [
+       "vegetarian"
+      ],
+      "top_priority": "activities"
+     },
+     "theo": {
+      "max": 150,
+      "hard": [],
+      "top_priority": "food"
+     }
+    },
+    "unknown": {
+     "maya": [],
+     "leo": [],
+     "sofia": [],
+     "omar": [],
+     "priya": [],
+     "theo": []
+    }
+   }
+  },
+  {
+   "i": 24,
+   "turn": 7,
+   "kind": "tool",
+   "actor": "lemma",
+   "to": null,
+   "text": "Exact solver on the stated facts.",
+   "data": {
+    "inputs": {
+     "money": 1800,
+     "known": {
+      "maya": {
+       "max": 450,
+       "hard": [],
+       "top_priority": "activities",
+       "prefers": {
+        "activities": "A"
+       }
+      },
+      "leo": {
+       "max": 400,
+       "hard": [],
+       "top_priority": "transport"
+      },
+      "sofia": {
+       "max": 350,
+       "hard": [
+        "own_room"
+       ],
+       "top_priority": "lodging"
+      },
+      "omar": {
+       "max": 250,
+       "hard": [
+        "no_long_drive"
+       ],
+       "top_priority": "food"
+      },
+      "priya": {
+       "max": 200,
+       "hard": [
+        "vegetarian"
+       ],
+       "top_priority": "activities"
+      },
+      "theo": {
+       "max": 150,
+       "hard": [],
+       "top_priority": "food"
+      }
+     },
+     "hard_stated": [
+      "no_long_drive",
+      "own_room",
+      "vegetarian"
+     ],
+     "caps_stated": {
+      "maya": 450,
+      "leo": 400,
+      "sofia": 350,
+      "omar": 250,
+      "priya": 200,
+      "theo": 150
+     },
+     "musts_stated": {},
+     "prefers_stated": {
+      "maya": {
+       "activities": "A"
+      }
+     }
+    },
+    "n_candidates": 81,
+    "n_feasible": 4,
+    "plan": {
+     "choices": {
+      "lodging": "B",
+      "transport": "A",
+      "food": "A",
+      "activities": "C"
+     },
+     "labels": {
+      "lodging": "2 hotel rooms + 1 single",
+      "transport": "train",
+      "food": "restaurants every meal",
+      "activities": "free trails"
+     },
+     "cost": 1770,
+     "shares": {
+      "maya": 420.0,
+      "leo": 400.0,
+      "sofia": 350.0,
+      "omar": 250.0,
+      "priya": 200.0,
+      "theo": 150.0
+     },
+     "assignments": [
+      {
+       "member": "sofia",
+       "item": "single room"
+      }
+     ]
+    },
+    "score": 7.172,
+    "why": "Highest Nash product (2125992960) among 4 of 81 combinations that fit $1,800 and 3 stated hard constraints.",
+    "alternatives": [
+     {
+      "tiers": {
+       "lodging": "A",
+       "transport": "A",
+       "food": "B",
+       "activities": "C"
+      },
+      "cost": 1640,
+      "score": 1907942400
+     },
+     {
+      "tiers": {
+       "lodging": "B",
+       "transport": "A",
+       "food": "B",
+       "activities": "B"
+      },
+      "cost": 1790,
+      "score": 1726546112
+     },
+     {
+      "tiers": {
+       "lodging": "B",
+       "transport": "A",
+       "food": "B",
+       "activities": "C"
+      },
+      "cost": 1550,
+      "score": 817465040
+     }
+    ],
+    "unmet_musts": [],
+    "tool": "solver"
+   }
+  },
+  {
+   "i": 25,
+   "turn": 7,
+   "kind": "tool",
+   "actor": "lemma",
+   "to": null,
+   "text": "Best plan that gives Maya what they prefer.",
+   "data": {
+    "inputs": {
+     "money": 1800,
+     "known": {
+      "maya": {
+       "max": 450,
+       "hard": [],
+       "top_priority": "activities",
+       "prefers": {
+        "activities": "A"
+       }
+      },
+      "leo": {
+       "max": 400,
+       "hard": [],
+       "top_priority": "transport"
+      },
+      "sofia": {
+       "max": 350,
+       "hard": [
+        "own_room"
+       ],
+       "top_priority": "lodging"
+      },
+      "omar": {
+       "max": 250,
+       "hard": [
+        "no_long_drive"
+       ],
+       "top_priority": "food"
+      },
+      "priya": {
+       "max": 200,
+       "hard": [
+        "vegetarian"
+       ],
+       "top_priority": "activities"
+      },
+      "theo": {
+       "max": 150,
+       "hard": [],
+       "top_priority": "food"
+      }
+     },
+     "hard_stated": [
+      "no_long_drive",
+      "own_room",
+      "vegetarian"
+     ],
+     "caps_stated": {
+      "maya": 450,
+      "leo": 400,
+      "sofia": 350,
+      "omar": 250,
+      "priya": 200,
+      "theo": 150
+     },
+     "musts_stated": {},
+     "prefers_stated": {
+      "maya": {
+       "activities": "A"
+      }
+     }
+    },
+    "n_candidates": 81,
+    "n_feasible": 0,
+    "plan": null,
+    "score": null,
+    "why": "No tier combination fits the money and the stated constraints.",
+    "alternatives": [],
+    "unmet_musts": [],
+    "tool": "solver"
+   }
+  },
+  {
+   "i": 26,
+   "turn": 7,
+   "kind": "message",
+   "actor": "lemma",
+   "to": null,
+   "text": "No plan within $1,800 gives Maya activities tier A (guided hike + concert) while keeping everyone's stated musts and maxes.",
+   "data": {}
+  },
+  {
+   "i": 27,
+   "turn": 7,
+   "kind": "message",
+   "actor": "omar",
+   "to": null,
+   "text": "I'm okay with this plan, it meets my food preferences and doesn't involve a long drive.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "hard": [
+      "no_long_drive"
+     ],
+     "top_priority": "food",
+     "prefers": {
+      "food": "A"
+     }
+    }
+   }
+  },
+  {
+   "i": 28,
+   "turn": 7,
+   "kind": "state",
+   "actor": "lemma",
+   "to": null,
+   "text": "Omar stated a fact.",
+   "data": {
+    "known": {
+     "maya": {
+      "max": 450,
+      "hard": [],
+      "top_priority": "activities",
+      "prefers": {
+       "activities": "A"
+      }
+     },
+     "leo": {
+      "max": 400,
+      "hard": [],
+      "top_priority": "transport"
+     },
+     "sofia": {
+      "max": 350,
+      "hard": [
+       "own_room"
+      ],
+      "top_priority": "lodging"
+     },
+     "omar": {
+      "max": 250,
+      "hard": [
+       "no_long_drive"
+      ],
+      "top_priority": "food",
+      "prefers": {
+       "food": "A"
+      }
+     },
+     "priya": {
+      "max": 200,
+      "hard": [
+       "vegetarian"
+      ],
+      "top_priority": "activities"
+     },
+     "theo": {
+      "max": 150,
+      "hard": [],
+      "top_priority": "food"
+     }
+    },
+    "unknown": {
+     "maya": [],
+     "leo": [],
+     "sofia": [],
+     "omar": [],
+     "priya": [],
+     "theo": []
+    }
+   }
+  },
+  {
+   "i": 29,
+   "turn": 8,
+   "kind": "tool",
+   "actor": "lemma",
+   "to": null,
+   "text": "Exact solver on the stated facts.",
+   "data": {
+    "inputs": {
+     "money": 1800,
+     "known": {
+      "maya": {
+       "max": 450,
+       "hard": [],
+       "top_priority": "activities",
+       "prefers": {
+        "activities": "A"
+       }
+      },
+      "leo": {
+       "max": 400,
+       "hard": [],
+       "top_priority": "transport"
+      },
+      "sofia": {
+       "max": 350,
+       "hard": [
+        "own_room"
+       ],
+       "top_priority": "lodging"
+      },
+      "omar": {
+       "max": 250,
+       "hard": [
+        "no_long_drive"
+       ],
+       "top_priority": "food",
+       "prefers": {
+        "food": "A"
+       }
+      },
+      "priya": {
+       "max": 200,
+       "hard": [
+        "vegetarian"
+       ],
+       "top_priority": "activities"
+      },
+      "theo": {
+       "max": 150,
+       "hard": [],
+       "top_priority": "food"
+      }
+     },
+     "hard_stated": [
+      "no_long_drive",
+      "own_room",
+      "vegetarian"
+     ],
+     "caps_stated": {
+      "maya": 450,
+      "leo": 400,
+      "sofia": 350,
+      "omar": 250,
+      "priya": 200,
+      "theo": 150
+     },
+     "musts_stated": {},
+     "prefers_stated": {
+      "maya": {
+       "activities": "A"
+      },
+      "omar": {
+       "food": "A"
+      }
+     }
+    },
+    "n_candidates": 81,
+    "n_feasible": 4,
+    "plan": {
+     "choices": {
+      "lodging": "B",
+      "transport": "A",
+      "food": "A",
+      "activities": "C"
+     },
+     "labels": {
+      "lodging": "2 hotel rooms + 1 single",
+      "transport": "train",
+      "food": "restaurants every meal",
+      "activities": "free trails"
+     },
+     "cost": 1770,
+     "shares": {
+      "maya": 420.0,
+      "leo": 400.0,
+      "sofia": 350.0,
+      "omar": 250.0,
+      "priya": 200.0,
+      "theo": 150.0
+     },
+     "assignments": [
+      {
+       "member": "sofia",
+       "item": "single room"
+      }
+     ]
+    },
+    "score": 7.289,
+    "why": "Highest Nash product (2344043520) among 4 of 81 combinations that fit $1,800 and 3 stated hard constraints.",
+    "alternatives": [
+     {
+      "tiers": {
+       "lodging": "A",
+       "transport": "A",
+       "food": "B",
+       "activities": "C"
+      },
+      "cost": 1640,
+      "score": 1907942400
+     },
+     {
+      "tiers": {
+       "lodging": "B",
+       "transport": "A",
+       "food": "B",
+       "activities": "B"
+      },
+      "cost": 1790,
+      "score": 1726546112
+     },
+     {
+      "tiers": {
+       "lodging": "B",
+       "transport": "A",
+       "food": "B",
+       "activities": "C"
+      },
+      "cost": 1550,
+      "score": 817465040
+     }
+    ],
+    "unmet_musts": [],
+    "tool": "solver"
+   }
+  },
+  {
+   "i": 30,
+   "turn": 8,
+   "kind": "message",
+   "actor": "lemma",
+   "to": null,
+   "text": "The plan on the table still fits everything stated so far.",
+   "data": {}
+  },
+  {
+   "i": 31,
+   "turn": 8,
+   "kind": "message",
+   "actor": "theo",
+   "to": null,
+   "text": "I'm good with the current plan, it meets my food preferences and I can live with the activities option.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 32,
+   "turn": 9,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "maya",
+   "text": "Maya, what would have to change for this plan to work for you? Is that a must or a preference?",
+   "data": {
+    "facts": [
+     "objection"
+    ]
+   }
+  },
+  {
+   "i": 33,
+   "turn": 9,
+   "kind": "message",
+   "actor": "maya",
+   "to": null,
+   "text": "I'd prefer activities tier A, a guided hike + concert, but it's not a must, just what I'd like.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "prefers": {
+      "activities": "A"
+     }
+    }
+   }
+  },
+  {
+   "i": 34,
+   "turn": 10,
+   "kind": "poll",
+   "actor": "lemma",
+   "to": null,
+   "text": "Private poll on plan 1: does it work for you, yes or no?",
+   "data": {
+    "members": [
+     "maya",
+     "leo",
+     "sofia",
+     "priya"
+    ],
+    "plan_id": 1
+   }
+  },
+  {
+   "i": 35,
+   "turn": 10,
+   "kind": "poll_reply",
+   "actor": "maya",
+   "to": "lemma",
+   "text": "no",
+   "data": {
+    "accept": "no",
+    "stated": {
+     "top_priority": "activities",
+     "prefers": {
+      "activities": "A"
+     }
+    },
+    "private_message": "I'd like better activities, but this plan doesn't break any of my constraints.",
+    "answer": "no"
+   }
+  },
+  {
+   "i": 36,
+   "turn": 10,
+   "kind": "poll_reply",
+   "actor": "leo",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "transport",
+     "prefers": {
+      "transport": "A"
+     }
+    },
+    "private_message": "I'm okay with the plan as it is, since transport is my top priority and the plan includes transport by train, which I prefer.",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 37,
+   "turn": 10,
+   "kind": "state",
+   "actor": "lemma",
+   "to": null,
+   "text": "Leo stated a fact in the poll.",
+   "data": {
+    "known": {
+     "maya": {
+      "max": 450,
+      "hard": [],
+      "top_priority": "activities",
+      "prefers": {
+       "activities": "A"
+      }
+     },
+     "leo": {
+      "max": 400,
+      "hard": [],
+      "top_priority": "transport",
+      "prefers": {
+       "transport": "A"
+      }
+     },
+     "sofia": {
+      "max": 350,
+      "hard": [
+       "own_room"
+      ],
+      "top_priority": "lodging"
+     },
+     "omar": {
+      "max": 250,
+      "hard": [
+       "no_long_drive"
+      ],
+      "top_priority": "food",
+      "prefers": {
+       "food": "A"
+      }
+     },
+     "priya": {
+      "max": 200,
+      "hard": [
+       "vegetarian"
+      ],
+      "top_priority": "activities"
+     },
+     "theo": {
+      "max": 150,
+      "hard": [],
+      "top_priority": "food"
+     }
+    },
+    "unknown": {
+     "maya": [],
+     "leo": [],
+     "sofia": [],
+     "omar": [],
+     "priya": [],
+     "theo": []
+    }
+   }
+  },
+  {
+   "i": 38,
+   "turn": 10,
+   "kind": "poll_reply",
+   "actor": "sofia",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "hard": [
+      "own_room"
+     ],
+     "top_priority": "lodging"
+    },
+    "private_message": "I'm okay with the plan as it gives me my own room.",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 39,
+   "turn": 10,
+   "kind": "poll_reply",
+   "actor": "priya",
+   "to": "lemma",
+   "text": "no",
+   "data": {
+    "accept": "no",
+    "stated": {
+     "hard": [
+      "vegetarian"
+     ]
+    },
+    "private_message": "I don't accept the plan because the food option is not explicitly vegetarian-friendly, which is a must for me.",
+    "answer": "no"
+   }
+  },
+  {
+   "i": 40,
+   "turn": 10,
+   "kind": "message",
+   "actor": "sofia",
+   "to": null,
+   "text": "I'm okay with the current plan, it meets my lodging needs and I can live with the other options.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 41,
+   "turn": 11,
+   "kind": "tool",
+   "actor": "lemma",
+   "to": null,
+   "text": "Exact solver on the stated facts.",
+   "data": {
+    "inputs": {
+     "money": 1800,
+     "known": {
+      "maya": {
+       "max": 450,
+       "hard": [],
+       "top_priority": "activities",
+       "prefers": {
+        "activities": "A"
+       }
+      },
+      "leo": {
+       "max": 400,
+       "hard": [],
+       "top_priority": "transport",
+       "prefers": {
+        "transport": "A"
+       }
+      },
+      "sofia": {
+       "max": 350,
+       "hard": [
+        "own_room"
+       ],
+       "top_priority": "lodging"
+      },
+      "omar": {
+       "max": 250,
+       "hard": [
+        "no_long_drive"
+       ],
+       "top_priority": "food",
+       "prefers": {
+        "food": "A"
+       }
+      },
+      "priya": {
+       "max": 200,
+       "hard": [
+        "vegetarian"
+       ],
+       "top_priority": "activities"
+      },
+      "theo": {
+       "max": 150,
+       "hard": [],
+       "top_priority": "food"
+      }
+     },
+     "hard_stated": [
+      "no_long_drive",
+      "own_room",
+      "vegetarian"
+     ],
+     "caps_stated": {
+      "maya": 450,
+      "leo": 400,
+      "sofia": 350,
+      "omar": 250,
+      "priya": 200,
+      "theo": 150
+     },
+     "musts_stated": {},
+     "prefers_stated": {
+      "maya": {
+       "activities": "A"
+      },
+      "leo": {
+       "transport": "A"
+      },
+      "omar": {
+       "food": "A"
+      }
+     }
+    },
+    "n_candidates": 81,
+    "n_feasible": 4,
+    "plan": {
+     "choices": {
+      "lodging": "B",
+      "transport": "A",
+      "food": "A",
+      "activities": "C"
+     },
+     "labels": {
+      "lodging": "2 hotel rooms + 1 single",
+      "transport": "train",
+      "food": "restaurants every meal",
+      "activities": "free trails"
+     },
+     "cost": 1770,
+     "shares": {
+      "maya": 420.0,
+      "leo": 400.0,
+      "sofia": 350.0,
+      "omar": 250.0,
+      "priya": 200.0,
+      "theo": 150.0
+     },
+     "assignments": [
+      {
+       "member": "sofia",
+       "item": "single room"
+      }
+     ]
+    },
+    "score": 7.409,
+    "why": "Highest Nash product (2584458240) among 4 of 81 combinations that fit $1,800 and 3 stated hard constraints.",
+    "alternatives": [
+     {
+      "tiers": {
+       "lodging": "A",
+       "transport": "A",
+       "food": "B",
+       "activities": "C"
+      },
+      "cost": 1640,
+      "score": 2103628800
+     },
+     {
+      "tiers": {
+       "lodging": "B",
+       "transport": "A",
+       "food": "B",
+       "activities": "B"
+      },
+      "cost": 1790,
+      "score": 1908287808
+     },
+     {
+      "tiers": {
+       "lodging": "B",
+       "transport": "A",
+       "food": "B",
+       "activities": "C"
+      },
+      "cost": 1550,
+      "score": 910889616
+     }
+    ],
+    "unmet_musts": [],
+    "tool": "solver"
+   }
+  },
+  {
+   "i": 42,
+   "turn": 11,
+   "kind": "message",
+   "actor": "lemma",
+   "to": null,
+   "text": "The plan on the table still fits everything stated so far.",
+   "data": {}
+  },
+  {
+   "i": 43,
+   "turn": 11,
+   "kind": "message",
+   "actor": "priya",
+   "to": null,
+   "text": "I'd like to explore options that include better activities, since that's my top priority. The current plan doesn't meet my preferences, but I can live with it if nothing better is found.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 44,
+   "turn": 12,
+   "kind": "message",
+   "actor": "lemma",
+   "to": "priya",
+   "text": "Priya: Your requirement (is vegetarian) is met: food is restaurants every meal. Your share is $200, within your $200 maximum.",
+   "data": {
+    "clarify": true
+   }
+  },
+  {
+   "i": 45,
+   "turn": 12,
+   "kind": "poll",
+   "actor": "lemma",
+   "to": null,
+   "text": "Private poll on plan 1: does it work for you, yes or no?",
+   "data": {
+    "members": [
+     "priya"
+    ],
+    "plan_id": 1
+   }
+  },
+  {
+   "i": 46,
+   "turn": 12,
+   "kind": "poll_reply",
+   "actor": "priya",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "activities"
+    },
+    "private_message": "I can live with the current plan, but I'd prefer something with better activities.",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 47,
+   "turn": 12,
+   "kind": "message",
+   "actor": "leo",
+   "to": null,
+   "text": "I'm okay with the current plan, it meets my transport preference and I can live with the other options.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "transport",
+     "prefers": {
+      "transport": "A"
+     }
+    }
+   }
+  },
+  {
+   "i": 48,
+   "turn": 13,
+   "kind": "poll",
+   "actor": "lemma",
+   "to": null,
+   "text": "Private poll on plan 1: does it work for you, yes or no?",
+   "data": {
+    "members": [
+     "maya"
+    ],
+    "plan_id": 1
+   }
+  },
+  {
+   "i": 49,
+   "turn": 13,
+   "kind": "poll_reply",
+   "actor": "maya",
+   "to": "lemma",
+   "text": "no",
+   "data": {
+    "accept": "no",
+    "stated": {
+     "top_priority": "activities",
+     "prefers": {
+      "activities": "A"
+     }
+    },
+    "private_message": "I'd prefer activities tier A, but it's not a must. The current plan doesn't meet my preference, so I don't accept it.",
+    "answer": "no"
+   }
+  },
+  {
+   "i": 50,
+   "turn": 13,
+   "kind": "message",
+   "actor": "maya",
+   "to": null,
+   "text": "I still wish we could upgrade the activities, but I can live with this plan if nothing better is found.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "hard": [],
+     "top_priority": "activities",
+     "prefers": {
+      "activities": "A"
+     }
+    }
+   }
+  },
+  {
+   "i": 51,
+   "turn": 13,
+   "kind": "consent",
+   "actor": "lemma",
+   "to": null,
+   "text": "All 6 members accepted plan 1.",
+   "data": {
+    "accepted": [
+     "maya",
+     "leo",
+     "sofia",
+     "omar",
+     "priya",
+     "theo"
+    ],
+    "plan_id": 1
+   }
+  },
+  {
+   "i": 52,
+   "turn": 13,
+   "kind": "close",
+   "actor": "lemma",
+   "to": null,
+   "text": "Plan 1 is agreed by everyone. Closing.",
+   "data": {}
+  }
+ ],
+ "private": {
+  "maya": {
+   "max": 450,
+   "hard": "none",
+   "top_priority": "activities"
+  },
+  "leo": {
+   "max": 400,
+   "hard": "none",
+   "top_priority": "transport"
+  },
+  "sofia": {
+   "max": 350,
+   "hard": "needs her own room",
+   "top_priority": "lodging"
+  },
+  "omar": {
+   "max": 250,
+   "hard": "gets carsick on long drives",
+   "top_priority": "food"
+  },
+  "priya": {
+   "max": 200,
+   "hard": "is vegetarian",
+   "top_priority": "activities"
+  },
+  "theo": {
+   "max": 150,
+   "hard": "none",
+   "top_priority": "food"
+  }
+ },
+ "outcome": {
+  "agreed": true,
+  "unanimous": true,
+  "plan": {
+   "choices": {
+    "lodging": "B",
+    "transport": "A",
+    "food": "A",
+    "activities": "C"
+   },
+   "labels": {
+    "lodging": "2 hotel rooms + 1 single",
+    "transport": "train",
+    "food": "restaurants every meal",
+    "activities": "free trails"
+   },
+   "cost": 1770,
+   "shares": {
+    "maya": 420.0,
+    "leo": 400.0,
+    "sofia": 350.0,
+    "omar": 250.0,
+    "priya": 200.0,
+    "theo": 150.0
+   },
+   "assignments": [
+    {
+     "member": "sofia",
+     "item": "single room"
+    }
+   ],
+   "id": 1
+  },
+  "violations": [],
+  "fairness": 0.9875,
+  "min_utility": 5.9,
+  "moderator_actions": 14,
+  "turns": 14,
+  "member_utility": {
+   "maya": 5.9,
+   "leo": 7.85,
+   "sofia": 6.8,
+   "omar": 8.0,
+   "priya": 6.45,
+   "theo": 7.85
+  }
+ }
+}

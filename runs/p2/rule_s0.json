@@ -1,0 +1,641 @@
+{
+ "meta": {
+  "scenario": "p2",
+  "arm": "rule",
+  "arm_title": "Scripted rule",
+  "seed": 0,
+  "title": "One car, two roommates",
+  "short": "Jordan and Riley, tomorrow",
+  "prompt": "Two roommates share a single car. One needs it for work tomorrow, while the other needs it for an appointment. Neither has specified their timing, locations, travel durations, or scheduling flexibility. Can you help them identify the necessary information, resolve potential conflicts, and agree on a feasible schedule?",
+  "context": "Jordan and Riley share one car. Places: home, office, clinic. Drive times (minutes): home-office 25, home-clinic 15, office-clinic 20. The bus runs home-office only (55 minutes). A rideshare home-clinic costs $18 each way.",
+  "kind": "car",
+  "members": [
+   {
+    "id": "jordan",
+    "name": "Jordan",
+    "color_index": 0
+   },
+   {
+    "id": "riley",
+    "name": "Riley",
+    "color_index": 1
+   }
+  ],
+  "options": {
+   "places": [
+    "home",
+    "office",
+    "clinic"
+   ],
+   "drive_min": {
+    "home-office": 25,
+    "home-clinic": 15,
+    "office-clinic": 20
+   },
+   "bus_min": {
+    "home-office": 55
+   },
+   "rideshare_usd": {
+    "home-clinic": 18,
+    "home-office": 24,
+    "office-clinic": 20
+   },
+   "day_start": "07:00",
+   "day_end": "19:00"
+  },
+  "model": "llama-3.3-70b-instruct",
+  "policy": "rule",
+  "max_member_turns": 18,
+  "created": "2026-11-16T23:00:37",
+  "dry": false,
+  "fact_labels": {
+   "max": "Max contribution",
+   "hard": "Hard constraint",
+   "top_priority": "Top priority",
+   "arrive_by": "Arrive by",
+   "leave_at": "Leaves work",
+   "flex_min": "Flexibility (min)",
+   "dislikes_bus": "Dislikes the bus",
+   "appt_start": "Appointment starts",
+   "appt_end": "Appointment ends",
+   "no_transit": "Cannot take bus or walk"
+  },
+  "contract": "app-v1"
+ },
+ "events": [
+  {
+   "i": 0,
+   "turn": 0,
+   "kind": "tool",
+   "actor": "rule",
+   "to": null,
+   "text": "Solver on the public information only.",
+   "data": {
+    "inputs": {
+     "facts_used": {
+      "arrive_by": "09:00",
+      "leave_at": "17:00",
+      "flex_min": 0,
+      "dislikes_bus": false,
+      "appt_start": "13:00",
+      "appt_end": "14:00",
+      "no_transit": false
+     },
+     "stated": [],
+     "defaults_used": [
+      "appt_end",
+      "appt_start",
+      "arrive_by",
+      "dislikes_bus",
+      "flex_min",
+      "leave_at",
+      "no_transit"
+     ],
+     "musts_stated": {},
+     "prefers_stated": {}
+    },
+    "n_candidates": 243,
+    "n_feasible": 33,
+    "plan": {
+     "trips": [
+      {
+       "id": "t1",
+       "who": [
+        "jordan"
+       ],
+       "mode": "bus",
+       "from": "home",
+       "to": "office",
+       "start": "08:05",
+       "end": "09:00",
+       "label": "Jordan takes the bus"
+      },
+      {
+       "id": "t2",
+       "who": [
+        "riley"
+       ],
+       "mode": "car",
+       "from": "home",
+       "to": "clinic",
+       "start": "12:35",
+       "end": "12:50",
+       "label": "Riley drives"
+      },
+      {
+       "id": "t3",
+       "who": [
+        "riley"
+       ],
+       "mode": "car",
+       "from": "clinic",
+       "to": "home",
+       "start": "14:00",
+       "end": "14:15",
+       "label": "Riley drives"
+      },
+      {
+       "id": "t4",
+       "who": [
+        "jordan"
+       ],
+       "mode": "bus",
+       "from": "office",
+       "to": "home",
+       "start": "17:00",
+       "end": "17:55",
+       "label": "Jordan takes the bus"
+      }
+     ],
+     "blocks": [
+      {
+       "who": "jordan",
+       "kind": "work",
+       "label": "At the office",
+       "start": "09:00",
+       "end": "17:00"
+      },
+      {
+       "who": "riley",
+       "kind": "appointment",
+       "label": "At the clinic",
+       "start": "12:50",
+       "end": "14:00"
+      }
+     ],
+     "extra_minutes": 140,
+     "dollars": 0
+    },
+    "score": null,
+    "why": "Lowest cost (150.0: transit minutes, dollars, penalties, idle time) among 33 feasible of 243 schedules checked; the car is never in two places.",
+    "unmet_musts": [],
+    "tool": "solver",
+    "cost": 150.0
+   }
+  },
+  {
+   "i": 1,
+   "turn": 0,
+   "kind": "propose",
+   "actor": "rule",
+   "to": null,
+   "text": "Plan 1:\nJordan: 08:05 you take the bus from home to the office (arrive 09:00); 17:00 you take the bus from the office to home (arrive 17:55).\nRiley: 12:35 you take the car from home to the clinic (arrive 12:50); 14:00 you take the car from the clinic to home (arrive 14:15).\nOne car, never in two places. Travel 140 person-minutes, $0 in rideshares. (Computed from the public information only.)",
+   "data": {
+    "plan": {
+     "trips": [
+      {
+       "id": "t1",
+       "who": [
+        "jordan"
+       ],
+       "mode": "bus",
+       "from": "home",
+       "to": "office",
+       "start": "08:05",
+       "end": "09:00",
+       "label": "Jordan takes the bus"
+      },
+      {
+       "id": "t2",
+       "who": [
+        "riley"
+       ],
+       "mode": "car",
+       "from": "home",
+       "to": "clinic",
+       "start": "12:35",
+       "end": "12:50",
+       "label": "Riley drives"
+      },
+      {
+       "id": "t3",
+       "who": [
+        "riley"
+       ],
+       "mode": "car",
+       "from": "clinic",
+       "to": "home",
+       "start": "14:00",
+       "end": "14:15",
+       "label": "Riley drives"
+      },
+      {
+       "id": "t4",
+       "who": [
+        "jordan"
+       ],
+       "mode": "bus",
+       "from": "office",
+       "to": "home",
+       "start": "17:00",
+       "end": "17:55",
+       "label": "Jordan takes the bus"
+      }
+     ],
+     "blocks": [
+      {
+       "who": "jordan",
+       "kind": "work",
+       "label": "At the office",
+       "start": "09:00",
+       "end": "17:00"
+      },
+      {
+       "who": "riley",
+       "kind": "appointment",
+       "label": "At the clinic",
+       "start": "12:50",
+       "end": "14:00"
+      }
+     ],
+     "extra_minutes": 140,
+     "dollars": 0,
+     "id": 1
+    },
+    "plan_id": 1,
+    "reason": "Lowest cost (150.0: transit minutes, dollars, penalties, idle time) among 33 feasible of 243 schedules checked; the car is never in two places."
+   }
+  },
+  {
+   "i": 2,
+   "turn": 0,
+   "kind": "message",
+   "actor": "jordan",
+   "to": null,
+   "text": "I'd rather not take the bus, can we find another way?",
+   "data": {
+    "accept": null,
+    "stated": {
+     "dislikes_bus": true
+    }
+   }
+  },
+  {
+   "i": 3,
+   "turn": 1,
+   "kind": "message",
+   "actor": "riley",
+   "to": null,
+   "text": "I need the car tomorrow for a physical therapy appointment, so I'd prefer if we could work around that.",
+   "data": {
+    "accept": null,
+    "stated": {}
+   }
+  },
+  {
+   "i": 4,
+   "turn": 2,
+   "kind": "message",
+   "actor": "jordan",
+   "to": null,
+   "text": "I really dislike the bus and would rather avoid it if possible, can we explore other options?",
+   "data": {
+    "accept": null,
+    "stated": {
+     "dislikes_bus": true
+    }
+   }
+  },
+  {
+   "i": 5,
+   "turn": 3,
+   "kind": "message",
+   "actor": "riley",
+   "to": null,
+   "text": "I really need the car tomorrow and my appointment is at 10:00, so I'd like to avoid taking a rideshare if possible",
+   "data": {
+    "accept": null,
+    "stated": {
+     "appt_start": 600
+    }
+   }
+  },
+  {
+   "i": 6,
+   "turn": 4,
+   "kind": "message",
+   "actor": "jordan",
+   "to": null,
+   "text": "I really need to be at the office by 08:30, can we think of a way to get me there on time without taking the bus?",
+   "data": {
+    "accept": null,
+    "stated": {
+     "arrive_by": 510,
+     "dislikes_bus": true
+    }
+   }
+  },
+  {
+   "i": 7,
+   "turn": 5,
+   "kind": "message",
+   "actor": "riley",
+   "to": null,
+   "text": "My appointment is from 10:00 to 11:00, and I really can't take the bus or walk far because of my knee, so I need the car during that time.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "appt_start": 600,
+     "appt_end": 660,
+     "no_transit": true
+    }
+   }
+  },
+  {
+   "i": 8,
+   "turn": 6,
+   "kind": "message",
+   "actor": "jordan",
+   "to": null,
+   "text": "I really need to be at the office by 08:30 and I'd rather not take the bus, can Riley drop me off on their way to the clinic or something?",
+   "data": {
+    "accept": null,
+    "stated": {
+     "arrive_by": 510,
+     "dislikes_bus": true
+    }
+   }
+  },
+  {
+   "i": 9,
+   "turn": 7,
+   "kind": "message",
+   "actor": "riley",
+   "to": null,
+   "text": "I'm not available to drop Jordan off at 08:30, and I don't think I can drive them to the office because I need the car for my appointment from 10:00 to 11:00",
+   "data": {
+    "accept": null,
+    "stated": {
+     "appt_start": 600,
+     "appt_end": 660
+    }
+   }
+  },
+  {
+   "i": 10,
+   "turn": 8,
+   "kind": "message",
+   "actor": "jordan",
+   "to": null,
+   "text": "I really need to be at the office by 08:30 and I'd rather not take the bus, is there any way Riley could drop me off or pick me up later?",
+   "data": {
+    "accept": null,
+    "stated": {
+     "arrive_by": 510,
+     "dislikes_bus": true
+    }
+   }
+  },
+  {
+   "i": 11,
+   "turn": 9,
+   "kind": "message",
+   "actor": "riley",
+   "to": null,
+   "text": "I'm not available to drive Jordan to the office at 08:30 because I need to get ready for my appointment, and I really can't take the bus or walk far due to my knee",
+   "data": {
+    "accept": null,
+    "stated": {
+     "no_transit": true
+    }
+   }
+  },
+  {
+   "i": 12,
+   "turn": 10,
+   "kind": "message",
+   "actor": "jordan",
+   "to": null,
+   "text": "I really need to be at the office by 08:30 and I'd rather not take the bus. Is there any way Riley could pick me up from the office after their appointment?",
+   "data": {
+    "accept": null,
+    "stated": {
+     "arrive_by": 510,
+     "dislikes_bus": true
+    }
+   }
+  },
+  {
+   "i": 13,
+   "turn": 11,
+   "kind": "message",
+   "actor": "riley",
+   "to": null,
+   "text": "I'm not available to pick Jordan up from the office after my appointment because I need to head home and rest my knee, and I still really need the car tomorrow from 10:00 to 11:00 for my physical therapy appointment",
+   "data": {
+    "accept": null,
+    "stated": {
+     "appt_start": 600,
+     "appt_end": 660,
+     "no_transit": true
+    }
+   }
+  },
+  {
+   "i": 14,
+   "turn": 12,
+   "kind": "message",
+   "actor": "jordan",
+   "to": null,
+   "text": "I really need to be at the office by 08:30 and I'd rather not take the bus. Can we think of a way for me to get to the office on time without taking the bus?",
+   "data": {
+    "accept": null,
+    "stated": {
+     "arrive_by": 510,
+     "dislikes_bus": true
+    }
+   }
+  },
+  {
+   "i": 15,
+   "turn": 13,
+   "kind": "message",
+   "actor": "riley",
+   "to": null,
+   "text": "I still really need the car tomorrow from 10:00 to 11:00 for my physical therapy appointment and I'd rather avoid taking a rideshare if possible",
+   "data": {
+    "accept": null,
+    "stated": {
+     "appt_start": 600,
+     "appt_end": 660
+    }
+   }
+  },
+  {
+   "i": 16,
+   "turn": 14,
+   "kind": "message",
+   "actor": "jordan",
+   "to": null,
+   "text": "I really need to be at the office by 08:30 and I'd rather not take the bus. Can Riley drop me off at the office before their appointment or pick me up after I'm done with work?",
+   "data": {
+    "accept": null,
+    "stated": {
+     "arrive_by": 510,
+     "dislikes_bus": true
+    }
+   }
+  },
+  {
+   "i": 17,
+   "turn": 15,
+   "kind": "message",
+   "actor": "riley",
+   "to": null,
+   "text": "I really need the car from 10:00 to 11:00 for my appointment and I'd rather avoid a rideshare, can we think of another way to get Jordan to the office?",
+   "data": {
+    "accept": null,
+    "stated": {
+     "appt_start": 600,
+     "appt_end": 660
+    }
+   }
+  },
+  {
+   "i": 18,
+   "turn": 16,
+   "kind": "message",
+   "actor": "jordan",
+   "to": null,
+   "text": "I really need to be at the office by 08:30 and I'd rather not take the bus. Is there any way Riley could drop me off at the office before their appointment?",
+   "data": {
+    "accept": null,
+    "stated": {
+     "arrive_by": 510,
+     "dislikes_bus": true
+    }
+   }
+  },
+  {
+   "i": 19,
+   "turn": 17,
+   "kind": "message",
+   "actor": "riley",
+   "to": null,
+   "text": "I really need the car from 10:00 to 11:00 for my appointment and I'd rather avoid a rideshare. Can we think of another way to get Jordan to the office without me having to drop them off or pick them up?",
+   "data": {
+    "accept": null,
+    "stated": {
+     "appt_start": 600,
+     "appt_end": 660
+    }
+   }
+  },
+  {
+   "i": 20,
+   "turn": 18,
+   "kind": "close",
+   "actor": "system",
+   "to": null,
+   "text": "Stopped after 18 member turns without everyone accepting.",
+   "data": {
+    "reason": "turn limit"
+   }
+  }
+ ],
+ "private": {
+  "jordan": {
+   "arrive_by": "08:30",
+   "leave_at": "17:30",
+   "flex_min": 30,
+   "dislikes_bus": true
+  },
+  "riley": {
+   "appt_start": "10:00",
+   "appt_end": "11:00",
+   "no_transit": true
+  }
+ },
+ "outcome": {
+  "agreed": false,
+  "unanimous": false,
+  "plan": {
+   "trips": [
+    {
+     "id": "t1",
+     "who": [
+      "jordan"
+     ],
+     "mode": "bus",
+     "from": "home",
+     "to": "office",
+     "start": "08:05",
+     "end": "09:00",
+     "label": "Jordan takes the bus"
+    },
+    {
+     "id": "t2",
+     "who": [
+      "riley"
+     ],
+     "mode": "car",
+     "from": "home",
+     "to": "clinic",
+     "start": "12:35",
+     "end": "12:50",
+     "label": "Riley drives"
+    },
+    {
+     "id": "t3",
+     "who": [
+      "riley"
+     ],
+     "mode": "car",
+     "from": "clinic",
+     "to": "home",
+     "start": "14:00",
+     "end": "14:15",
+     "label": "Riley drives"
+    },
+    {
+     "id": "t4",
+     "who": [
+      "jordan"
+     ],
+     "mode": "bus",
+     "from": "office",
+     "to": "home",
+     "start": "17:00",
+     "end": "17:55",
+     "label": "Jordan takes the bus"
+    }
+   ],
+   "blocks": [
+    {
+     "who": "jordan",
+     "kind": "work",
+     "label": "At the office",
+     "start": "09:00",
+     "end": "17:00"
+    },
+    {
+     "who": "riley",
+     "kind": "appointment",
+     "label": "At the clinic",
+     "start": "12:50",
+     "end": "14:00"
+    }
+   ],
+   "extra_minutes": 140,
+   "dollars": 0
+  },
+  "violations": [
+   {
+    "member": "jordan",
+    "fact": "must be at the office by 08:30"
+   },
+   {
+    "member": "riley",
+    "fact": "must be at the clinic 10:00-11:00"
+   }
+  ],
+  "fairness": 0.0,
+  "min_utility": 0.0,
+  "moderator_actions": 1,
+  "turns": 18,
+  "member_utility": {
+   "jordan": 0.0,
+   "riley": 0.0
+  }
+ }
+}

@@ -1,0 +1,705 @@
+{
+ "meta": {
+  "scenario": "p1",
+  "arm": "none",
+  "arm_title": "No moderator",
+  "seed": 2,
+  "title": "The $250 gap",
+  "short": "Four friends, lake weekend",
+  "prompt": "A group of friends has agreed on a trip budget of $1,500. However, one member has unexpectedly reduced their maximum contribution from $400 to $150, while the remaining members are unwilling to increase their contributions. Can you help the group renegotiate the budget, explore feasible alternatives, and reach an agreement that respects everyone's financial constraints?",
+  "context": "Four friends (Ana, Ben, Cara, Dev) planned a lake weekend. Original pledges: Ana $400, Ben $400, Cara $400, Dev $300 (total $1,500). Ana now says she can give only $150. The others will not raise their pledges, so $1,250 is available. The original plan was the top option in every category.",
+  "kind": "budget",
+  "members": [
+   {
+    "id": "ana",
+    "name": "Ana",
+    "color_index": 0,
+    "public_max": 150
+   },
+   {
+    "id": "ben",
+    "name": "Ben",
+    "color_index": 1,
+    "public_max": 400
+   },
+   {
+    "id": "cara",
+    "name": "Cara",
+    "color_index": 2,
+    "public_max": 400
+   },
+   {
+    "id": "dev",
+    "name": "Dev",
+    "color_index": 3,
+    "public_max": 300
+   }
+  ],
+  "options": {
+   "money": 1250,
+   "original_budget": 1500,
+   "categories": [
+    {
+     "key": "lodging",
+     "label": "Lodging",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "lakeside cabin",
+       "cost": 650,
+       "satisfies": [
+        "no_camping"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "motel, 2 rooms",
+       "cost": 420,
+       "satisfies": [
+        "no_camping"
+       ]
+      },
+      {
+       "tier": "C",
+       "label": "campsite + gear",
+       "cost": 180,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "transport",
+     "label": "Transport",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "rental SUV",
+       "cost": 250,
+       "satisfies": []
+      },
+      {
+       "tier": "B",
+       "label": "Cara's car (gas, parking)",
+       "cost": 120,
+       "satisfies": []
+      },
+      {
+       "tier": "C",
+       "label": "bus",
+       "cost": 180,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "food",
+     "label": "Food",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "restaurants",
+       "cost": 350,
+       "satisfies": []
+      },
+      {
+       "tier": "B",
+       "label": "groceries + one dinner out",
+       "cost": 210,
+       "satisfies": []
+      },
+      {
+       "tier": "C",
+       "label": "groceries only",
+       "cost": 130,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "activities",
+     "label": "Activities",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "kayak tour + winery",
+       "cost": 250,
+       "satisfies": [
+        "kayak"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "kayak rental",
+       "cost": 110,
+       "satisfies": [
+        "kayak"
+       ]
+      },
+      {
+       "tier": "C",
+       "label": "hiking",
+       "cost": 0,
+       "satisfies": []
+      }
+     ]
+    }
+   ],
+   "hard_constraints": {
+    "no_camping": {
+     "member": "dev",
+     "category": "lodging",
+     "label": "cannot camp (back problem)",
+     "mention": "camp|tent|back|ground|cabin|motel|bed"
+    },
+    "kayak": {
+     "member": "ben",
+     "category": "activities",
+     "label": "needs a kayak activity",
+     "mention": "kayak|paddl"
+    }
+   }
+  },
+  "model": "llama-3.3-70b-instruct",
+  "policy": "none",
+  "max_member_turns": 24,
+  "created": "2026-11-16T22:54:41",
+  "dry": false,
+  "fact_labels": {
+   "max": "Max contribution",
+   "hard": "Hard constraint",
+   "top_priority": "Top priority",
+   "arrive_by": "Arrive by",
+   "leave_at": "Leaves work",
+   "flex_min": "Flexibility (min)",
+   "dislikes_bus": "Dislikes the bus",
+   "appt_start": "Appointment starts",
+   "appt_end": "Appointment ends",
+   "no_transit": "Cannot take bus or walk"
+  },
+  "contract": "app-v1"
+ },
+ "events": [
+  {
+   "i": 0,
+   "turn": 0,
+   "kind": "message",
+   "actor": "cara",
+   "to": null,
+   "text": "Let's prioritize lodging, I'd love the cabin, but the motel is also fine. For transport, we could use my car if we share gas and parking costs.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging",
+     "prefers": {
+      "lodging": "A",
+      "transport": "B"
+     }
+    }
+   }
+  },
+  {
+   "i": 1,
+   "turn": 1,
+   "kind": "message",
+   "actor": "dev",
+   "to": null,
+   "text": "I think we should focus on food, it's really important to me. Let's try to get the restaurants option if possible.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 2,
+   "turn": 2,
+   "kind": "message",
+   "actor": "ana",
+   "to": null,
+   "text": "Hey guys, I'm really sorry about the change in my pledge. I'd still love to join you all at the lake, and I think the cabin would be amazing, but we should definitely consider the cheaper options too. Let's try to make it work!",
+   "data": {
+    "accept": null,
+    "stated": {}
+   }
+  },
+  {
+   "i": 3,
+   "turn": 3,
+   "kind": "message",
+   "actor": "ben",
+   "to": null,
+   "text": "I think we should prioritize activities, a kayak tour or rental is a must for me",
+   "data": {
+    "accept": null,
+    "stated": {
+     "hard": [
+      "kayak"
+     ],
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 4,
+   "turn": 4,
+   "kind": "message",
+   "actor": "cara",
+   "to": null,
+   "text": "Let's consider the cabin or motel for lodging, and I'm happy to lend my car for transport if we split the costs. What do you all think?",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging",
+     "prefers": {
+      "lodging": "A",
+      "transport": "B"
+     }
+    }
+   }
+  },
+  {
+   "i": 5,
+   "turn": 5,
+   "kind": "message",
+   "actor": "dev",
+   "to": null,
+   "text": "I still think food should be our top priority, let's aim for the restaurants option if we can make it work with the budget.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 6,
+   "turn": 6,
+   "kind": "message",
+   "actor": "ana",
+   "to": null,
+   "text": "I think we should consider the motel or campsite for lodging to save some money, and maybe go for the kayak rental for activities, it's more budget-friendly and still sounds like a lot of fun!",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging",
+     "prefers": {
+      "lodging": "A",
+      "activities": "B"
+     }
+    }
+   }
+  },
+  {
+   "i": 7,
+   "turn": 7,
+   "kind": "message",
+   "actor": "ben",
+   "to": null,
+   "text": "I still think we should prioritize activities, and I'd love to do the kayak tour, but the rental is also okay. Let's make sure we have a kayak activity!",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities",
+     "hard": [
+      "kayak"
+     ]
+    }
+   }
+  },
+  {
+   "i": 8,
+   "turn": 8,
+   "kind": "message",
+   "actor": "cara",
+   "to": null,
+   "text": "I still think the cabin or motel would be great for lodging, and using my car for transport could save us some money. Let's see if we can make that work with the budget.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging",
+     "prefers": {
+      "lodging": "A",
+      "transport": "B"
+     }
+    }
+   }
+  },
+  {
+   "i": 9,
+   "turn": 9,
+   "kind": "message",
+   "actor": "dev",
+   "to": null,
+   "text": "Let's focus on getting good food, I think it's crucial for a great weekend. Can we explore options that include the restaurants choice?",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 10,
+   "turn": 10,
+   "kind": "message",
+   "actor": "ana",
+   "to": null,
+   "text": "I think we should aim for a balance, but I'd love to do the kayak rental and stay in the cabin if possible, let's see if we can make it work with the budget",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging",
+     "prefers": {
+      "lodging": "A",
+      "activities": "B"
+     }
+    }
+   }
+  },
+  {
+   "i": 11,
+   "turn": 11,
+   "kind": "message",
+   "actor": "ben",
+   "to": null,
+   "text": "I think we should focus on getting a kayak activity, either the tour or rental, and see what else we can fit around that. Let's make sure we have a solid plan for activities before deciding on other things.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities",
+     "hard": [
+      "kayak"
+     ]
+    }
+   }
+  },
+  {
+   "i": 12,
+   "turn": 12,
+   "kind": "message",
+   "actor": "cara",
+   "to": null,
+   "text": "Let's consider a plan that includes the cabin or motel for lodging and my car for transport, which would cost $120 and we can split the gas and parking",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging",
+     "prefers": {
+      "lodging": "A",
+      "transport": "B"
+     }
+    }
+   }
+  },
+  {
+   "i": 13,
+   "turn": 13,
+   "kind": "message",
+   "actor": "dev",
+   "to": null,
+   "text": "Let's prioritize food, I think the restaurants option is a must for a great weekend. Can we explore options that include this choice?",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 14,
+   "turn": 14,
+   "kind": "message",
+   "actor": "ana",
+   "to": null,
+   "text": "I think we should consider the motel for lodging and kayak rental for activities, it's a good balance and fits within our budget. Let's prioritize and see what else we can make work.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 15,
+   "turn": 15,
+   "kind": "message",
+   "actor": "ben",
+   "to": null,
+   "text": "I think we should focus on getting a kayak activity, either the tour or rental, and see what else we can fit around that. Let's make sure we have a solid plan for activities before deciding on other things.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities",
+     "hard": [
+      "kayak"
+     ]
+    }
+   }
+  },
+  {
+   "i": 16,
+   "turn": 16,
+   "kind": "message",
+   "actor": "cara",
+   "to": null,
+   "text": "Let's propose a plan that includes the cabin for lodging and my car for transport, and see if we can fit in the kayak rental for activities and groceries for food.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging",
+     "prefers": {
+      "lodging": "A",
+      "transport": "B"
+     }
+    }
+   }
+  },
+  {
+   "i": 17,
+   "turn": 16,
+   "kind": "propose",
+   "actor": "cara",
+   "to": null,
+   "text": "Proposal 1 from Cara.",
+   "data": {
+    "plan": {
+     "choices": {
+      "lodging": "A",
+      "transport": "B",
+      "food": "C",
+      "activities": "B"
+     },
+     "labels": {
+      "lodging": "lakeside cabin",
+      "transport": "Cara's car (gas, parking)",
+      "food": "groceries only",
+      "activities": "kayak rental"
+     },
+     "cost": 1010,
+     "shares": {
+      "ana": 253.0,
+      "ben": 253.0,
+      "cara": 252.0,
+      "dev": 252.0
+     },
+     "id": 1
+    },
+    "plan_id": 1,
+    "reason": "member proposal",
+    "accept": "yes"
+   }
+  },
+  {
+   "i": 18,
+   "turn": 17,
+   "kind": "message",
+   "actor": "dev",
+   "to": null,
+   "text": "I'm not a fan of this plan, the groceries only food option is a bit of a letdown for me. Can we try to allocate some more money to food?",
+   "data": {
+    "accept": "no",
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 19,
+   "turn": 18,
+   "kind": "message",
+   "actor": "ana",
+   "to": null,
+   "text": "I like the cabin and kayak rental, but I'm a bit concerned about my share, I can only give $150, so I'd like to explore other options that fit within my budget.",
+   "data": {
+    "accept": "no",
+    "stated": {
+     "max": 150
+    }
+   }
+  },
+  {
+   "i": 20,
+   "turn": 19,
+   "kind": "message",
+   "actor": "ben",
+   "to": null,
+   "text": "I'm okay with this plan, it includes a kayak activity which is my top priority, and I can live with the other options.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "activities",
+     "hard": [
+      "kayak"
+     ]
+    }
+   }
+  },
+  {
+   "i": 21,
+   "turn": 20,
+   "kind": "message",
+   "actor": "cara",
+   "to": null,
+   "text": "I'm happy with the current plan, but I think we can adjust to make it more comfortable for Ana. Maybe we can consider the motel option to reduce costs?",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 22,
+   "turn": 20,
+   "kind": "propose",
+   "actor": "cara",
+   "to": null,
+   "text": "Proposal 2 from Cara.",
+   "data": {
+    "plan": {
+     "choices": {
+      "lodging": "B",
+      "transport": "B",
+      "food": "C",
+      "activities": "B"
+     },
+     "labels": {
+      "lodging": "motel, 2 rooms",
+      "transport": "Cara's car (gas, parking)",
+      "food": "groceries only",
+      "activities": "kayak rental"
+     },
+     "cost": 780,
+     "shares": {
+      "ana": 195.0,
+      "ben": 195.0,
+      "cara": 195.0,
+      "dev": 195.0
+     },
+     "id": 2
+    },
+    "plan_id": 2,
+    "reason": "member proposal",
+    "accept": "yes"
+   }
+  },
+  {
+   "i": 23,
+   "turn": 21,
+   "kind": "message",
+   "actor": "dev",
+   "to": null,
+   "text": "I'm still not thrilled about the groceries only food option, can we try to upgrade to restaurants or at least groceries + one dinner out?",
+   "data": {
+    "accept": "no",
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 24,
+   "turn": 22,
+   "kind": "message",
+   "actor": "ana",
+   "to": null,
+   "text": "I appreciate the effort to adjust the plan, but I still can't afford $195. My maximum contribution is $150, and I'd rather skip the winery or adjust other options to fit within my budget.",
+   "data": {
+    "accept": "no",
+    "stated": {
+     "max": 150
+    }
+   }
+  },
+  {
+   "i": 25,
+   "turn": 23,
+   "kind": "message",
+   "actor": "ben",
+   "to": null,
+   "text": "I'm okay with the current plan, but I think we can allocate the remaining budget better. Since activities are my top priority, I'd like to suggest upgrading to the kayak tour if possible.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 26,
+   "turn": 24,
+   "kind": "close",
+   "actor": "system",
+   "to": null,
+   "text": "Stopped after 24 member turns without everyone accepting.",
+   "data": {
+    "reason": "turn limit"
+   }
+  }
+ ],
+ "private": {
+  "ana": {
+   "max": 150,
+   "hard": "none",
+   "top_priority": "lodging"
+  },
+  "ben": {
+   "max": 400,
+   "hard": "needs a kayak activity",
+   "top_priority": "activities"
+  },
+  "cara": {
+   "max": 400,
+   "hard": "none",
+   "top_priority": "lodging"
+  },
+  "dev": {
+   "max": 300,
+   "hard": "cannot camp (back problem)",
+   "top_priority": "food"
+  }
+ },
+ "outcome": {
+  "agreed": false,
+  "unanimous": false,
+  "plan": {
+   "choices": {
+    "lodging": "B",
+    "transport": "B",
+    "food": "C",
+    "activities": "B"
+   },
+   "labels": {
+    "lodging": "motel, 2 rooms",
+    "transport": "Cara's car (gas, parking)",
+    "food": "groceries only",
+    "activities": "kayak rental"
+   },
+   "cost": 780,
+   "shares": {
+    "ana": 195.0,
+    "ben": 195.0,
+    "cara": 195.0,
+    "dev": 195.0
+   },
+   "id": 2
+  },
+  "violations": [
+   {
+    "member": "ana",
+    "fact": "share $195 is over their maximum $150"
+   }
+  ],
+  "fairness": 0.7467,
+  "min_utility": 0.0,
+  "moderator_actions": 0,
+  "turns": 24,
+  "member_utility": {
+   "ana": 0.0,
+   "ben": 6.25,
+   "cara": 7.0,
+   "dev": 6.0
+  }
+ }
+}

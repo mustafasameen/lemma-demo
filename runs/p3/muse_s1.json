@@ -1,0 +1,1171 @@
+{
+ "meta": {
+  "scenario": "p3",
+  "arm": "muse",
+  "arm_title": "General agent (Muse Glimmer 30B, chat only)",
+  "seed": 1,
+  "title": "Six friends, $1,800",
+  "short": "Six friends, weekend trip",
+  "prompt": "Six friends are planning a weekend trip with a total budget of $1,800. Each person has different preferences regarding accommodation, transportation, food, and activities, but nobody has fully disclosed their priorities or maximum contribution. Can you moderate the discussion, gather everyone's constraints, and help negotiate a fair budget allocation that all six members can accept?",
+  "context": "Six friends (Maya, Leo, Sofia, Omar, Priya, Theo) are planning a weekend trip with a total budget of $1,800. Nobody has said what they can contribute or what they need.",
+  "kind": "budget",
+  "members": [
+   {
+    "id": "maya",
+    "name": "Maya",
+    "color_index": 0
+   },
+   {
+    "id": "leo",
+    "name": "Leo",
+    "color_index": 1
+   },
+   {
+    "id": "sofia",
+    "name": "Sofia",
+    "color_index": 2
+   },
+   {
+    "id": "omar",
+    "name": "Omar",
+    "color_index": 3
+   },
+   {
+    "id": "priya",
+    "name": "Priya",
+    "color_index": 4
+   },
+   {
+    "id": "theo",
+    "name": "Theo",
+    "color_index": 5
+   }
+  ],
+  "options": {
+   "money": 1800,
+   "original_budget": 1800,
+   "categories": [
+    {
+     "key": "lodging",
+     "label": "Lodging",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "house with 4 rooms",
+       "cost": 780,
+       "satisfies": [
+        "own_room"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "2 hotel rooms + 1 single",
+       "cost": 690,
+       "satisfies": [
+        "own_room"
+       ]
+      },
+      {
+       "tier": "C",
+       "label": "hostel dorm",
+       "cost": 360,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "transport",
+     "label": "Transport",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "train",
+       "cost": 480,
+       "satisfies": [
+        "no_long_drive"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "two rental cars, 5-hour drive",
+       "cost": 300,
+       "satisfies": []
+      },
+      {
+       "tier": "C",
+       "label": "one van, 5-hour drive",
+       "cost": 240,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "food",
+     "label": "Food",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "restaurants every meal",
+       "cost": 600,
+       "satisfies": [
+        "vegetarian"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "cook + 2 dinners out (vegetarian-friendly)",
+       "cost": 380,
+       "satisfies": [
+        "vegetarian"
+       ]
+      },
+      {
+       "tier": "C",
+       "label": "cook every meal (shared barbecue plan)",
+       "cost": 220,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "activities",
+     "label": "Activities",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "guided hike + concert",
+       "cost": 420,
+       "satisfies": []
+      },
+      {
+       "tier": "B",
+       "label": "concert only",
+       "cost": 240,
+       "satisfies": []
+      },
+      {
+       "tier": "C",
+       "label": "free trails",
+       "cost": 0,
+       "satisfies": []
+      }
+     ]
+    }
+   ],
+   "hard_constraints": {
+    "vegetarian": {
+     "member": "priya",
+     "category": "food",
+     "label": "is vegetarian",
+     "mention": "vegetarian|vegan|meat|veg\\b"
+    },
+    "no_long_drive": {
+     "member": "omar",
+     "category": "transport",
+     "label": "gets carsick on long drives",
+     "mention": "carsick|car sick|motion|long drive|5.hour|five.hour|nause|queasy|drive|train"
+    },
+    "own_room": {
+     "member": "sofia",
+     "category": "lodging",
+     "label": "needs her own room",
+     "mention": "own room|private room|own space|room to myself|privacy|dorm|hostel|sharing|share a room|my own"
+    }
+   }
+  },
+  "model": "llama-3.3-70b-instruct",
+  "policy": "general agent",
+  "moderator_model": "meta-muse-glimmer-30b",
+  "max_member_turns": 30,
+  "created": "2026-11-19T23:47:39",
+  "dry": false,
+  "fact_labels": {
+   "max": "Max contribution",
+   "hard": "Hard constraint",
+   "top_priority": "Top priority",
+   "arrive_by": "Arrive by",
+   "leave_at": "Leaves work",
+   "flex_min": "Flexibility (min)",
+   "dislikes_bus": "Dislikes the bus",
+   "appt_start": "Appointment starts",
+   "appt_end": "Appointment ends",
+   "no_transit": "Cannot take bus or walk"
+  },
+  "contract": "app-v1"
+ },
+ "events": [
+  {
+   "i": 0,
+   "turn": 0,
+   "kind": "propose",
+   "actor": "lemma",
+   "to": null,
+   "text": "Hi everyone! Let's get a first draft on the table so we can react to something concrete. How about: lodging A – house with 4 rooms $780, transport C – one van 5-hour drive $240, food B – cook + 2 dinners out vegetarian-friendly $380, activities B – concert only $240. Total = $1,640, which is under our $1,800 budget. That’s about $273 each if we split equally, leaving a small buffer for extras. Does this work for you, or do you want to swap any of the A/B/C choices? If you’re good with it, just say accept and we can lock it in.",
+   "data": {
+    "plan": {
+     "choices": {
+      "lodging": "A",
+      "transport": "C",
+      "food": "B",
+      "activities": "B"
+     },
+     "labels": {
+      "lodging": "house with 4 rooms",
+      "transport": "one van, 5-hour drive",
+      "food": "cook + 2 dinners out (vegetarian-friendly)",
+      "activities": "concert only"
+     },
+     "cost": 1640,
+     "shares": {
+      "maya": 274.0,
+      "leo": 274.0,
+      "sofia": 273.0,
+      "omar": 273.0,
+      "priya": 273.0,
+      "theo": 273.0
+     },
+     "id": 1
+    },
+    "plan_id": 1,
+    "reason": "general agent proposal"
+   }
+  },
+  {
+   "i": 1,
+   "turn": 0,
+   "kind": "message",
+   "actor": "priya",
+   "to": null,
+   "text": "I'm okay with the budget, but I'd love to prioritize activities - a guided hike sounds amazing. Can we consider activities tier A?",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 2,
+   "turn": 1,
+   "kind": "propose",
+   "actor": "lemma",
+   "to": null,
+   "text": "Priya, guided hike + concert sounds great and I think the group would love Activities A. That adds $180 to the draft plan, so we need a small offset to stay under $1,800. Let's keep the van transport C and the vegetarian-friendly food B you liked, and switch lodging from house A to option B – 2 hotel rooms + 1 single $690. That saves $90. New draft: lodging B $690, transport C $240, food B $380, activities A $420 = $1,730 total, about $288 each with a small buffer left. Does this work for everyone? If you're good, say accept and we can lock it in.",
+   "data": {
+    "plan": {
+     "choices": {
+      "lodging": "B",
+      "transport": "C",
+      "food": "B",
+      "activities": "A"
+     },
+     "labels": {
+      "lodging": "2 hotel rooms + 1 single",
+      "transport": "one van, 5-hour drive",
+      "food": "cook + 2 dinners out (vegetarian-friendly)",
+      "activities": "guided hike + concert"
+     },
+     "cost": 1730,
+     "shares": {
+      "maya": 289.0,
+      "leo": 289.0,
+      "sofia": 288.0,
+      "omar": 288.0,
+      "priya": 288.0,
+      "theo": 288.0
+     },
+     "id": 2
+    },
+    "plan_id": 2,
+    "reason": "general agent proposal"
+   }
+  },
+  {
+   "i": 3,
+   "turn": 1,
+   "kind": "message",
+   "actor": "theo",
+   "to": null,
+   "text": "I'm not sure about this plan, I'd rather have better food options, like restaurants every meal",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 4,
+   "turn": 2,
+   "kind": "propose",
+   "actor": "lemma",
+   "to": null,
+   "text": "Theo, thanks for flagging food — restaurants every meal would be great, and Priya really wants the guided hike + concert. To keep both under $1,800 we can offset the food upgrade by moving lodging down a tier. How about: lodging C hostel dorm $360, transport C one van $240, food A restaurants every meal $600, activities A guided hike + concert $420. Total $1,620, about $270 each with a small buffer for extras. Does this work for everyone? If you're good, say accept and we can lock it in.",
+   "data": {
+    "plan": {
+     "choices": {
+      "lodging": "C",
+      "transport": "C",
+      "food": "A",
+      "activities": "A"
+     },
+     "labels": {
+      "lodging": "hostel dorm",
+      "transport": "one van, 5-hour drive",
+      "food": "restaurants every meal",
+      "activities": "guided hike + concert"
+     },
+     "cost": 1620,
+     "shares": {
+      "maya": 270.0,
+      "leo": 270.0,
+      "sofia": 270.0,
+      "omar": 270.0,
+      "priya": 270.0,
+      "theo": 270.0
+     },
+     "id": 3
+    },
+    "plan_id": 3,
+    "reason": "general agent proposal"
+   }
+  },
+  {
+   "i": 5,
+   "turn": 2,
+   "kind": "message",
+   "actor": "sofia",
+   "to": null,
+   "text": "I'm not comfortable with the hostel dorm, I need my own room.",
+   "data": {
+    "accept": "no",
+    "stated": {
+     "hard": [
+      "own_room"
+     ]
+    }
+   }
+  },
+  {
+   "i": 6,
+   "turn": 3,
+   "kind": "propose",
+   "actor": "lemma",
+   "to": null,
+   "text": "Thanks Sofia, you’re right — hostel dorm won’t work if you need your own room. Let’s keep Priya’s guided hike + concert and find a middle ground on food for Theo. New draft: lodging B – 2 hotel rooms + 1 single $690, transport C – one van 5-hour drive $240, food B – cook + 2 dinners out vegetarian-friendly $380, activities A – guided hike + concert $420. Total $1,730, about $288 each with a small buffer left for extras. This gives everyone a private room, the hike you wanted Priya, and two nice dinners out. Can we lock this in?",
+   "data": {
+    "plan": {
+     "choices": {
+      "lodging": "B",
+      "transport": "C",
+      "food": "B",
+      "activities": "A"
+     },
+     "labels": {
+      "lodging": "2 hotel rooms + 1 single",
+      "transport": "one van, 5-hour drive",
+      "food": "cook + 2 dinners out (vegetarian-friendly)",
+      "activities": "guided hike + concert"
+     },
+     "cost": 1730,
+     "shares": {
+      "maya": 289.0,
+      "leo": 289.0,
+      "sofia": 288.0,
+      "omar": 288.0,
+      "priya": 288.0,
+      "theo": 288.0
+     },
+     "id": 4
+    },
+    "plan_id": 4,
+    "reason": "general agent proposal"
+   }
+  },
+  {
+   "i": 7,
+   "turn": 3,
+   "kind": "message",
+   "actor": "leo",
+   "to": null,
+   "text": "I'm not comfortable with the van, I'd rather take the train for transport, it's my top priority",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "transport"
+    }
+   }
+  },
+  {
+   "i": 8,
+   "turn": 4,
+   "kind": "propose",
+   "actor": "lemma",
+   "to": null,
+   "text": "Thanks Leo for flagging transport — train is your top priority and I hear you. Keeping Sofia’s need for a private room and staying under $1,800 with train means we have to trim elsewhere. The current draft with lodging B, van, food B and activities A can’t take the $240 jump to train without going over budget. Here’s a compromise that keeps the private rooms and gets you the train, while keeping food B with the two vegetarian-friendly dinners out and a concert: lodging B – 2 hotel rooms + 1 single $690 transport A – train $480 food B – cook + 2 dinners out vegetarian-friendly $380 activities B – concert only $240 Total = $1,790, about $298 each with a small buffer left. Priya you keep the concert, we lose the guided hike for now to make the train work. Theo you keep the cook + 2 dinners out option. Sofia keeps a private room. Leo gets train. Can we lock this in, or do you want to try a different trade-off?",
+   "data": {
+    "plan": {
+     "choices": {
+      "lodging": "B",
+      "transport": "A",
+      "food": "B",
+      "activities": "B"
+     },
+     "labels": {
+      "lodging": "2 hotel rooms + 1 single",
+      "transport": "train",
+      "food": "cook + 2 dinners out (vegetarian-friendly)",
+      "activities": "concert only"
+     },
+     "cost": 1790,
+     "shares": {
+      "maya": 299.0,
+      "leo": 299.0,
+      "sofia": 298.0,
+      "omar": 298.0,
+      "priya": 298.0,
+      "theo": 298.0
+     },
+     "id": 5
+    },
+    "plan_id": 5,
+    "reason": "general agent proposal"
+   }
+  },
+  {
+   "i": 9,
+   "turn": 4,
+   "kind": "message",
+   "actor": "omar",
+   "to": null,
+   "text": "I'm not sure about this plan, food is really important to me and I'd love to have restaurants every meal, but I can live with it if it's what the group wants",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food",
+     "prefers": {
+      "food": "A"
+     }
+    }
+   }
+  },
+  {
+   "i": 10,
+   "turn": 5,
+   "kind": "wait",
+   "actor": "lemma",
+   "to": null,
+   "text": "",
+   "data": {
+    "reason": "no readable answer from the general agent"
+   }
+  },
+  {
+   "i": 11,
+   "turn": 5,
+   "kind": "message",
+   "actor": "maya",
+   "to": null,
+   "text": "I'm not thrilled about the concert only, I was really looking forward to some outdoor activities like the guided hike.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 12,
+   "turn": 6,
+   "kind": "wait",
+   "actor": "lemma",
+   "to": null,
+   "text": "",
+   "data": {
+    "reason": "no readable answer from the general agent"
+   }
+  },
+  {
+   "i": 13,
+   "turn": 6,
+   "kind": "message",
+   "actor": "priya",
+   "to": null,
+   "text": "I'm not thrilled about giving up the guided hike, can we revisit activities and see if there's a way to make the guided hike + concert work?",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 14,
+   "turn": 7,
+   "kind": "propose",
+   "actor": "lemma",
+   "to": null,
+   "text": "Thanks everyone for keeping the priorities clear. Leo, train stays your top priority and Sofia, we’ll keep a private room. Theo and Omar, you’ve both said food is really important and you’d love restaurants. Priya and Maya, you want outdoor time and Priya specifically wants the guided hike + concert. With train $480 + a private room (lodging B $690) we have $1,170 locked in, leaving $630 for food + activities. Guided hike + concert $420 can’t fit with restaurants $600 under the $1,800 cap, and it also can’t fit with train + private room at all. Here’s a compromise that keeps the non-negotiables and gives the two biggest asks something: - lodging B – 2 hotel rooms + 1 single $690 → private room for Sofia - transport A – train $480 → Leo’s top priority - food A – restaurants every meal $600 → Theo and Omar’s priority - activities C – free trails $0 → outdoor time for Maya and Priya without the guided hike/concert cost Total = $1,770, about $295 each with a $30 buffer for extras. It keeps train and private rooms, upgrades food to restaurants, and keeps the weekend outdoors with free trails. Can we lock this in, or do you want to try a different trade-off?",
+   "data": {
+    "plan": {
+     "choices": {
+      "lodging": "B",
+      "transport": "A",
+      "food": "A",
+      "activities": "C"
+     },
+     "labels": {
+      "lodging": "2 hotel rooms + 1 single",
+      "transport": "train",
+      "food": "restaurants every meal",
+      "activities": "free trails"
+     },
+     "cost": 1770,
+     "shares": {
+      "maya": 295.0,
+      "leo": 295.0,
+      "sofia": 295.0,
+      "omar": 295.0,
+      "priya": 295.0,
+      "theo": 295.0
+     },
+     "id": 6
+    },
+    "plan_id": 6,
+    "reason": "general agent proposal"
+   }
+  },
+  {
+   "i": 15,
+   "turn": 7,
+   "kind": "message",
+   "actor": "theo",
+   "to": null,
+   "text": "I'm glad we're having restaurants every meal, that's a big win for me. However, I'm a bit concerned about the cost, I was thinking I could contribute up to $150.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 150,
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 16,
+   "turn": 8,
+   "kind": "propose",
+   "actor": "lemma",
+   "to": null,
+   "text": "Thanks Theo for flagging your budget — that’s really helpful. We can keep the restaurants you’re happy with and the non-negotiables the group has named, and adjust the split so it works for you. Keeping: lodging B – 2 hotel rooms + 1 single for Sofia’s private room, transport A – train for Leo, food A – restaurants every meal for Theo and Omar, activities C – free trails for outdoor time for Maya and Priya. Total = $690 + $480 + $600 + $0 = $1,770. With your $150 cap, the remaining $1,620 can be shared by the other five at $324 each. Can everyone accept this plan and split? If yes, say accept and we can lock it in.",
+   "data": {
+    "plan": {
+     "choices": {
+      "lodging": "B",
+      "transport": "A",
+      "food": "A",
+      "activities": "C"
+     },
+     "labels": {
+      "lodging": "2 hotel rooms + 1 single",
+      "transport": "train",
+      "food": "restaurants every meal",
+      "activities": "free trails"
+     },
+     "cost": 1770,
+     "shares": {
+      "maya": 324.0,
+      "leo": 324.0,
+      "sofia": 324.0,
+      "omar": 324.0,
+      "priya": 324.0,
+      "theo": 150.0
+     },
+     "id": 7
+    },
+    "plan_id": 7,
+    "reason": "general agent proposal"
+   }
+  },
+  {
+   "i": 17,
+   "turn": 8,
+   "kind": "message",
+   "actor": "sofia",
+   "to": null,
+   "text": "I'm glad we have a private room, but I think I can contribute a bit more than $324. I'd like to pay up to $350 if it helps.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 350
+    }
+   }
+  },
+  {
+   "i": 18,
+   "turn": 9,
+   "kind": "propose",
+   "actor": "lemma",
+   "to": null,
+   "text": "Thanks Sofia for offering to go up to $350 — that gives us room to ease the load on the rest of the group while keeping Theo at his $150 cap. Keeping the non-negotiables we’ve all named: private rooms for Sofia, train for Leo, restaurants every meal for Theo and Omar, and free trails for outdoor time for Maya and Priya. With that, here’s a split that respects Theo’s cap and uses Sofia’s offer to bring the others down a bit: Lodging B – 2 hotel rooms + 1 single $690 Transport A – train $480 Food A – restaurants every meal $600 Activities C – free trails $0 Total $1,770 Maya $318, Leo $318, Sofia $350, Omar $317, Priya $317, Theo $150. Can everyone say accept? If yes we can lock it in.",
+   "data": {
+    "plan": {
+     "choices": {
+      "lodging": "B",
+      "transport": "A",
+      "food": "A",
+      "activities": "C"
+     },
+     "labels": {
+      "lodging": "2 hotel rooms + 1 single",
+      "transport": "train",
+      "food": "restaurants every meal",
+      "activities": "free trails"
+     },
+     "cost": 1770,
+     "shares": {
+      "maya": 318.0,
+      "leo": 318.0,
+      "sofia": 350.0,
+      "omar": 317.0,
+      "priya": 317.0,
+      "theo": 150.0
+     },
+     "id": 8
+    },
+    "plan_id": 8,
+    "reason": "general agent proposal"
+   }
+  },
+  {
+   "i": 19,
+   "turn": 9,
+   "kind": "message",
+   "actor": "leo",
+   "to": null,
+   "text": "I'm comfortable with the current plan, it meets my top priority of taking the train and I can afford the $318 contribution.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "transport"
+    }
+   }
+  },
+  {
+   "i": 20,
+   "turn": 10,
+   "kind": "message",
+   "actor": "lemma",
+   "to": null,
+   "text": "Thanks Leo, that's great to hear the train priority is covered and $318 works for you. We still have the same plan on the table that respects all the non-negotiables we've named: lodging B for Sofia's private room, transport A train for Leo, food A restaurants every meal for Theo and Omar, and activities C free trails for outdoor time for Maya and Priya. Total $1,770 with the split we discussed: Maya $318, Leo $318, Sofia $350, Omar $317, Priya $317, Theo $150. This keeps Theo at his $150 cap and uses Sofia's offer to ease the load on the others. Maya, Omar, Priya, Sofia and Theo — can you each say accept if this works for you? Once we have accept from everyone we can lock it in.",
+   "data": {}
+  },
+  {
+   "i": 21,
+   "turn": 10,
+   "kind": "message",
+   "actor": "omar",
+   "to": null,
+   "text": "I'm glad we're having restaurants every meal, that's a big win for me. I can live with the $317 contribution.",
+   "data": {
+    "accept": "yes",
+    "stated": {}
+   }
+  },
+  {
+   "i": 22,
+   "turn": 11,
+   "kind": "message",
+   "actor": "lemma",
+   "to": null,
+   "text": "Thanks Leo for confirming the train works at $318 and Omar for confirming restaurants work at $317. We still need explicit accept from the remaining four to lock this in. Current proposal keeps all the non-negotiables we’ve named: lodging B – 2 hotel rooms + 1 single for Sofia’s private room, transport A – train for Leo, food A – restaurants every meal for Theo and Omar, activities C – free trails for outdoor time for Maya and Priya. Total $1,770 with the split we discussed: Maya $318, Leo $318, Sofia $350, Omar $317, Priya $317, Theo $150. Theo stays at his $150 cap and Sofia’s offer to go up to $350 is used to ease the load on the others. Maya, Priya, Sofia and Theo — please say accept if this works for you so we can lock it in.",
+   "data": {}
+  },
+  {
+   "i": 23,
+   "turn": 11,
+   "kind": "message",
+   "actor": "maya",
+   "to": null,
+   "text": "I'm not thrilled with the free trails, I was really looking forward to the guided hike + concert, but I can live with this plan if it's what the group wants.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 24,
+   "turn": 12,
+   "kind": "message",
+   "actor": "lemma",
+   "to": null,
+   "text": "Thanks Maya for being flexible and saying you can live with the plan if the group wants it — that helps. We’re really close to locking this in. The plan on the table still respects all the non-negotiables we’ve named: lodging B – 2 hotel rooms + 1 single for Sofia’s private room, transport A – train for Leo, food A – restaurants every meal for Theo and Omar, and activities C – free trails for outdoor time for Maya and Priya. Total $1,770 with the split we discussed: Maya $318, Leo $318, Sofia $350, Omar $317, Priya $317, Theo $150. Leo and Omar have already confirmed they’re comfortable. Maya, Priya, Sofia and Theo — please reply with an explicit ‘accept’ if this works for you so we can lock it in. If anyone wants a final tweak, say now.",
+   "data": {}
+  },
+  {
+   "i": 25,
+   "turn": 12,
+   "kind": "message",
+   "actor": "priya",
+   "to": null,
+   "text": "I'm not thrilled about the free trails, I was really looking forward to the guided hike + concert. However, I can live with this plan if it's what the group wants. I just want to confirm that the food option is vegetarian-friendly, as that's a must for me.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "hard": [
+      "vegetarian"
+     ]
+    }
+   }
+  },
+  {
+   "i": 26,
+   "turn": 13,
+   "kind": "propose",
+   "actor": "lemma",
+   "to": null,
+   "text": "Thanks Priya for flagging the vegetarian must — that’s a non-negotiable we need to lock in. Food A restaurants every meal isn’t explicitly vegetarian-friendly, so let’s move to Food B which is cook + 2 dinners out vegetarian-friendly. That keeps it vegetarian-friendly for you, keeps Leo’s train, Sofia’s private room, and gives Maya and Priya outdoor time with free trails. It also drops the total so Theo’s $150 cap is comfortable. New proposal: - lodging B – 2 hotel rooms + 1 single $690 → private room for Sofia - transport A – train $480 → Leo’s top priority - food B – cook + 2 dinners out vegetarian-friendly $380 → vegetarian-friendly for Priya, and still gives Theo and Omar restaurant dinners - activities C – free trails $0 → outdoor time for Maya and Priya Total = $1,550 Split respecting Theo’s cap and Sofia’s offer to go up to $350: Maya $263, Leo $263, Sofia $350, Omar $262, Priya $262, Theo $150 Can everyone say accept? If yes we can lock it in.",
+   "data": {
+    "plan": {
+     "choices": {
+      "lodging": "B",
+      "transport": "A",
+      "food": "B",
+      "activities": "C"
+     },
+     "labels": {
+      "lodging": "2 hotel rooms + 1 single",
+      "transport": "train",
+      "food": "cook + 2 dinners out (vegetarian-friendly)",
+      "activities": "free trails"
+     },
+     "cost": 1550,
+     "shares": {
+      "maya": 263.0,
+      "leo": 263.0,
+      "sofia": 350.0,
+      "omar": 262.0,
+      "priya": 262.0,
+      "theo": 150.0
+     },
+     "id": 9
+    },
+    "plan_id": 9,
+    "reason": "general agent proposal"
+   }
+  },
+  {
+   "i": 27,
+   "turn": 13,
+   "kind": "message",
+   "actor": "theo",
+   "to": null,
+   "text": "I'm glad we've found a plan that works for everyone, and I appreciate the effort to keep my contribution at $150. Food is my top priority, and while I initially wanted restaurants every meal, I can live with the cook + 2 dinners out option as long as it's vegetarian-friendly for Priya.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "max": 150,
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 28,
+   "turn": 14,
+   "kind": "message",
+   "actor": "lemma",
+   "to": null,
+   "text": "Thanks Theo for confirming you can live with cook + 2 dinners out as long as it’s vegetarian-friendly for Priya. Food B is cook + 2 dinners out vegetarian-friendly, so that requirement is covered. Plan on the table: - lodging B – 2 hotel rooms + 1 single $690 → private room for Sofia - transport A – train $480 → Leo’s top priority - food B – cook + 2 dinners out vegetarian-friendly $380 → vegetarian-friendly for Priya, and two restaurant dinners for Theo/Omar - activities C – free trails $0 → outdoor time for Maya and Priya Total $1,550 Split respecting Theo’s $150 cap and Sofia’s offer to go up to $350: Maya $263, Leo $263, Sofia $350, Omar $262, Priya $262, Theo $150 Maya, Leo, Sofia, Omar, Priya and Theo — please reply with an explicit ‘accept’ if this works for you so we can lock it in.",
+   "data": {}
+  },
+  {
+   "i": 29,
+   "turn": 14,
+   "kind": "message",
+   "actor": "sofia",
+   "to": null,
+   "text": "I'm glad we have a plan that includes my own room and I'm comfortable with paying $350.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "max": 350,
+     "hard": [
+      "own_room"
+     ],
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 30,
+   "turn": 15,
+   "kind": "message",
+   "actor": "lemma",
+   "to": null,
+   "text": "Thanks Sofia for confirming you are comfortable with $350 and having your own room. We are very close to locking this in. The plan on the table respects all the non-negotiables we have heard: private rooms for Sofia, train for Leo, vegetarian-friendly food with two restaurant dinners for Priya, Theo and Omar, and free trails for outdoor time for Maya and Priya. Plan: lodging B – 2 hotel rooms + 1 single $690, transport A – train $480, food B – cook + 2 dinners out vegetarian-friendly $380, activities C – free trails $0. Total $1,550. Proposed split: Maya $263, Leo $263, Sofia $350, Omar $262, Priya $262, Theo $150. Maya, Leo, Omar, Priya and Theo please reply with an explicit accept if this works for you. Sofia, can you also confirm accept for the full plan? Once we have accept from everyone we can lock it in.",
+   "data": {}
+  },
+  {
+   "i": 31,
+   "turn": 15,
+   "kind": "message",
+   "actor": "leo",
+   "to": null,
+   "text": "I'm good with this plan, it meets my top priority of taking the train and I can afford the $263 contribution.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "transport"
+    }
+   }
+  },
+  {
+   "i": 32,
+   "turn": 16,
+   "kind": "message",
+   "actor": "lemma",
+   "to": null,
+   "text": "Great progress — Leo is good with the train at $263 and Sofia is comfortable with her private room at $350. The plan on the table is still: lodging B – 2 hotel rooms + 1 single $690, transport A – train $480, food B – cook + 2 dinners out vegetarian-friendly $380, activities C – free trails $0. Total $1,550. Proposed split: Maya $263, Leo $263, Sofia $350, Omar $262, Priya $262, Theo $150, which respects Theo’s $150 cap and Sofia’s offer and keeps food vegetarian-friendly for Priya. Maya, Omar, Priya and Theo — please reply with an explicit ‘accept’ if this works for you. Once we have accept from everyone we can lock it in.",
+   "data": {}
+  },
+  {
+   "i": 33,
+   "turn": 16,
+   "kind": "message",
+   "actor": "omar",
+   "to": null,
+   "text": "I'm glad we've found a plan that works for everyone, and I'm comfortable with the $262 contribution. Food is really important to me, and I appreciate that we've got a vegetarian-friendly option with two restaurant dinners.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 34,
+   "turn": 17,
+   "kind": "message",
+   "actor": "lemma",
+   "to": null,
+   "text": "Thanks Leo, Omar and Sofia for confirming you’re comfortable with the current proposal. We’re very close to locking it in. The plan on the table is: lodging B – 2 hotel rooms + 1 single for Sofia’s private room, transport A – train for Leo’s top priority, food B – cook + 2 dinners out vegetarian-friendly for Priya and the two restaurant dinners Theo and Omar wanted, activities C – free trails for outdoor time for Maya and Priya. Total $1,550. Proposed split respecting Theo’s $150 cap and Sofia’s offer to go up to $350: Maya $263, Leo $263, Sofia $350, Omar $262, Priya $262, Theo $150. Maya, Priya and Theo — please reply with an explicit ‘accept’ if this works for you. Once we have accept from everyone we can lock it in.",
+   "data": {}
+  },
+  {
+   "i": 35,
+   "turn": 17,
+   "kind": "message",
+   "actor": "maya",
+   "to": null,
+   "text": "I'm still not thrilled about the free trails, but I can live with this plan if it's what the group wants. My top priority is activities, and I had hoped for something more like the guided hike + concert.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 36,
+   "turn": 18,
+   "kind": "message",
+   "actor": "lemma",
+   "to": null,
+   "text": "We're really close to locking this in. The plan on the table respects all the non-negotiables we've named: lodging B – 2 hotel rooms + 1 single for Sofia's private room, transport A – train for Leo, food B – cook + 2 dinners out vegetarian-friendly for Priya and the two restaurant dinners Theo and Omar wanted, activities C – free trails for outdoor time for Maya and Priya. Total $1,550. Split respecting Theo's $150 cap and Sofia's offer up to $350: Maya $263, Leo $263, Sofia $350, Omar $262, Priya $262, Theo $150. Leo and Omar have already confirmed they're comfortable. Maya, Priya, Sofia and Theo – please reply with an explicit 'accept' if this works for you so we can lock it in.",
+   "data": {}
+  },
+  {
+   "i": 37,
+   "turn": 18,
+   "kind": "message",
+   "actor": "priya",
+   "to": null,
+   "text": "I'm glad we have a vegetarian-friendly food option, but I'm still a bit disappointed about the free trails. Activities are my top priority, and I had really hoped for the guided hike + concert. However, I can live with this plan if it's what the group wants.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities",
+     "hard": [
+      "vegetarian"
+     ]
+    }
+   }
+  },
+  {
+   "i": 38,
+   "turn": 19,
+   "kind": "message",
+   "actor": "lemma",
+   "to": null,
+   "text": "We’re really close to locking this in. The plan on the table is lodging B – 2 hotel rooms + 1 single $690 for Sofia’s private room, transport A – train $480 for Leo’s top priority, food B – cook + 2 dinners out vegetarian-friendly $380 for Priya’s vegetarian must and the two restaurant dinners Theo and Omar wanted, activities C – free trails $0 for outdoor time for Maya and Priya. Total $1,550. Proposed split respecting Theo’s $150 cap and Sofia’s offer up to $350: Maya $263, Leo $263, Sofia $350, Omar $262, Priya $262, Theo $150. Leo, Omar and Sofia have confirmed they’re comfortable. Maya, Priya and Theo – please reply with an explicit ‘accept’ if this works for you. Once we have accept from everyone we can lock it in.",
+   "data": {}
+  },
+  {
+   "i": 39,
+   "turn": 19,
+   "kind": "message",
+   "actor": "theo",
+   "to": null,
+   "text": "I'm glad we've found a plan that works for everyone, and I'm comfortable with the $150 contribution. Food is my top priority, and while I initially wanted restaurants every meal, I can live with the cook + 2 dinners out option as long as it's vegetarian-friendly for Priya.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "max": 150,
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 40,
+   "turn": 20,
+   "kind": "message",
+   "actor": "sofia",
+   "to": null,
+   "text": "I'm glad we have a plan that includes my own room and I'm comfortable with paying $350. Lodging is my top priority, and I appreciate that we were able to make it work.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "max": 350,
+     "hard": [
+      "own_room"
+     ],
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 41,
+   "turn": 21,
+   "kind": "message",
+   "actor": "leo",
+   "to": null,
+   "text": "I'm glad my top priority of taking the train is covered and I can afford the $263 contribution.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "transport"
+    }
+   }
+  },
+  {
+   "i": 42,
+   "turn": 22,
+   "kind": "message",
+   "actor": "omar",
+   "to": null,
+   "text": "I'm comfortable with the plan, food is a high priority for me and I like that we have a vegetarian-friendly option with two restaurant dinners. I can live with the $262 contribution.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 43,
+   "turn": 23,
+   "kind": "message",
+   "actor": "maya",
+   "to": null,
+   "text": "I'm still not thrilled about the free trails, but I can live with this plan if it's what the group wants. My top priority is activities, and I had hoped for something more like the guided hike + concert.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 44,
+   "turn": 24,
+   "kind": "message",
+   "actor": "priya",
+   "to": null,
+   "text": "I'm glad we have a vegetarian-friendly food option and I can live with this plan, but I do want to confirm that my maximum contribution is $200, so the $262 assigned to me is a bit of a stretch.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 200,
+     "hard": [
+      "vegetarian"
+     ]
+    }
+   }
+  },
+  {
+   "i": 45,
+   "turn": 25,
+   "kind": "message",
+   "actor": "theo",
+   "to": null,
+   "text": "I'm glad we've found a plan that works for everyone, but I want to confirm my own details - my top priority is food and I have no hard constraints, just a preference for better food options and a maximum contribution of $150.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 150,
+     "hard": [],
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 46,
+   "turn": 26,
+   "kind": "message",
+   "actor": "sofia",
+   "to": null,
+   "text": "I'm glad we have a plan that includes my own room and I'm comfortable with paying $350. Lodging is my top priority, and I appreciate that we were able to make it work.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "max": 350,
+     "hard": [
+      "own_room"
+     ],
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 47,
+   "turn": 27,
+   "kind": "message",
+   "actor": "leo",
+   "to": null,
+   "text": "I'm glad my top priority of taking the train is covered and I can afford the $263 contribution. I also want to confirm that my maximum contribution is $400, so I'm comfortable with the current split.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "max": 400,
+     "top_priority": "transport"
+    }
+   }
+  },
+  {
+   "i": 48,
+   "turn": 28,
+   "kind": "message",
+   "actor": "omar",
+   "to": null,
+   "text": "I'm glad we have a plan that works for everyone, and I'm comfortable with the $262 contribution. Food is a high priority for me and I like that we have a vegetarian-friendly option with two restaurant dinners.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "food",
+     "prefers": {
+      "food": "A"
+     }
+    }
+   }
+  },
+  {
+   "i": 49,
+   "turn": 29,
+   "kind": "message",
+   "actor": "maya",
+   "to": null,
+   "text": "I'm still not thrilled about the free trails, but I can live with this plan. My top priority is activities, and I had hoped for something more like the guided hike + concert. I can contribute up to $450.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 450,
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 50,
+   "turn": 30,
+   "kind": "close",
+   "actor": "system",
+   "to": null,
+   "text": "Stopped after 30 member turns without everyone accepting.",
+   "data": {
+    "reason": "turn limit"
+   }
+  }
+ ],
+ "private": {
+  "maya": {
+   "max": 450,
+   "hard": "none",
+   "top_priority": "activities"
+  },
+  "leo": {
+   "max": 400,
+   "hard": "none",
+   "top_priority": "transport"
+  },
+  "sofia": {
+   "max": 350,
+   "hard": "needs her own room",
+   "top_priority": "lodging"
+  },
+  "omar": {
+   "max": 250,
+   "hard": "gets carsick on long drives",
+   "top_priority": "food"
+  },
+  "priya": {
+   "max": 200,
+   "hard": "is vegetarian",
+   "top_priority": "activities"
+  },
+  "theo": {
+   "max": 150,
+   "hard": "none",
+   "top_priority": "food"
+  }
+ },
+ "outcome": {
+  "agreed": false,
+  "unanimous": false,
+  "plan": {
+   "choices": {
+    "lodging": "B",
+    "transport": "A",
+    "food": "B",
+    "activities": "C"
+   },
+   "labels": {
+    "lodging": "2 hotel rooms + 1 single",
+    "transport": "train",
+    "food": "cook + 2 dinners out (vegetarian-friendly)",
+    "activities": "free trails"
+   },
+   "cost": 1550,
+   "shares": {
+    "maya": 263.0,
+    "leo": 263.0,
+    "sofia": 350.0,
+    "omar": 262.0,
+    "priya": 262.0,
+    "theo": 150.0
+   },
+   "id": 9
+  },
+  "violations": [
+   {
+    "member": "omar",
+    "fact": "share $262 is over their maximum $250"
+   },
+   {
+    "member": "priya",
+    "fact": "share $262 is over their maximum $200"
+   }
+  ],
+  "fairness": 0.6575,
+  "min_utility": 0.0,
+  "moderator_actions": 18,
+  "turns": 30,
+  "member_utility": {
+   "maya": 5.1,
+   "leo": 7.05,
+   "sofia": 5.8,
+   "omar": 0.0,
+   "priya": 0.0,
+   "theo": 5.85
+  }
+ }
+}

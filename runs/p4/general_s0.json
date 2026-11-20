@@ -1,0 +1,769 @@
+{
+ "meta": {
+  "scenario": "p4",
+  "arm": "general",
+  "arm_title": "Muse + LEMMA's tools (Muse Glimmer 30B with polls and asks, no solver)",
+  "seed": 0,
+  "title": "Eight friends, $2,600",
+  "short": "Eight friends, long weekend",
+  "prompt": "Eight friends are planning a long weekend with a total budget of $2,600. Each person has a private limit on what they can pay and some things they cannot do, and nobody has said them yet. Can you moderate the discussion, gather everyone's constraints, and reach a plan and a split that all eight members can accept?",
+  "context": "Eight friends (Hana, Kofi, Lena, Raj, Mei, Sam, Ines, Tom) are planning a long weekend with a total budget of $2,600. Nobody has said what they can contribute or what they need.",
+  "kind": "budget",
+  "members": [
+   {
+    "id": "hana",
+    "name": "Hana",
+    "color_index": 0
+   },
+   {
+    "id": "kofi",
+    "name": "Kofi",
+    "color_index": 1
+   },
+   {
+    "id": "lena",
+    "name": "Lena",
+    "color_index": 2
+   },
+   {
+    "id": "raj",
+    "name": "Raj",
+    "color_index": 3
+   },
+   {
+    "id": "mei",
+    "name": "Mei",
+    "color_index": 4
+   },
+   {
+    "id": "sam",
+    "name": "Sam",
+    "color_index": 5
+   },
+   {
+    "id": "ines",
+    "name": "Ines",
+    "color_index": 6
+   },
+   {
+    "id": "tom",
+    "name": "Tom",
+    "color_index": 7
+   }
+  ],
+  "options": {
+   "money": 2600,
+   "original_budget": 2600,
+   "categories": [
+    {
+     "key": "lodging",
+     "label": "Lodging",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "lake house, 5 bedrooms, step-free",
+       "cost": 1100,
+       "satisfies": [
+        "step_free"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "4 hotel rooms, step-free",
+       "cost": 800,
+       "satisfies": [
+        "step_free"
+       ]
+      },
+      {
+       "tier": "C",
+       "label": "campground cabins (steps, gravel paths)",
+       "cost": 420,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "transport",
+     "label": "Transport",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "train",
+       "cost": 640,
+       "satisfies": [
+        "no_long_drive"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "two rental cars, 4-hour drive",
+       "cost": 380,
+       "satisfies": []
+      },
+      {
+       "tier": "C",
+       "label": "one 12-seat van, 4-hour drive",
+       "cost": 300,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "food",
+     "label": "Food",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "restaurants every meal (gluten-free and vegan menus)",
+       "cost": 800,
+       "satisfies": [
+        "vegan",
+        "celiac"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "cook + 2 dinners out (vegan options)",
+       "cost": 480,
+       "satisfies": [
+        "vegan"
+       ]
+      },
+      {
+       "tier": "C",
+       "label": "cook every meal (shared grill plan)",
+       "cost": 260,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "activities",
+     "label": "Activities",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "boat tour + concert",
+       "cost": 560,
+       "satisfies": [
+        "boat"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "boat tour only",
+       "cost": 280,
+       "satisfies": [
+        "boat"
+       ]
+      },
+      {
+       "tier": "C",
+       "label": "free trails",
+       "cost": 0,
+       "satisfies": []
+      }
+     ]
+    }
+   ],
+   "hard_constraints": {
+    "step_free": {
+     "member": "hana",
+     "category": "lodging",
+     "label": "uses a wheelchair (step-free lodging)",
+     "mention": "wheelchair|step.free|steps|stairs|accessib|ramp"
+    },
+    "vegan": {
+     "member": "lena",
+     "category": "food",
+     "label": "is vegan",
+     "mention": "vegan|plant.based|animal|meat|dairy"
+    },
+    "no_long_drive": {
+     "member": "raj",
+     "category": "transport",
+     "label": "gets carsick on long drives",
+     "mention": "carsick|car sick|motion|long drive|4.hour|four.hour|nause|queasy|drive|train"
+    },
+    "boat": {
+     "member": "mei",
+     "category": "activities",
+     "label": "needs the boat tour",
+     "mention": "boat|lake tour|cruise|on the water"
+    },
+    "celiac": {
+     "member": "sam",
+     "category": "food",
+     "label": "has celiac disease (restaurants only)",
+     "mention": "celiac|coeliac|gluten|wheat|cross.contact|kitchen|restaurant"
+    }
+   }
+  },
+  "model": "llama-3.3-70b-instruct",
+  "policy": "general agent + tools",
+  "moderator_model": "meta-muse-glimmer-30b",
+  "max_member_turns": 36,
+  "created": "2026-11-20T00:13:34",
+  "dry": false,
+  "fact_labels": {
+   "max": "Max contribution",
+   "hard": "Hard constraint",
+   "top_priority": "Top priority",
+   "arrive_by": "Arrive by",
+   "leave_at": "Leaves work",
+   "flex_min": "Flexibility (min)",
+   "dislikes_bus": "Dislikes the bus",
+   "appt_start": "Appointment starts",
+   "appt_end": "Appointment ends",
+   "no_transit": "Cannot take bus or walk"
+  },
+  "contract": "app-v1"
+ },
+ "events": [
+  {
+   "i": 0,
+   "turn": 0,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "hana",
+   "text": "Hi Hana, to help find a plan everyone can accept within $2600, could you share any accessibility needs you have (e.g., step-free lodging), dietary needs (e.g., gluten-free, vegan), and the maximum amount you could contribute to the trip?",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 1,
+   "turn": 0,
+   "kind": "message",
+   "actor": "hana",
+   "to": null,
+   "text": "I need step-free lodging and my max contribution is $400. Lodging is my top priority.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 400,
+     "hard": [
+      "step_free"
+     ],
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 2,
+   "turn": 1,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "kofi",
+   "text": "Hi Kofi, to help find a plan everyone can accept within $2600, could you share any accessibility needs you have (e.g., step-free lodging), dietary needs (e.g., gluten-free, vegan), and the maximum amount you could contribute to the trip?",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 3,
+   "turn": 1,
+   "kind": "message",
+   "actor": "kofi",
+   "to": null,
+   "text": "I can contribute up to $500 and I have no hard constraints, my top priority is activities.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 500,
+     "hard": [],
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 4,
+   "turn": 2,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "lena",
+   "text": "Hi Lena, to help find a plan everyone can accept within $2600, could you share any accessibility needs you have (e.g., step-free lodging), dietary needs (e.g., gluten-free, vegan), and the maximum amount you could contribute to the trip?",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 5,
+   "turn": 2,
+   "kind": "message",
+   "actor": "lena",
+   "to": null,
+   "text": "I'm vegan, my top priority is food, and I can contribute up to $350.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 350,
+     "hard": [
+      "vegan"
+     ],
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 6,
+   "turn": 3,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "raj",
+   "text": "Hi Raj, to help find a plan everyone can accept within $2600, could you share any accessibility needs you have (e.g., step-free lodging), dietary needs (e.g., gluten-free, vegan), and the maximum amount you could contribute to the trip?",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 7,
+   "turn": 3,
+   "kind": "message",
+   "actor": "raj",
+   "to": null,
+   "text": "I can contribute up to $250, and my top priority is transport. I don't have any specific accessibility or dietary needs, but I do get carsick on long drives.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 250,
+     "hard": [
+      "no_long_drive"
+     ],
+     "top_priority": "transport"
+    }
+   }
+  },
+  {
+   "i": 8,
+   "turn": 4,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "mei",
+   "text": "Hi Mei, to help find a plan everyone can accept within $2600, could you share any accessibility needs you have (e.g., step-free lodging), dietary needs (e.g., gluten-free, vegan), and the maximum amount you could contribute to the trip?",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 9,
+   "turn": 4,
+   "kind": "message",
+   "actor": "mei",
+   "to": null,
+   "text": "I can contribute up to $450 and my top priority is activities. I also need the boat tour to be included in the plan.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 450,
+     "hard": [
+      "boat"
+     ],
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 10,
+   "turn": 5,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "sam",
+   "text": "Hi Sam, to help find a plan everyone can accept within $2600, could you share any accessibility needs you have (e.g., step-free lodging), dietary needs (e.g., gluten-free, vegan), and the maximum amount you could contribute to the trip?",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 11,
+   "turn": 5,
+   "kind": "message",
+   "actor": "sam",
+   "to": null,
+   "text": "I have celiac disease, so I need gluten-free food options. My top priority is food and I can contribute up to $200.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 200,
+     "hard": [
+      "celiac"
+     ],
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 12,
+   "turn": 6,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "ines",
+   "text": "Hi Ines, to help find a plan everyone can accept within $2600, could you share any accessibility needs you have (e.g., step-free lodging), dietary needs (e.g., gluten-free, vegan), and the maximum amount you could contribute to the trip?",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 13,
+   "turn": 6,
+   "kind": "message",
+   "actor": "ines",
+   "to": null,
+   "text": "I can contribute up to $300 and my top priority is lodging. I have no hard constraints.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 300,
+     "hard": [],
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 14,
+   "turn": 7,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "tom",
+   "text": "Hi Tom, to help find a plan everyone can accept within $2600, could you share any accessibility needs you have (e.g., step-free lodging), dietary needs (e.g., gluten-free, vegan), and the maximum amount you could contribute to the trip?",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 15,
+   "turn": 7,
+   "kind": "message",
+   "actor": "tom",
+   "to": null,
+   "text": "I can contribute up to $150 and my top priority is food. I have no hard constraints.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 150,
+     "hard": [],
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 16,
+   "turn": 8,
+   "kind": "propose",
+   "actor": "lemma",
+   "to": null,
+   "text": "Plan 1: lodging 4 hotel rooms, step-free, transport train, food restaurants every meal (gluten-free and vegan menus), activities boat tour only.\nHana pays $400.\nKofi pays $420.\nLena pays $350.\nRaj pays $250.\nMei pays $450.\nSam pays $200.\nInes pays $300.\nTom pays $150.\nTotal $2,520 of $2,600.",
+   "data": {
+    "plan": {
+     "choices": {
+      "lodging": "B",
+      "transport": "A",
+      "food": "A",
+      "activities": "B"
+     },
+     "labels": {
+      "lodging": "4 hotel rooms, step-free",
+      "transport": "train",
+      "food": "restaurants every meal (gluten-free and vegan menus)",
+      "activities": "boat tour only"
+     },
+     "cost": 2520,
+     "shares": {
+      "hana": 400.0,
+      "kofi": 420.0,
+      "lena": 350.0,
+      "raj": 250.0,
+      "mei": 450.0,
+      "sam": 200.0,
+      "ines": 300.0,
+      "tom": 150.0
+     },
+     "id": 1
+    },
+    "plan_id": 1,
+    "reason": "general agent proposal"
+   }
+  },
+  {
+   "i": 17,
+   "turn": 8,
+   "kind": "message",
+   "actor": "mei",
+   "to": null,
+   "text": "I'd like to see the concert included in the activities, it's my preference, but I can live with the boat tour only for now.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "hard": [
+      "boat"
+     ],
+     "top_priority": "activities",
+     "prefers": {
+      "activities": "A"
+     }
+    }
+   }
+  },
+  {
+   "i": 18,
+   "turn": 9,
+   "kind": "poll",
+   "actor": "lemma",
+   "to": null,
+   "text": "Private poll on plan 1: does it work for you, yes or no?",
+   "data": {
+    "members": [
+     "hana",
+     "kofi",
+     "lena",
+     "raj",
+     "sam",
+     "ines",
+     "tom"
+    ],
+    "plan_id": 1
+   }
+  },
+  {
+   "i": 19,
+   "turn": 9,
+   "kind": "poll_reply",
+   "actor": "hana",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "hard": [
+      "step_free"
+     ],
+     "top_priority": "lodging"
+    },
+    "private_message": "I accept the plan because it meets my need for step-free lodging and is within my budget.",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 20,
+   "turn": 9,
+   "kind": "poll_reply",
+   "actor": "kofi",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "activities",
+     "prefers": {
+      "activities": "A"
+     }
+    },
+    "private_message": "I'd prefer activities tier A, but I can live with this plan for now.",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 21,
+   "turn": 9,
+   "kind": "poll_reply",
+   "actor": "lena",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "hard": [
+      "vegan"
+     ],
+     "top_priority": "food"
+    },
+    "private_message": "I accept the plan as it includes vegan food options and is within my budget.",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 22,
+   "turn": 9,
+   "kind": "poll_reply",
+   "actor": "raj",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "hard": [
+      "no_long_drive"
+     ],
+     "top_priority": "transport",
+     "prefers": {
+      "transport": "A"
+     }
+    },
+    "private_message": "I accept the plan as it doesn't break any of my constraints and I prefer the train for transport.",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 23,
+   "turn": 9,
+   "kind": "poll_reply",
+   "actor": "sam",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "hard": [
+      "celiac"
+     ],
+     "top_priority": "food"
+    },
+    "private_message": "I accept the plan as it includes gluten-free food options and is within my budget.",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 24,
+   "turn": 9,
+   "kind": "poll_reply",
+   "actor": "ines",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "lodging"
+    },
+    "private_message": "I'd prefer a different lodging option, but I can live with this plan for now.",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 25,
+   "turn": 9,
+   "kind": "poll_reply",
+   "actor": "tom",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {},
+    "private_message": "I'm okay with this plan for now.",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 26,
+   "turn": 9,
+   "kind": "close",
+   "actor": "system",
+   "to": null,
+   "text": "All members accepted plan 1.",
+   "data": {}
+  }
+ ],
+ "private": {
+  "hana": {
+   "max": 400,
+   "hard": "uses a wheelchair (step-free lodging)",
+   "top_priority": "lodging"
+  },
+  "kofi": {
+   "max": 500,
+   "hard": "none",
+   "top_priority": "activities"
+  },
+  "lena": {
+   "max": 350,
+   "hard": "is vegan",
+   "top_priority": "food"
+  },
+  "raj": {
+   "max": 250,
+   "hard": "gets carsick on long drives",
+   "top_priority": "transport"
+  },
+  "mei": {
+   "max": 450,
+   "hard": "needs the boat tour",
+   "top_priority": "activities"
+  },
+  "sam": {
+   "max": 200,
+   "hard": "has celiac disease (restaurants only)",
+   "top_priority": "food"
+  },
+  "ines": {
+   "max": 300,
+   "hard": "none",
+   "top_priority": "lodging"
+  },
+  "tom": {
+   "max": 150,
+   "hard": "none",
+   "top_priority": "food"
+  }
+ },
+ "outcome": {
+  "agreed": true,
+  "unanimous": true,
+  "plan": {
+   "choices": {
+    "lodging": "B",
+    "transport": "A",
+    "food": "A",
+    "activities": "B"
+   },
+   "labels": {
+    "lodging": "4 hotel rooms, step-free",
+    "transport": "train",
+    "food": "restaurants every meal (gluten-free and vegan menus)",
+    "activities": "boat tour only"
+   },
+   "cost": 2520,
+   "shares": {
+    "hana": 400.0,
+    "kofi": 420.0,
+    "lena": 350.0,
+    "raj": 250.0,
+    "mei": 450.0,
+    "sam": 200.0,
+    "ines": 300.0,
+    "tom": 150.0
+   },
+   "id": 1
+  },
+  "violations": [],
+  "fairness": 0.9953,
+  "min_utility": 7.2,
+  "moderator_actions": 10,
+  "turns": 9,
+  "member_utility": {
+   "hana": 7.4,
+   "kofi": 7.6,
+   "lena": 8.4,
+   "raj": 8.6,
+   "mei": 7.4,
+   "sam": 8.2,
+   "ines": 7.2,
+   "tom": 8.6
+  }
+ }
+}

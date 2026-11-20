@@ -1,0 +1,1056 @@
+{
+ "meta": {
+  "scenario": "p1",
+  "arm": "lemma",
+  "arm_title": "LEMMA (scripted policy)",
+  "seed": 0,
+  "title": "The $250 gap",
+  "short": "Four friends, lake weekend",
+  "prompt": "A group of friends has agreed on a trip budget of $1,500. However, one member has unexpectedly reduced their maximum contribution from $400 to $150, while the remaining members are unwilling to increase their contributions. Can you help the group renegotiate the budget, explore feasible alternatives, and reach an agreement that respects everyone's financial constraints?",
+  "context": "Four friends (Ana, Ben, Cara, Dev) planned a lake weekend. Original pledges: Ana $400, Ben $400, Cara $400, Dev $300 (total $1,500). Ana now says she can give only $150. The others will not raise their pledges, so $1,250 is available. The original plan was the top option in every category.",
+  "kind": "budget",
+  "members": [
+   {
+    "id": "ana",
+    "name": "Ana",
+    "color_index": 0,
+    "public_max": 150
+   },
+   {
+    "id": "ben",
+    "name": "Ben",
+    "color_index": 1,
+    "public_max": 400
+   },
+   {
+    "id": "cara",
+    "name": "Cara",
+    "color_index": 2,
+    "public_max": 400
+   },
+   {
+    "id": "dev",
+    "name": "Dev",
+    "color_index": 3,
+    "public_max": 300
+   }
+  ],
+  "options": {
+   "money": 1250,
+   "original_budget": 1500,
+   "categories": [
+    {
+     "key": "lodging",
+     "label": "Lodging",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "lakeside cabin",
+       "cost": 650,
+       "satisfies": [
+        "no_camping"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "motel, 2 rooms",
+       "cost": 420,
+       "satisfies": [
+        "no_camping"
+       ]
+      },
+      {
+       "tier": "C",
+       "label": "campsite + gear",
+       "cost": 180,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "transport",
+     "label": "Transport",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "rental SUV",
+       "cost": 250,
+       "satisfies": []
+      },
+      {
+       "tier": "B",
+       "label": "Cara's car (gas, parking)",
+       "cost": 120,
+       "satisfies": []
+      },
+      {
+       "tier": "C",
+       "label": "bus",
+       "cost": 180,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "food",
+     "label": "Food",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "restaurants",
+       "cost": 350,
+       "satisfies": []
+      },
+      {
+       "tier": "B",
+       "label": "groceries + one dinner out",
+       "cost": 210,
+       "satisfies": []
+      },
+      {
+       "tier": "C",
+       "label": "groceries only",
+       "cost": 130,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "activities",
+     "label": "Activities",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "kayak tour + winery",
+       "cost": 250,
+       "satisfies": [
+        "kayak"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "kayak rental",
+       "cost": 110,
+       "satisfies": [
+        "kayak"
+       ]
+      },
+      {
+       "tier": "C",
+       "label": "hiking",
+       "cost": 0,
+       "satisfies": []
+      }
+     ]
+    }
+   ],
+   "hard_constraints": {
+    "no_camping": {
+     "member": "dev",
+     "category": "lodging",
+     "label": "cannot camp (back problem)",
+     "mention": "camp|tent|back|ground|cabin|motel|bed"
+    },
+    "kayak": {
+     "member": "ben",
+     "category": "activities",
+     "label": "needs a kayak activity",
+     "mention": "kayak|paddl"
+    }
+   }
+  },
+  "model": "llama-3.3-70b-instruct",
+  "policy": "scripted",
+  "max_member_turns": 24,
+  "created": "2026-11-16T22:55:24",
+  "dry": false,
+  "fact_labels": {
+   "max": "Max contribution",
+   "hard": "Hard constraint",
+   "top_priority": "Top priority",
+   "arrive_by": "Arrive by",
+   "leave_at": "Leaves work",
+   "flex_min": "Flexibility (min)",
+   "dislikes_bus": "Dislikes the bus",
+   "appt_start": "Appointment starts",
+   "appt_end": "Appointment ends",
+   "no_transit": "Cannot take bus or walk"
+  },
+  "contract": "app-v1"
+ },
+ "events": [
+  {
+   "i": 0,
+   "turn": 0,
+   "kind": "message",
+   "actor": "lemma",
+   "to": null,
+   "text": "The goal: agree on a lake-weekend plan that fits the $1,250 now available and respects everyone's limits and needs.",
+   "data": {}
+  },
+  {
+   "i": 1,
+   "turn": 0,
+   "kind": "state",
+   "actor": "lemma",
+   "to": null,
+   "text": "Facts known at the start.",
+   "data": {
+    "known": {
+     "ana": {
+      "max": 150
+     },
+     "ben": {
+      "max": 400
+     },
+     "cara": {
+      "max": 400
+     },
+     "dev": {
+      "max": 300
+     }
+    },
+    "unknown": {
+     "ana": [
+      "hard",
+      "top_priority"
+     ],
+     "ben": [
+      "hard",
+      "top_priority"
+     ],
+     "cara": [
+      "hard",
+      "top_priority"
+     ],
+     "dev": [
+      "hard",
+      "top_priority"
+     ]
+    }
+   }
+  },
+  {
+   "i": 2,
+   "turn": 0,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "ana",
+   "text": "Ana, I cannot build a plan that works for everyone without a few facts from you. Could you tell me any hard constraint (something that rules a plan out) and which of lodging, transport, food and activities matters most to you?",
+   "data": {
+    "facts": [
+     "hard",
+     "top_priority"
+    ]
+   }
+  },
+  {
+   "i": 3,
+   "turn": 0,
+   "kind": "message",
+   "actor": "ana",
+   "to": null,
+   "text": "I have no hard constraints, and lodging matters most to me.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "hard": [],
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 4,
+   "turn": 0,
+   "kind": "state",
+   "actor": "lemma",
+   "to": null,
+   "text": "Ana stated a fact.",
+   "data": {
+    "known": {
+     "ana": {
+      "max": 150,
+      "hard": [],
+      "top_priority": "lodging"
+     },
+     "ben": {
+      "max": 400
+     },
+     "cara": {
+      "max": 400
+     },
+     "dev": {
+      "max": 300
+     }
+    },
+    "unknown": {
+     "ana": [],
+     "ben": [
+      "hard",
+      "top_priority"
+     ],
+     "cara": [
+      "hard",
+      "top_priority"
+     ],
+     "dev": [
+      "hard",
+      "top_priority"
+     ]
+    }
+   }
+  },
+  {
+   "i": 5,
+   "turn": 1,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "ben",
+   "text": "Ben, I cannot build a plan that works for everyone without a few facts from you. Could you tell me any hard constraint (something that rules a plan out) and which of lodging, transport, food and activities matters most to you?",
+   "data": {
+    "facts": [
+     "hard",
+     "top_priority"
+    ]
+   }
+  },
+  {
+   "i": 6,
+   "turn": 1,
+   "kind": "message",
+   "actor": "ben",
+   "to": null,
+   "text": "I need a kayak activity, so that's a hard constraint for me. Activities are my top priority.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "hard": [
+      "kayak"
+     ],
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 7,
+   "turn": 1,
+   "kind": "state",
+   "actor": "lemma",
+   "to": null,
+   "text": "Ben stated a fact.",
+   "data": {
+    "known": {
+     "ana": {
+      "max": 150,
+      "hard": [],
+      "top_priority": "lodging"
+     },
+     "ben": {
+      "max": 400,
+      "hard": [
+       "kayak"
+      ],
+      "top_priority": "activities"
+     },
+     "cara": {
+      "max": 400
+     },
+     "dev": {
+      "max": 300
+     }
+    },
+    "unknown": {
+     "ana": [],
+     "ben": [],
+     "cara": [
+      "hard",
+      "top_priority"
+     ],
+     "dev": [
+      "hard",
+      "top_priority"
+     ]
+    }
+   }
+  },
+  {
+   "i": 8,
+   "turn": 2,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "cara",
+   "text": "Cara, I cannot build a plan that works for everyone without a few facts from you. Could you tell me any hard constraint (something that rules a plan out) and which of lodging, transport, food and activities matters most to you?",
+   "data": {
+    "facts": [
+     "hard",
+     "top_priority"
+    ]
+   }
+  },
+  {
+   "i": 9,
+   "turn": 2,
+   "kind": "message",
+   "actor": "cara",
+   "to": null,
+   "text": "I have no hard constraints and my top priority is lodging, I'd love to stay in the cabin or motel if possible",
+   "data": {
+    "accept": null,
+    "stated": {
+     "hard": [],
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 10,
+   "turn": 2,
+   "kind": "state",
+   "actor": "lemma",
+   "to": null,
+   "text": "Cara stated a fact.",
+   "data": {
+    "known": {
+     "ana": {
+      "max": 150,
+      "hard": [],
+      "top_priority": "lodging"
+     },
+     "ben": {
+      "max": 400,
+      "hard": [
+       "kayak"
+      ],
+      "top_priority": "activities"
+     },
+     "cara": {
+      "max": 400,
+      "hard": [],
+      "top_priority": "lodging"
+     },
+     "dev": {
+      "max": 300
+     }
+    },
+    "unknown": {
+     "ana": [],
+     "ben": [],
+     "cara": [],
+     "dev": [
+      "hard",
+      "top_priority"
+     ]
+    }
+   }
+  },
+  {
+   "i": 11,
+   "turn": 3,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "dev",
+   "text": "Dev, I cannot build a plan that works for everyone without a few facts from you. Could you tell me any hard constraint (something that rules a plan out) and which of lodging, transport, food and activities matters most to you?",
+   "data": {
+    "facts": [
+     "hard",
+     "top_priority"
+    ]
+   }
+  },
+  {
+   "i": 12,
+   "turn": 3,
+   "kind": "message",
+   "actor": "dev",
+   "to": null,
+   "text": "I have a hard constraint of no camping due to a back problem, and food matters most to me.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "hard": [
+      "no_camping"
+     ],
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 13,
+   "turn": 3,
+   "kind": "state",
+   "actor": "lemma",
+   "to": null,
+   "text": "Dev stated a fact.",
+   "data": {
+    "known": {
+     "ana": {
+      "max": 150,
+      "hard": [],
+      "top_priority": "lodging"
+     },
+     "ben": {
+      "max": 400,
+      "hard": [
+       "kayak"
+      ],
+      "top_priority": "activities"
+     },
+     "cara": {
+      "max": 400,
+      "hard": [],
+      "top_priority": "lodging"
+     },
+     "dev": {
+      "max": 300,
+      "hard": [
+       "no_camping"
+      ],
+      "top_priority": "food"
+     }
+    },
+    "unknown": {
+     "ana": [],
+     "ben": [],
+     "cara": [],
+     "dev": []
+    }
+   }
+  },
+  {
+   "i": 14,
+   "turn": 4,
+   "kind": "tool",
+   "actor": "lemma",
+   "to": null,
+   "text": "Exact solver on the stated facts.",
+   "data": {
+    "inputs": {
+     "money": 1250,
+     "known": {
+      "ana": {
+       "max": 150,
+       "hard": [],
+       "top_priority": "lodging"
+      },
+      "ben": {
+       "max": 400,
+       "hard": [
+        "kayak"
+       ],
+       "top_priority": "activities"
+      },
+      "cara": {
+       "max": 400,
+       "hard": [],
+       "top_priority": "lodging"
+      },
+      "dev": {
+       "max": 300,
+       "hard": [
+        "no_camping"
+       ],
+       "top_priority": "food"
+      }
+     },
+     "hard_stated": [
+      "kayak",
+      "no_camping"
+     ],
+     "caps_stated": {
+      "ana": 150,
+      "ben": 400,
+      "cara": 400,
+      "dev": 300
+     },
+     "musts_stated": {},
+     "prefers_stated": {}
+    },
+    "n_candidates": 81,
+    "n_feasible": 27,
+    "plan": {
+     "choices": {
+      "lodging": "A",
+      "transport": "B",
+      "food": "A",
+      "activities": "B"
+     },
+     "labels": {
+      "lodging": "lakeside cabin",
+      "transport": "Cara's car (gas, parking)",
+      "food": "restaurants",
+      "activities": "kayak rental"
+     },
+     "cost": 1230,
+     "shares": {
+      "ana": 150.0,
+      "ben": 390.0,
+      "cara": 390.0,
+      "dev": 300.0
+     }
+    },
+    "score": 8.192,
+    "why": "Highest Nash product (2815344) among 27 of 81 combinations that fit $1,250 and 2 stated hard constraints; 2 tied, the larger spend was kept.",
+    "alternatives": [
+     {
+      "tiers": {
+       "lodging": "A",
+       "transport": "B",
+       "food": "B",
+       "activities": "A"
+      },
+      "cost": 1230,
+      "score": 2815344
+     },
+     {
+      "tiers": {
+       "lodging": "A",
+       "transport": "A",
+       "food": "B",
+       "activities": "B"
+      },
+      "cost": 1220,
+      "score": 2547216
+     },
+     {
+      "tiers": {
+       "lodging": "B",
+       "transport": "B",
+       "food": "A",
+       "activities": "A"
+      },
+      "cost": 1140,
+      "score": 2547216
+     }
+    ],
+    "unmet_musts": [],
+    "tool": "solver"
+   }
+  },
+  {
+   "i": 15,
+   "turn": 4,
+   "kind": "propose",
+   "actor": "lemma",
+   "to": null,
+   "text": "Plan 1: lodging lakeside cabin, transport Cara's car (gas, parking), food restaurants, activities kayak rental.\nAna pays $150 (at their max).\nBen pays $390.\nCara pays $390.\nDev pays $300 (at their max).\nTotal $1,230 of $1,250.",
+   "data": {
+    "plan": {
+     "choices": {
+      "lodging": "A",
+      "transport": "B",
+      "food": "A",
+      "activities": "B"
+     },
+     "labels": {
+      "lodging": "lakeside cabin",
+      "transport": "Cara's car (gas, parking)",
+      "food": "restaurants",
+      "activities": "kayak rental"
+     },
+     "cost": 1230,
+     "shares": {
+      "ana": 150.0,
+      "ben": 390.0,
+      "cara": 390.0,
+      "dev": 300.0
+     },
+     "id": 1
+    },
+    "plan_id": 1,
+    "reason": "Highest Nash product (2815344) among 27 of 81 combinations that fit $1,250 and 2 stated hard constraints; 2 tied, the larger spend was kept."
+   }
+  },
+  {
+   "i": 16,
+   "turn": 4,
+   "kind": "message",
+   "actor": "ana",
+   "to": null,
+   "text": "I'm happy with the current plan, it fits my budget and I prefer the cabin, but I'd rather skip the winery than stay home, so kayak rental is fine by me",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "lodging",
+     "prefers": {
+      "lodging": "A",
+      "activities": "B"
+     }
+    }
+   }
+  },
+  {
+   "i": 17,
+   "turn": 4,
+   "kind": "state",
+   "actor": "lemma",
+   "to": null,
+   "text": "Ana stated a fact.",
+   "data": {
+    "known": {
+     "ana": {
+      "max": 150,
+      "hard": [],
+      "top_priority": "lodging",
+      "prefers": {
+       "lodging": "A",
+       "activities": "B"
+      }
+     },
+     "ben": {
+      "max": 400,
+      "hard": [
+       "kayak"
+      ],
+      "top_priority": "activities"
+     },
+     "cara": {
+      "max": 400,
+      "hard": [],
+      "top_priority": "lodging"
+     },
+     "dev": {
+      "max": 300,
+      "hard": [
+       "no_camping"
+      ],
+      "top_priority": "food"
+     }
+    },
+    "unknown": {
+     "ana": [],
+     "ben": [],
+     "cara": [],
+     "dev": []
+    }
+   }
+  },
+  {
+   "i": 18,
+   "turn": 5,
+   "kind": "tool",
+   "actor": "lemma",
+   "to": null,
+   "text": "Exact solver on the stated facts.",
+   "data": {
+    "inputs": {
+     "money": 1250,
+     "known": {
+      "ana": {
+       "max": 150,
+       "hard": [],
+       "top_priority": "lodging",
+       "prefers": {
+        "lodging": "A",
+        "activities": "B"
+       }
+      },
+      "ben": {
+       "max": 400,
+       "hard": [
+        "kayak"
+       ],
+       "top_priority": "activities"
+      },
+      "cara": {
+       "max": 400,
+       "hard": [],
+       "top_priority": "lodging"
+      },
+      "dev": {
+       "max": 300,
+       "hard": [
+        "no_camping"
+       ],
+       "top_priority": "food"
+      }
+     },
+     "hard_stated": [
+      "kayak",
+      "no_camping"
+     ],
+     "caps_stated": {
+      "ana": 150,
+      "ben": 400,
+      "cara": 400,
+      "dev": 300
+     },
+     "musts_stated": {},
+     "prefers_stated": {
+      "ana": {
+       "lodging": "A",
+       "activities": "B"
+      }
+     }
+    },
+    "n_candidates": 81,
+    "n_feasible": 27,
+    "plan": {
+     "choices": {
+      "lodging": "A",
+      "transport": "B",
+      "food": "A",
+      "activities": "B"
+     },
+     "labels": {
+      "lodging": "lakeside cabin",
+      "transport": "Cara's car (gas, parking)",
+      "food": "restaurants",
+      "activities": "kayak rental"
+     },
+     "cost": 1230,
+     "shares": {
+      "ana": 150.0,
+      "ben": 390.0,
+      "cara": 390.0,
+      "dev": 300.0
+     }
+    },
+    "score": 8.557,
+    "why": "Highest Nash product (3351600) among 27 of 81 combinations that fit $1,250 and 2 stated hard constraints.",
+    "alternatives": [
+     {
+      "tiers": {
+       "lodging": "A",
+       "transport": "B",
+       "food": "B",
+       "activities": "A"
+      },
+      "cost": 1230,
+      "score": 3083472
+     },
+     {
+      "tiers": {
+       "lodging": "A",
+       "transport": "A",
+       "food": "B",
+       "activities": "B"
+      },
+      "cost": 1220,
+      "score": 3032400
+     },
+     {
+      "tiers": {
+       "lodging": "B",
+       "transport": "B",
+       "food": "A",
+       "activities": "A"
+      },
+      "cost": 1140,
+      "score": 2547216
+     }
+    ],
+    "unmet_musts": [],
+    "tool": "solver"
+   }
+  },
+  {
+   "i": 19,
+   "turn": 5,
+   "kind": "message",
+   "actor": "lemma",
+   "to": null,
+   "text": "The plan on the table still fits everything stated so far.",
+   "data": {}
+  },
+  {
+   "i": 20,
+   "turn": 5,
+   "kind": "message",
+   "actor": "dev",
+   "to": null,
+   "text": "I'm okay with the current plan, it meets my needs and I love the food option",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 21,
+   "turn": 6,
+   "kind": "poll",
+   "actor": "lemma",
+   "to": null,
+   "text": "Private poll on plan 1: does it work for you, yes or no?",
+   "data": {
+    "members": [
+     "ben",
+     "cara"
+    ],
+    "plan_id": 1
+   }
+  },
+  {
+   "i": 22,
+   "turn": 6,
+   "kind": "poll_reply",
+   "actor": "ben",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "hard": [
+      "kayak"
+     ],
+     "top_priority": "activities"
+    },
+    "private_message": "I'm okay with the plan, it has a kayak activity and fits my budget",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 23,
+   "turn": 6,
+   "kind": "poll_reply",
+   "actor": "cara",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "prefers": {
+      "transport": "B"
+     }
+    },
+    "private_message": "I'm fine with the plan, but I want to clarify that I'm lending my car with the understanding that gas and parking costs are shared.",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 24,
+   "turn": 6,
+   "kind": "state",
+   "actor": "lemma",
+   "to": null,
+   "text": "Cara stated a fact in the poll.",
+   "data": {
+    "known": {
+     "ana": {
+      "max": 150,
+      "hard": [],
+      "top_priority": "lodging",
+      "prefers": {
+       "lodging": "A",
+       "activities": "B"
+      }
+     },
+     "ben": {
+      "max": 400,
+      "hard": [
+       "kayak"
+      ],
+      "top_priority": "activities"
+     },
+     "cara": {
+      "max": 400,
+      "hard": [],
+      "top_priority": "lodging",
+      "prefers": {
+       "transport": "B"
+      }
+     },
+     "dev": {
+      "max": 300,
+      "hard": [
+       "no_camping"
+      ],
+      "top_priority": "food"
+     }
+    },
+    "unknown": {
+     "ana": [],
+     "ben": [],
+     "cara": [],
+     "dev": []
+    }
+   }
+  },
+  {
+   "i": 25,
+   "turn": 6,
+   "kind": "consent",
+   "actor": "lemma",
+   "to": null,
+   "text": "All 4 members accepted plan 1.",
+   "data": {
+    "accepted": [
+     "ana",
+     "ben",
+     "cara",
+     "dev"
+    ],
+    "plan_id": 1
+   }
+  },
+  {
+   "i": 26,
+   "turn": 6,
+   "kind": "close",
+   "actor": "lemma",
+   "to": null,
+   "text": "Plan 1 is agreed by everyone. Closing.",
+   "data": {}
+  }
+ ],
+ "private": {
+  "ana": {
+   "max": 150,
+   "hard": "none",
+   "top_priority": "lodging"
+  },
+  "ben": {
+   "max": 400,
+   "hard": "needs a kayak activity",
+   "top_priority": "activities"
+  },
+  "cara": {
+   "max": 400,
+   "hard": "none",
+   "top_priority": "lodging"
+  },
+  "dev": {
+   "max": 300,
+   "hard": "cannot camp (back problem)",
+   "top_priority": "food"
+  }
+ },
+ "outcome": {
+  "agreed": true,
+  "unanimous": true,
+  "plan": {
+   "choices": {
+    "lodging": "A",
+    "transport": "B",
+    "food": "A",
+    "activities": "B"
+   },
+   "labels": {
+    "lodging": "lakeside cabin",
+    "transport": "Cara's car (gas, parking)",
+    "food": "restaurants",
+    "activities": "kayak rental"
+   },
+   "cost": 1230,
+   "shares": {
+    "ana": 150.0,
+    "ben": 390.0,
+    "cara": 390.0,
+    "dev": 300.0
+   },
+   "id": 1
+  },
+  "violations": [],
+  "fairness": 0.9952,
+  "min_utility": 7.0,
+  "moderator_actions": 7,
+  "turns": 6,
+  "member_utility": {
+   "ana": 7.75,
+   "ben": 7.0,
+   "cara": 8.5,
+   "dev": 8.0
+  }
+ }
+}

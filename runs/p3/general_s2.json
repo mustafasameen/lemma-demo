@@ -1,0 +1,625 @@
+{
+ "meta": {
+  "scenario": "p3",
+  "arm": "general",
+  "arm_title": "General agent (Muse Glimmer 30B, prompted)",
+  "seed": 2,
+  "title": "Six friends, $1,800",
+  "short": "Six friends, weekend trip",
+  "prompt": "Six friends are planning a weekend trip with a total budget of $1,800. Each person has different preferences regarding accommodation, transportation, food, and activities, but nobody has fully disclosed their priorities or maximum contribution. Can you moderate the discussion, gather everyone's constraints, and help negotiate a fair budget allocation that all six members can accept?",
+  "context": "Six friends (Maya, Leo, Sofia, Omar, Priya, Theo) are planning a weekend trip with a total budget of $1,800. Nobody has said what they can contribute or what they need.",
+  "kind": "budget",
+  "members": [
+   {
+    "id": "maya",
+    "name": "Maya",
+    "color_index": 0
+   },
+   {
+    "id": "leo",
+    "name": "Leo",
+    "color_index": 1
+   },
+   {
+    "id": "sofia",
+    "name": "Sofia",
+    "color_index": 2
+   },
+   {
+    "id": "omar",
+    "name": "Omar",
+    "color_index": 3
+   },
+   {
+    "id": "priya",
+    "name": "Priya",
+    "color_index": 4
+   },
+   {
+    "id": "theo",
+    "name": "Theo",
+    "color_index": 5
+   }
+  ],
+  "options": {
+   "money": 1800,
+   "original_budget": 1800,
+   "categories": [
+    {
+     "key": "lodging",
+     "label": "Lodging",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "house with 4 rooms",
+       "cost": 780,
+       "satisfies": [
+        "own_room"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "2 hotel rooms + 1 single",
+       "cost": 690,
+       "satisfies": [
+        "own_room"
+       ]
+      },
+      {
+       "tier": "C",
+       "label": "hostel dorm",
+       "cost": 360,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "transport",
+     "label": "Transport",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "train",
+       "cost": 480,
+       "satisfies": [
+        "no_long_drive"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "two rental cars, 5-hour drive",
+       "cost": 300,
+       "satisfies": []
+      },
+      {
+       "tier": "C",
+       "label": "one van, 5-hour drive",
+       "cost": 240,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "food",
+     "label": "Food",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "restaurants every meal",
+       "cost": 600,
+       "satisfies": [
+        "vegetarian"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "cook + 2 dinners out (vegetarian-friendly)",
+       "cost": 380,
+       "satisfies": [
+        "vegetarian"
+       ]
+      },
+      {
+       "tier": "C",
+       "label": "cook every meal (shared barbecue plan)",
+       "cost": 220,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "activities",
+     "label": "Activities",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "guided hike + concert",
+       "cost": 420,
+       "satisfies": []
+      },
+      {
+       "tier": "B",
+       "label": "concert only",
+       "cost": 240,
+       "satisfies": []
+      },
+      {
+       "tier": "C",
+       "label": "free trails",
+       "cost": 0,
+       "satisfies": []
+      }
+     ]
+    }
+   ],
+   "hard_constraints": {
+    "vegetarian": {
+     "member": "priya",
+     "category": "food",
+     "label": "is vegetarian",
+     "mention": "vegetarian|vegan|meat|veg\\b"
+    },
+    "no_long_drive": {
+     "member": "omar",
+     "category": "transport",
+     "label": "gets carsick on long drives",
+     "mention": "carsick|car sick|motion|long drive|5.hour|five.hour|nause|queasy|drive|train"
+    },
+    "own_room": {
+     "member": "sofia",
+     "category": "lodging",
+     "label": "needs her own room",
+     "mention": "own room|private room|own space|room to myself|privacy|dorm|hostel|sharing|share a room|my own"
+    }
+   }
+  },
+  "model": "llama-3.3-70b-instruct",
+  "policy": "general agent",
+  "moderator_model": "meta-muse-glimmer-30b",
+  "max_member_turns": 30,
+  "created": "2026-11-19T23:17:06",
+  "dry": false,
+  "fact_labels": {
+   "max": "Max contribution",
+   "hard": "Hard constraint",
+   "top_priority": "Top priority",
+   "arrive_by": "Arrive by",
+   "leave_at": "Leaves work",
+   "flex_min": "Flexibility (min)",
+   "dislikes_bus": "Dislikes the bus",
+   "appt_start": "Appointment starts",
+   "appt_end": "Appointment ends",
+   "no_transit": "Cannot take bus or walk"
+  },
+  "contract": "app-v1"
+ },
+ "events": [
+  {
+   "i": 0,
+   "turn": 0,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "maya",
+   "text": "Hi Maya! To find a plan everyone can accept within $1,800, could you share your maximum contribution for the weekend and any must-haves for lodging, transport, food or activities, e.g., private room, vegetarian-friendly meals, etc.?",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 1,
+   "turn": 0,
+   "kind": "message",
+   "actor": "maya",
+   "to": null,
+   "text": "I can contribute up to $450 and I don't have any hard constraints, but I care most about the activities.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 450,
+     "hard": [],
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 2,
+   "turn": 1,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "leo",
+   "text": "Hi Leo! To find a plan everyone can accept within $1,800, could you share your maximum contribution for the weekend and any must-haves for lodging, transport, food or activities, e.g., private room, vegetarian-friendly meals, etc.?",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 3,
+   "turn": 1,
+   "kind": "message",
+   "actor": "leo",
+   "to": null,
+   "text": "I can contribute up to $400 and I don't have any hard constraints, but my top priority is transport, preferably by train.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 400,
+     "hard": [],
+     "top_priority": "transport",
+     "prefers": {
+      "transport": "A"
+     }
+    }
+   }
+  },
+  {
+   "i": 4,
+   "turn": 2,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "sofia",
+   "text": "Hi Sofia! To find a plan everyone can accept within $1,800, could you share your maximum contribution for the weekend and any must-haves for lodging, transport, food or activities, e.g., private room, vegetarian-friendly meals, etc.?",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 5,
+   "turn": 2,
+   "kind": "message",
+   "actor": "sofia",
+   "to": null,
+   "text": "I can contribute up to $350 and my top priority is lodging, I need my own room.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 350,
+     "hard": [
+      "own_room"
+     ],
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 6,
+   "turn": 3,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "omar",
+   "text": "Hi Omar! To find a plan everyone can accept within $1,800, could you share your maximum contribution for the weekend and any must-haves for lodging, transport, food or activities, e.g., private room, vegetarian-friendly meals, etc.?",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 7,
+   "turn": 3,
+   "kind": "message",
+   "actor": "omar",
+   "to": null,
+   "text": "I can contribute up to $250 and my top priority is food, I prefer restaurants every meal. I also have a hard constraint: I get carsick on long drives.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 250,
+     "hard": [
+      "no_long_drive"
+     ],
+     "top_priority": "food",
+     "prefers": {
+      "food": "A"
+     }
+    }
+   }
+  },
+  {
+   "i": 8,
+   "turn": 4,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "priya",
+   "text": "Hi Priya! To find a plan everyone can accept within $1,800, could you share your maximum contribution for the weekend and any must-haves for lodging, transport, food or activities, e.g., private room, vegetarian-friendly meals, etc.?",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 9,
+   "turn": 4,
+   "kind": "message",
+   "actor": "priya",
+   "to": null,
+   "text": "I can contribute up to $200 and my top priority is activities. I also have a hard constraint: I am vegetarian, so the food plan must be vegetarian-friendly.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 200,
+     "hard": [
+      "vegetarian"
+     ],
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 10,
+   "turn": 5,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "theo",
+   "text": "Hi Theo! To find a plan everyone can accept within $1,800, could you share your maximum contribution for the weekend and any must-haves for lodging, transport, food or activities, e.g., private room, vegetarian-friendly meals, etc.?",
+   "data": {
+    "facts": [
+     "question"
+    ]
+   }
+  },
+  {
+   "i": 11,
+   "turn": 5,
+   "kind": "message",
+   "actor": "theo",
+   "to": null,
+   "text": "I can contribute up to $150 and I don't have any hard constraints, but my top priority is food.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 150,
+     "hard": [],
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 12,
+   "turn": 6,
+   "kind": "propose",
+   "actor": "lemma",
+   "to": null,
+   "text": "Here is a first feasible plan that respects the hard constraints we know about: Sofia needs her own room, Omar cannot do a long drive, and Priya needs vegetarian-friendly food. This keeps us within $1,800. Lodging B: 2 hotel rooms + 1 single $690 → Sofia can have her own room Transport A: train $480 → no long drive for Omar, preferred by Leo Food B: cook + 2 dinners out vegetarian-friendly $380 → vegetarian-friendly for Priya Activities B: concert only $240 → activities for Maya and Priya Total cost: $1,790 Proposed split within everyone’s stated maximums: Maya $450, Leo $390, Sofia $350, Omar $250, Priya $200, Theo $150",
+   "data": {
+    "plan": {
+     "choices": {
+      "lodging": "B",
+      "transport": "A",
+      "food": "B",
+      "activities": "B"
+     },
+     "labels": {
+      "lodging": "2 hotel rooms + 1 single",
+      "transport": "train",
+      "food": "cook + 2 dinners out (vegetarian-friendly)",
+      "activities": "concert only"
+     },
+     "cost": 1790,
+     "shares": {
+      "maya": 450.0,
+      "leo": 390.0,
+      "sofia": 350.0,
+      "omar": 250.0,
+      "priya": 200.0,
+      "theo": 150.0
+     },
+     "id": 1
+    },
+    "plan_id": 1,
+    "reason": "general agent proposal"
+   }
+  },
+  {
+   "i": 13,
+   "turn": 6,
+   "kind": "message",
+   "actor": "sofia",
+   "to": null,
+   "text": "I'm okay with this plan, it meets my needs for lodging and fits within my budget.",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 14,
+   "turn": 7,
+   "kind": "poll",
+   "actor": "lemma",
+   "to": null,
+   "text": "Private poll on plan 1: does it work for you, yes or no?",
+   "data": {
+    "members": [
+     "maya",
+     "leo",
+     "omar",
+     "priya",
+     "theo"
+    ],
+    "plan_id": 1
+   }
+  },
+  {
+   "i": 15,
+   "turn": 7,
+   "kind": "poll_reply",
+   "actor": "maya",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "activities",
+     "prefers": {
+      "activities": "A"
+     }
+    },
+    "private_message": "I'd prefer activities tier A, but I can live with this plan since it doesn't break any of my constraints.",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 16,
+   "turn": 7,
+   "kind": "poll_reply",
+   "actor": "leo",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "transport",
+     "prefers": {
+      "transport": "A"
+     }
+    },
+    "private_message": "I accept the plan as it meets my top priority of transport by train and fits within my budget.",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 17,
+   "turn": 7,
+   "kind": "poll_reply",
+   "actor": "omar",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "hard": [
+      "no_long_drive"
+     ],
+     "top_priority": "food"
+    },
+    "private_message": "I'm not thrilled with the food plan, but it doesn't break any of my hard constraints.",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 18,
+   "turn": 7,
+   "kind": "poll_reply",
+   "actor": "priya",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "hard": [
+      "vegetarian"
+     ]
+    },
+    "private_message": "I'm not entirely satisfied with the plan, but it does meet my hard constraint of vegetarian-friendly food and is within my budget.",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 19,
+   "turn": 7,
+   "kind": "poll_reply",
+   "actor": "theo",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "food"
+    },
+    "private_message": "I don't love the food plan, but it doesn't break any of my constraints.",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 20,
+   "turn": 7,
+   "kind": "close",
+   "actor": "system",
+   "to": null,
+   "text": "All members accepted plan 1.",
+   "data": {}
+  }
+ ],
+ "private": {
+  "maya": {
+   "max": 450,
+   "hard": "none",
+   "top_priority": "activities"
+  },
+  "leo": {
+   "max": 400,
+   "hard": "none",
+   "top_priority": "transport"
+  },
+  "sofia": {
+   "max": 350,
+   "hard": "needs her own room",
+   "top_priority": "lodging"
+  },
+  "omar": {
+   "max": 250,
+   "hard": "gets carsick on long drives",
+   "top_priority": "food"
+  },
+  "priya": {
+   "max": 200,
+   "hard": "is vegetarian",
+   "top_priority": "activities"
+  },
+  "theo": {
+   "max": 150,
+   "hard": "none",
+   "top_priority": "food"
+  }
+ },
+ "outcome": {
+  "agreed": true,
+  "unanimous": true,
+  "plan": {
+   "choices": {
+    "lodging": "B",
+    "transport": "A",
+    "food": "B",
+    "activities": "B"
+   },
+   "labels": {
+    "lodging": "2 hotel rooms + 1 single",
+    "transport": "train",
+    "food": "cook + 2 dinners out (vegetarian-friendly)",
+    "activities": "concert only"
+   },
+   "cost": 1790,
+   "shares": {
+    "maya": 450.0,
+    "leo": 390.0,
+    "sofia": 350.0,
+    "omar": 250.0,
+    "priya": 200.0,
+    "theo": 150.0
+   },
+   "id": 1
+  },
+  "violations": [],
+  "fairness": 0.9954,
+  "min_utility": 6.4,
+  "moderator_actions": 8,
+  "turns": 7,
+  "member_utility": {
+   "maya": 6.6,
+   "leo": 7.8,
+   "sofia": 6.4,
+   "omar": 6.8,
+   "priya": 6.6,
+   "theo": 6.6
+  }
+ }
+}

@@ -1,0 +1,2267 @@
+{
+ "meta": {
+  "scenario": "p4",
+  "arm": "lemma",
+  "arm_title": "LEMMA (scripted policy)",
+  "seed": 0,
+  "title": "Eight friends, $2,600",
+  "short": "Eight friends, long weekend",
+  "prompt": "Eight friends are planning a long weekend with a total budget of $2,600. Each person has a private limit on what they can pay and some things they cannot do, and nobody has said them yet. Can you moderate the discussion, gather everyone's constraints, and reach a plan and a split that all eight members can accept?",
+  "context": "Eight friends (Hana, Kofi, Lena, Raj, Mei, Sam, Ines, Tom) are planning a long weekend with a total budget of $2,600. Nobody has said what they can contribute or what they need.",
+  "kind": "budget",
+  "members": [
+   {
+    "id": "hana",
+    "name": "Hana",
+    "color_index": 0
+   },
+   {
+    "id": "kofi",
+    "name": "Kofi",
+    "color_index": 1
+   },
+   {
+    "id": "lena",
+    "name": "Lena",
+    "color_index": 2
+   },
+   {
+    "id": "raj",
+    "name": "Raj",
+    "color_index": 3
+   },
+   {
+    "id": "mei",
+    "name": "Mei",
+    "color_index": 4
+   },
+   {
+    "id": "sam",
+    "name": "Sam",
+    "color_index": 5
+   },
+   {
+    "id": "ines",
+    "name": "Ines",
+    "color_index": 6
+   },
+   {
+    "id": "tom",
+    "name": "Tom",
+    "color_index": 7
+   }
+  ],
+  "options": {
+   "money": 2600,
+   "original_budget": 2600,
+   "categories": [
+    {
+     "key": "lodging",
+     "label": "Lodging",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "lake house, 5 bedrooms, step-free",
+       "cost": 1100,
+       "satisfies": [
+        "step_free"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "4 hotel rooms, step-free",
+       "cost": 800,
+       "satisfies": [
+        "step_free"
+       ]
+      },
+      {
+       "tier": "C",
+       "label": "campground cabins (steps, gravel paths)",
+       "cost": 420,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "transport",
+     "label": "Transport",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "train",
+       "cost": 640,
+       "satisfies": [
+        "no_long_drive"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "two rental cars, 4-hour drive",
+       "cost": 380,
+       "satisfies": []
+      },
+      {
+       "tier": "C",
+       "label": "one 12-seat van, 4-hour drive",
+       "cost": 300,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "food",
+     "label": "Food",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "restaurants every meal (gluten-free and vegan menus)",
+       "cost": 800,
+       "satisfies": [
+        "vegan",
+        "celiac"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "cook + 2 dinners out (vegan options)",
+       "cost": 480,
+       "satisfies": [
+        "vegan"
+       ]
+      },
+      {
+       "tier": "C",
+       "label": "cook every meal (shared grill plan)",
+       "cost": 260,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "activities",
+     "label": "Activities",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "boat tour + concert",
+       "cost": 560,
+       "satisfies": [
+        "boat"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "boat tour only",
+       "cost": 280,
+       "satisfies": [
+        "boat"
+       ]
+      },
+      {
+       "tier": "C",
+       "label": "free trails",
+       "cost": 0,
+       "satisfies": []
+      }
+     ]
+    }
+   ],
+   "hard_constraints": {
+    "step_free": {
+     "member": "hana",
+     "category": "lodging",
+     "label": "uses a wheelchair (step-free lodging)",
+     "mention": "wheelchair|step.free|steps|stairs|accessib|ramp"
+    },
+    "vegan": {
+     "member": "lena",
+     "category": "food",
+     "label": "is vegan",
+     "mention": "vegan|plant.based|animal|meat|dairy"
+    },
+    "no_long_drive": {
+     "member": "raj",
+     "category": "transport",
+     "label": "gets carsick on long drives",
+     "mention": "carsick|car sick|motion|long drive|4.hour|four.hour|nause|queasy|drive|train"
+    },
+    "boat": {
+     "member": "mei",
+     "category": "activities",
+     "label": "needs the boat tour",
+     "mention": "boat|lake tour|cruise|on the water"
+    },
+    "celiac": {
+     "member": "sam",
+     "category": "food",
+     "label": "has celiac disease (restaurants only)",
+     "mention": "celiac|coeliac|gluten|wheat|cross.contact|kitchen|restaurant"
+    }
+   }
+  },
+  "model": "llama-3.3-70b-instruct",
+  "policy": "scripted",
+  "max_member_turns": 36,
+  "created": "2026-11-20T00:16:12",
+  "dry": false,
+  "fact_labels": {
+   "max": "Max contribution",
+   "hard": "Hard constraint",
+   "top_priority": "Top priority",
+   "arrive_by": "Arrive by",
+   "leave_at": "Leaves work",
+   "flex_min": "Flexibility (min)",
+   "dislikes_bus": "Dislikes the bus",
+   "appt_start": "Appointment starts",
+   "appt_end": "Appointment ends",
+   "no_transit": "Cannot take bus or walk"
+  },
+  "contract": "app-v1"
+ },
+ "events": [
+  {
+   "i": 0,
+   "turn": 0,
+   "kind": "message",
+   "actor": "lemma",
+   "to": null,
+   "text": "The goal: agree on a long-weekend plan within $2,600 and a split that each of the eight members can accept.",
+   "data": {}
+  },
+  {
+   "i": 1,
+   "turn": 0,
+   "kind": "state",
+   "actor": "lemma",
+   "to": null,
+   "text": "Facts known at the start.",
+   "data": {
+    "known": {
+     "hana": {},
+     "kofi": {},
+     "lena": {},
+     "raj": {},
+     "mei": {},
+     "sam": {},
+     "ines": {},
+     "tom": {}
+    },
+    "unknown": {
+     "hana": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "kofi": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "lena": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "raj": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "mei": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "sam": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "ines": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "tom": [
+      "max",
+      "hard",
+      "top_priority"
+     ]
+    }
+   }
+  },
+  {
+   "i": 2,
+   "turn": 0,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "hana",
+   "text": "Hana, I cannot build a plan that works for everyone without a few facts from you. Could you tell me your maximum contribution, any hard constraint (something that rules a plan out) and which of lodging, transport, food and activities matters most to you?",
+   "data": {
+    "facts": [
+     "max",
+     "hard",
+     "top_priority"
+    ]
+   }
+  },
+  {
+   "i": 3,
+   "turn": 0,
+   "kind": "message",
+   "actor": "hana",
+   "to": null,
+   "text": "I can contribute up to $400, I need step-free lodging, and lodging matters most to me.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 400,
+     "hard": [
+      "step_free"
+     ],
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 4,
+   "turn": 0,
+   "kind": "state",
+   "actor": "lemma",
+   "to": null,
+   "text": "Hana stated a fact.",
+   "data": {
+    "known": {
+     "hana": {
+      "max": 400,
+      "hard": [
+       "step_free"
+      ],
+      "top_priority": "lodging"
+     },
+     "kofi": {},
+     "lena": {},
+     "raj": {},
+     "mei": {},
+     "sam": {},
+     "ines": {},
+     "tom": {}
+    },
+    "unknown": {
+     "hana": [],
+     "kofi": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "lena": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "raj": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "mei": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "sam": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "ines": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "tom": [
+      "max",
+      "hard",
+      "top_priority"
+     ]
+    }
+   }
+  },
+  {
+   "i": 5,
+   "turn": 1,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "kofi",
+   "text": "Kofi, I cannot build a plan that works for everyone without a few facts from you. Could you tell me your maximum contribution, any hard constraint (something that rules a plan out) and which of lodging, transport, food and activities matters most to you?",
+   "data": {
+    "facts": [
+     "max",
+     "hard",
+     "top_priority"
+    ]
+   }
+  },
+  {
+   "i": 6,
+   "turn": 1,
+   "kind": "message",
+   "actor": "kofi",
+   "to": null,
+   "text": "I can contribute up to $500, I have no hard constraints, and activities matter most to me.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 500,
+     "hard": [],
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 7,
+   "turn": 1,
+   "kind": "state",
+   "actor": "lemma",
+   "to": null,
+   "text": "Kofi stated a fact.",
+   "data": {
+    "known": {
+     "hana": {
+      "max": 400,
+      "hard": [
+       "step_free"
+      ],
+      "top_priority": "lodging"
+     },
+     "kofi": {
+      "max": 500,
+      "hard": [],
+      "top_priority": "activities"
+     },
+     "lena": {},
+     "raj": {},
+     "mei": {},
+     "sam": {},
+     "ines": {},
+     "tom": {}
+    },
+    "unknown": {
+     "hana": [],
+     "kofi": [],
+     "lena": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "raj": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "mei": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "sam": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "ines": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "tom": [
+      "max",
+      "hard",
+      "top_priority"
+     ]
+    }
+   }
+  },
+  {
+   "i": 8,
+   "turn": 2,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "lena",
+   "text": "Lena, I cannot build a plan that works for everyone without a few facts from you. Could you tell me your maximum contribution, any hard constraint (something that rules a plan out) and which of lodging, transport, food and activities matters most to you?",
+   "data": {
+    "facts": [
+     "max",
+     "hard",
+     "top_priority"
+    ]
+   }
+  },
+  {
+   "i": 9,
+   "turn": 2,
+   "kind": "message",
+   "actor": "lena",
+   "to": null,
+   "text": "I can contribute up to $350, I'm vegan so the food plan must have vegan options, and food matters most to me.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 350,
+     "hard": [
+      "vegan"
+     ],
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 10,
+   "turn": 2,
+   "kind": "state",
+   "actor": "lemma",
+   "to": null,
+   "text": "Lena stated a fact.",
+   "data": {
+    "known": {
+     "hana": {
+      "max": 400,
+      "hard": [
+       "step_free"
+      ],
+      "top_priority": "lodging"
+     },
+     "kofi": {
+      "max": 500,
+      "hard": [],
+      "top_priority": "activities"
+     },
+     "lena": {
+      "max": 350,
+      "hard": [
+       "vegan"
+      ],
+      "top_priority": "food"
+     },
+     "raj": {},
+     "mei": {},
+     "sam": {},
+     "ines": {},
+     "tom": {}
+    },
+    "unknown": {
+     "hana": [],
+     "kofi": [],
+     "lena": [],
+     "raj": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "mei": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "sam": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "ines": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "tom": [
+      "max",
+      "hard",
+      "top_priority"
+     ]
+    }
+   }
+  },
+  {
+   "i": 11,
+   "turn": 3,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "raj",
+   "text": "Raj, I cannot build a plan that works for everyone without a few facts from you. Could you tell me your maximum contribution, any hard constraint (something that rules a plan out) and which of lodging, transport, food and activities matters most to you?",
+   "data": {
+    "facts": [
+     "max",
+     "hard",
+     "top_priority"
+    ]
+   }
+  },
+  {
+   "i": 12,
+   "turn": 3,
+   "kind": "message",
+   "actor": "raj",
+   "to": null,
+   "text": "I can contribute up to $250, I get carsick on long drives so that's a hard constraint for me, and transport matters most to me.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 250,
+     "hard": [
+      "no_long_drive"
+     ],
+     "top_priority": "transport"
+    }
+   }
+  },
+  {
+   "i": 13,
+   "turn": 3,
+   "kind": "state",
+   "actor": "lemma",
+   "to": null,
+   "text": "Raj stated a fact.",
+   "data": {
+    "known": {
+     "hana": {
+      "max": 400,
+      "hard": [
+       "step_free"
+      ],
+      "top_priority": "lodging"
+     },
+     "kofi": {
+      "max": 500,
+      "hard": [],
+      "top_priority": "activities"
+     },
+     "lena": {
+      "max": 350,
+      "hard": [
+       "vegan"
+      ],
+      "top_priority": "food"
+     },
+     "raj": {
+      "max": 250,
+      "hard": [
+       "no_long_drive"
+      ],
+      "top_priority": "transport"
+     },
+     "mei": {},
+     "sam": {},
+     "ines": {},
+     "tom": {}
+    },
+    "unknown": {
+     "hana": [],
+     "kofi": [],
+     "lena": [],
+     "raj": [],
+     "mei": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "sam": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "ines": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "tom": [
+      "max",
+      "hard",
+      "top_priority"
+     ]
+    }
+   }
+  },
+  {
+   "i": 14,
+   "turn": 4,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "mei",
+   "text": "Mei, I cannot build a plan that works for everyone without a few facts from you. Could you tell me your maximum contribution, any hard constraint (something that rules a plan out) and which of lodging, transport, food and activities matters most to you?",
+   "data": {
+    "facts": [
+     "max",
+     "hard",
+     "top_priority"
+    ]
+   }
+  },
+  {
+   "i": 15,
+   "turn": 4,
+   "kind": "message",
+   "actor": "mei",
+   "to": null,
+   "text": "I can contribute up to $450, I need the boat tour so that's a hard constraint for me, and activities matter most to me.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 450,
+     "hard": [
+      "boat"
+     ],
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 16,
+   "turn": 4,
+   "kind": "state",
+   "actor": "lemma",
+   "to": null,
+   "text": "Mei stated a fact.",
+   "data": {
+    "known": {
+     "hana": {
+      "max": 400,
+      "hard": [
+       "step_free"
+      ],
+      "top_priority": "lodging"
+     },
+     "kofi": {
+      "max": 500,
+      "hard": [],
+      "top_priority": "activities"
+     },
+     "lena": {
+      "max": 350,
+      "hard": [
+       "vegan"
+      ],
+      "top_priority": "food"
+     },
+     "raj": {
+      "max": 250,
+      "hard": [
+       "no_long_drive"
+      ],
+      "top_priority": "transport"
+     },
+     "mei": {
+      "max": 450,
+      "hard": [
+       "boat"
+      ],
+      "top_priority": "activities"
+     },
+     "sam": {},
+     "ines": {},
+     "tom": {}
+    },
+    "unknown": {
+     "hana": [],
+     "kofi": [],
+     "lena": [],
+     "raj": [],
+     "mei": [],
+     "sam": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "ines": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "tom": [
+      "max",
+      "hard",
+      "top_priority"
+     ]
+    }
+   }
+  },
+  {
+   "i": 17,
+   "turn": 5,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "sam",
+   "text": "Sam, I cannot build a plan that works for everyone without a few facts from you. Could you tell me your maximum contribution, any hard constraint (something that rules a plan out) and which of lodging, transport, food and activities matters most to you?",
+   "data": {
+    "facts": [
+     "max",
+     "hard",
+     "top_priority"
+    ]
+   }
+  },
+  {
+   "i": 18,
+   "turn": 5,
+   "kind": "message",
+   "actor": "sam",
+   "to": null,
+   "text": "I can contribute up to $200, I have celiac disease so I need a food plan with gluten-free options, and food matters most to me.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 200,
+     "hard": [
+      "celiac"
+     ],
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 19,
+   "turn": 5,
+   "kind": "state",
+   "actor": "lemma",
+   "to": null,
+   "text": "Sam stated a fact.",
+   "data": {
+    "known": {
+     "hana": {
+      "max": 400,
+      "hard": [
+       "step_free"
+      ],
+      "top_priority": "lodging"
+     },
+     "kofi": {
+      "max": 500,
+      "hard": [],
+      "top_priority": "activities"
+     },
+     "lena": {
+      "max": 350,
+      "hard": [
+       "vegan"
+      ],
+      "top_priority": "food"
+     },
+     "raj": {
+      "max": 250,
+      "hard": [
+       "no_long_drive"
+      ],
+      "top_priority": "transport"
+     },
+     "mei": {
+      "max": 450,
+      "hard": [
+       "boat"
+      ],
+      "top_priority": "activities"
+     },
+     "sam": {
+      "max": 200,
+      "hard": [
+       "celiac"
+      ],
+      "top_priority": "food"
+     },
+     "ines": {},
+     "tom": {}
+    },
+    "unknown": {
+     "hana": [],
+     "kofi": [],
+     "lena": [],
+     "raj": [],
+     "mei": [],
+     "sam": [],
+     "ines": [
+      "max",
+      "hard",
+      "top_priority"
+     ],
+     "tom": [
+      "max",
+      "hard",
+      "top_priority"
+     ]
+    }
+   }
+  },
+  {
+   "i": 20,
+   "turn": 6,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "ines",
+   "text": "Ines, I cannot build a plan that works for everyone without a few facts from you. Could you tell me your maximum contribution, any hard constraint (something that rules a plan out) and which of lodging, transport, food and activities matters most to you?",
+   "data": {
+    "facts": [
+     "max",
+     "hard",
+     "top_priority"
+    ]
+   }
+  },
+  {
+   "i": 21,
+   "turn": 6,
+   "kind": "message",
+   "actor": "ines",
+   "to": null,
+   "text": "I can contribute up to $300, I have no hard constraints, and lodging matters most to me.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 300,
+     "hard": [],
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 22,
+   "turn": 6,
+   "kind": "state",
+   "actor": "lemma",
+   "to": null,
+   "text": "Ines stated a fact.",
+   "data": {
+    "known": {
+     "hana": {
+      "max": 400,
+      "hard": [
+       "step_free"
+      ],
+      "top_priority": "lodging"
+     },
+     "kofi": {
+      "max": 500,
+      "hard": [],
+      "top_priority": "activities"
+     },
+     "lena": {
+      "max": 350,
+      "hard": [
+       "vegan"
+      ],
+      "top_priority": "food"
+     },
+     "raj": {
+      "max": 250,
+      "hard": [
+       "no_long_drive"
+      ],
+      "top_priority": "transport"
+     },
+     "mei": {
+      "max": 450,
+      "hard": [
+       "boat"
+      ],
+      "top_priority": "activities"
+     },
+     "sam": {
+      "max": 200,
+      "hard": [
+       "celiac"
+      ],
+      "top_priority": "food"
+     },
+     "ines": {
+      "max": 300,
+      "hard": [],
+      "top_priority": "lodging"
+     },
+     "tom": {}
+    },
+    "unknown": {
+     "hana": [],
+     "kofi": [],
+     "lena": [],
+     "raj": [],
+     "mei": [],
+     "sam": [],
+     "ines": [],
+     "tom": [
+      "max",
+      "hard",
+      "top_priority"
+     ]
+    }
+   }
+  },
+  {
+   "i": 23,
+   "turn": 7,
+   "kind": "ask",
+   "actor": "lemma",
+   "to": "tom",
+   "text": "Tom, I cannot build a plan that works for everyone without a few facts from you. Could you tell me your maximum contribution, any hard constraint (something that rules a plan out) and which of lodging, transport, food and activities matters most to you?",
+   "data": {
+    "facts": [
+     "max",
+     "hard",
+     "top_priority"
+    ]
+   }
+  },
+  {
+   "i": 24,
+   "turn": 7,
+   "kind": "message",
+   "actor": "tom",
+   "to": null,
+   "text": "I can contribute up to $150, I have no hard constraints, and food matters most to me.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 150,
+     "hard": [],
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 25,
+   "turn": 7,
+   "kind": "state",
+   "actor": "lemma",
+   "to": null,
+   "text": "Tom stated a fact.",
+   "data": {
+    "known": {
+     "hana": {
+      "max": 400,
+      "hard": [
+       "step_free"
+      ],
+      "top_priority": "lodging"
+     },
+     "kofi": {
+      "max": 500,
+      "hard": [],
+      "top_priority": "activities"
+     },
+     "lena": {
+      "max": 350,
+      "hard": [
+       "vegan"
+      ],
+      "top_priority": "food"
+     },
+     "raj": {
+      "max": 250,
+      "hard": [
+       "no_long_drive"
+      ],
+      "top_priority": "transport"
+     },
+     "mei": {
+      "max": 450,
+      "hard": [
+       "boat"
+      ],
+      "top_priority": "activities"
+     },
+     "sam": {
+      "max": 200,
+      "hard": [
+       "celiac"
+      ],
+      "top_priority": "food"
+     },
+     "ines": {
+      "max": 300,
+      "hard": [],
+      "top_priority": "lodging"
+     },
+     "tom": {
+      "max": 150,
+      "hard": [],
+      "top_priority": "food"
+     }
+    },
+    "unknown": {
+     "hana": [],
+     "kofi": [],
+     "lena": [],
+     "raj": [],
+     "mei": [],
+     "sam": [],
+     "ines": [],
+     "tom": []
+    }
+   }
+  },
+  {
+   "i": 26,
+   "turn": 8,
+   "kind": "tool",
+   "actor": "lemma",
+   "to": null,
+   "text": "Exact solver on the stated facts.",
+   "data": {
+    "inputs": {
+     "money": 2600,
+     "known": {
+      "hana": {
+       "max": 400,
+       "hard": [
+        "step_free"
+       ],
+       "top_priority": "lodging"
+      },
+      "kofi": {
+       "max": 500,
+       "hard": [],
+       "top_priority": "activities"
+      },
+      "lena": {
+       "max": 350,
+       "hard": [
+        "vegan"
+       ],
+       "top_priority": "food"
+      },
+      "raj": {
+       "max": 250,
+       "hard": [
+        "no_long_drive"
+       ],
+       "top_priority": "transport"
+      },
+      "mei": {
+       "max": 450,
+       "hard": [
+        "boat"
+       ],
+       "top_priority": "activities"
+      },
+      "sam": {
+       "max": 200,
+       "hard": [
+        "celiac"
+       ],
+       "top_priority": "food"
+      },
+      "ines": {
+       "max": 300,
+       "hard": [],
+       "top_priority": "lodging"
+      },
+      "tom": {
+       "max": 150,
+       "hard": [],
+       "top_priority": "food"
+      }
+     },
+     "hard_stated": [
+      "boat",
+      "celiac",
+      "no_long_drive",
+      "step_free",
+      "vegan"
+     ],
+     "caps_stated": {
+      "hana": 400,
+      "kofi": 500,
+      "lena": 350,
+      "raj": 250,
+      "mei": 450,
+      "sam": 200,
+      "ines": 300,
+      "tom": 150
+     },
+     "musts_stated": {},
+     "prefers_stated": {}
+    },
+    "n_candidates": 81,
+    "n_feasible": 1,
+    "plan": {
+     "choices": {
+      "lodging": "B",
+      "transport": "A",
+      "food": "A",
+      "activities": "B"
+     },
+     "labels": {
+      "lodging": "4 hotel rooms, step-free",
+      "transport": "train",
+      "food": "restaurants every meal (gluten-free and vegan menus)",
+      "activities": "boat tour only"
+     },
+     "cost": 2520,
+     "shares": {
+      "hana": 400.0,
+      "kofi": 435.0,
+      "lena": 350.0,
+      "raj": 250.0,
+      "mei": 435.0,
+      "sam": 200.0,
+      "ines": 300.0,
+      "tom": 150.0
+     }
+    },
+    "score": 7.99,
+    "why": "Highest Nash product (6488309350656) among 1 of 81 combinations that fit $2,600 and 5 stated hard constraints.",
+    "alternatives": [],
+    "unmet_musts": [],
+    "tool": "solver"
+   }
+  },
+  {
+   "i": 27,
+   "turn": 8,
+   "kind": "propose",
+   "actor": "lemma",
+   "to": null,
+   "text": "Plan 1: lodging 4 hotel rooms, step-free, transport train, food restaurants every meal (gluten-free and vegan menus), activities boat tour only.\nHana pays $400 (at their max).\nKofi pays $435.\nLena pays $350 (at their max).\nRaj pays $250 (at their max).\nMei pays $435.\nSam pays $200 (at their max).\nInes pays $300 (at their max).\nTom pays $150 (at their max).\nTotal $2,520 of $2,600.",
+   "data": {
+    "plan": {
+     "choices": {
+      "lodging": "B",
+      "transport": "A",
+      "food": "A",
+      "activities": "B"
+     },
+     "labels": {
+      "lodging": "4 hotel rooms, step-free",
+      "transport": "train",
+      "food": "restaurants every meal (gluten-free and vegan menus)",
+      "activities": "boat tour only"
+     },
+     "cost": 2520,
+     "shares": {
+      "hana": 400.0,
+      "kofi": 435.0,
+      "lena": 350.0,
+      "raj": 250.0,
+      "mei": 435.0,
+      "sam": 200.0,
+      "ines": 300.0,
+      "tom": 150.0
+     },
+     "id": 1
+    },
+    "plan_id": 1,
+    "reason": "Highest Nash product (6488309350656) among 1 of 81 combinations that fit $2,600 and 5 stated hard constraints."
+   }
+  },
+  {
+   "i": 28,
+   "turn": 8,
+   "kind": "message",
+   "actor": "mei",
+   "to": null,
+   "text": "I'd like to see the concert as part of the activities, it's my preference, but the boat tour is a must for me.",
+   "data": {
+    "accept": "no",
+    "stated": {
+     "hard": [
+      "boat"
+     ],
+     "top_priority": "activities",
+     "prefers": {
+      "activities": "A"
+     }
+    }
+   }
+  },
+  {
+   "i": 29,
+   "turn": 8,
+   "kind": "state",
+   "actor": "lemma",
+   "to": null,
+   "text": "Mei stated a fact.",
+   "data": {
+    "known": {
+     "hana": {
+      "max": 400,
+      "hard": [
+       "step_free"
+      ],
+      "top_priority": "lodging"
+     },
+     "kofi": {
+      "max": 500,
+      "hard": [],
+      "top_priority": "activities"
+     },
+     "lena": {
+      "max": 350,
+      "hard": [
+       "vegan"
+      ],
+      "top_priority": "food"
+     },
+     "raj": {
+      "max": 250,
+      "hard": [
+       "no_long_drive"
+      ],
+      "top_priority": "transport"
+     },
+     "mei": {
+      "max": 450,
+      "hard": [
+       "boat"
+      ],
+      "top_priority": "activities",
+      "prefers": {
+       "activities": "A"
+      }
+     },
+     "sam": {
+      "max": 200,
+      "hard": [
+       "celiac"
+      ],
+      "top_priority": "food"
+     },
+     "ines": {
+      "max": 300,
+      "hard": [],
+      "top_priority": "lodging"
+     },
+     "tom": {
+      "max": 150,
+      "hard": [],
+      "top_priority": "food"
+     }
+    },
+    "unknown": {
+     "hana": [],
+     "kofi": [],
+     "lena": [],
+     "raj": [],
+     "mei": [],
+     "sam": [],
+     "ines": [],
+     "tom": []
+    }
+   }
+  },
+  {
+   "i": 30,
+   "turn": 9,
+   "kind": "tool",
+   "actor": "lemma",
+   "to": null,
+   "text": "Exact solver on the stated facts.",
+   "data": {
+    "inputs": {
+     "money": 2600,
+     "known": {
+      "hana": {
+       "max": 400,
+       "hard": [
+        "step_free"
+       ],
+       "top_priority": "lodging"
+      },
+      "kofi": {
+       "max": 500,
+       "hard": [],
+       "top_priority": "activities"
+      },
+      "lena": {
+       "max": 350,
+       "hard": [
+        "vegan"
+       ],
+       "top_priority": "food"
+      },
+      "raj": {
+       "max": 250,
+       "hard": [
+        "no_long_drive"
+       ],
+       "top_priority": "transport"
+      },
+      "mei": {
+       "max": 450,
+       "hard": [
+        "boat"
+       ],
+       "top_priority": "activities",
+       "prefers": {
+        "activities": "A"
+       }
+      },
+      "sam": {
+       "max": 200,
+       "hard": [
+        "celiac"
+       ],
+       "top_priority": "food"
+      },
+      "ines": {
+       "max": 300,
+       "hard": [],
+       "top_priority": "lodging"
+      },
+      "tom": {
+       "max": 150,
+       "hard": [],
+       "top_priority": "food"
+      }
+     },
+     "hard_stated": [
+      "boat",
+      "celiac",
+      "no_long_drive",
+      "step_free",
+      "vegan"
+     ],
+     "caps_stated": {
+      "hana": 400,
+      "kofi": 500,
+      "lena": 350,
+      "raj": 250,
+      "mei": 450,
+      "sam": 200,
+      "ines": 300,
+      "tom": 150
+     },
+     "musts_stated": {},
+     "prefers_stated": {
+      "mei": {
+       "activities": "A"
+      }
+     }
+    },
+    "n_candidates": 81,
+    "n_feasible": 1,
+    "plan": {
+     "choices": {
+      "lodging": "B",
+      "transport": "A",
+      "food": "A",
+      "activities": "B"
+     },
+     "labels": {
+      "lodging": "4 hotel rooms, step-free",
+      "transport": "train",
+      "food": "restaurants every meal (gluten-free and vegan menus)",
+      "activities": "boat tour only"
+     },
+     "cost": 2520,
+     "shares": {
+      "hana": 400.0,
+      "kofi": 435.0,
+      "lena": 350.0,
+      "raj": 250.0,
+      "mei": 435.0,
+      "sam": 200.0,
+      "ines": 300.0,
+      "tom": 150.0
+     }
+    },
+    "score": 7.99,
+    "why": "Highest Nash product (6488309350656) among 1 of 81 combinations that fit $2,600 and 5 stated hard constraints.",
+    "alternatives": [],
+    "unmet_musts": [],
+    "tool": "solver"
+   }
+  },
+  {
+   "i": 31,
+   "turn": 9,
+   "kind": "tool",
+   "actor": "lemma",
+   "to": null,
+   "text": "Best plan that gives Mei what they prefer.",
+   "data": {
+    "inputs": {
+     "money": 2600,
+     "known": {
+      "hana": {
+       "max": 400,
+       "hard": [
+        "step_free"
+       ],
+       "top_priority": "lodging"
+      },
+      "kofi": {
+       "max": 500,
+       "hard": [],
+       "top_priority": "activities"
+      },
+      "lena": {
+       "max": 350,
+       "hard": [
+        "vegan"
+       ],
+       "top_priority": "food"
+      },
+      "raj": {
+       "max": 250,
+       "hard": [
+        "no_long_drive"
+       ],
+       "top_priority": "transport"
+      },
+      "mei": {
+       "max": 450,
+       "hard": [
+        "boat"
+       ],
+       "top_priority": "activities",
+       "prefers": {
+        "activities": "A"
+       }
+      },
+      "sam": {
+       "max": 200,
+       "hard": [
+        "celiac"
+       ],
+       "top_priority": "food"
+      },
+      "ines": {
+       "max": 300,
+       "hard": [],
+       "top_priority": "lodging"
+      },
+      "tom": {
+       "max": 150,
+       "hard": [],
+       "top_priority": "food"
+      }
+     },
+     "hard_stated": [
+      "boat",
+      "celiac",
+      "no_long_drive",
+      "step_free",
+      "vegan"
+     ],
+     "caps_stated": {
+      "hana": 400,
+      "kofi": 500,
+      "lena": 350,
+      "raj": 250,
+      "mei": 450,
+      "sam": 200,
+      "ines": 300,
+      "tom": 150
+     },
+     "musts_stated": {},
+     "prefers_stated": {
+      "mei": {
+       "activities": "A"
+      }
+     }
+    },
+    "n_candidates": 81,
+    "n_feasible": 0,
+    "plan": null,
+    "score": null,
+    "why": "No tier combination fits the money and the stated constraints.",
+    "alternatives": [],
+    "unmet_musts": [],
+    "tool": "solver"
+   }
+  },
+  {
+   "i": 32,
+   "turn": 9,
+   "kind": "message",
+   "actor": "lemma",
+   "to": null,
+   "text": "No plan within $2,600 gives Mei activities tier A (boat tour + concert) while keeping everyone's stated musts and maxes.",
+   "data": {}
+  },
+  {
+   "i": 33,
+   "turn": 9,
+   "kind": "message",
+   "actor": "lena",
+   "to": null,
+   "text": "I'm okay with Plan 1, it meets my needs as a vegan and I like the food option",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "hard": [
+      "vegan"
+     ],
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 34,
+   "turn": 10,
+   "kind": "message",
+   "actor": "lemma",
+   "to": "mei",
+   "text": "Mei: Your requirement (needs the boat tour) is met: activities is boat tour only. Your share is $435, within your $450 maximum.",
+   "data": {
+    "clarify": true
+   }
+  },
+  {
+   "i": 35,
+   "turn": 10,
+   "kind": "poll",
+   "actor": "lemma",
+   "to": null,
+   "text": "Private poll on plan 1: does it work for you, yes or no?",
+   "data": {
+    "members": [
+     "mei"
+    ],
+    "plan_id": 1
+   }
+  },
+  {
+   "i": 36,
+   "turn": 10,
+   "kind": "poll_reply",
+   "actor": "mei",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "hard": [
+      "boat"
+     ],
+     "top_priority": "activities"
+    },
+    "private_message": "I'd prefer activities tier A but it's not a requirement, so this plan is acceptable to me as it includes the boat tour.",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 37,
+   "turn": 10,
+   "kind": "message",
+   "actor": "raj",
+   "to": null,
+   "text": "I'm okay with Plan 1, the train is my preferred transport option and it meets my needs",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "hard": [
+      "no_long_drive"
+     ],
+     "top_priority": "transport",
+     "prefers": {
+      "transport": "A"
+     }
+    }
+   }
+  },
+  {
+   "i": 38,
+   "turn": 10,
+   "kind": "state",
+   "actor": "lemma",
+   "to": null,
+   "text": "Raj stated a fact.",
+   "data": {
+    "known": {
+     "hana": {
+      "max": 400,
+      "hard": [
+       "step_free"
+      ],
+      "top_priority": "lodging"
+     },
+     "kofi": {
+      "max": 500,
+      "hard": [],
+      "top_priority": "activities"
+     },
+     "lena": {
+      "max": 350,
+      "hard": [
+       "vegan"
+      ],
+      "top_priority": "food"
+     },
+     "raj": {
+      "max": 250,
+      "hard": [
+       "no_long_drive"
+      ],
+      "top_priority": "transport",
+      "prefers": {
+       "transport": "A"
+      }
+     },
+     "mei": {
+      "max": 450,
+      "hard": [
+       "boat"
+      ],
+      "top_priority": "activities",
+      "prefers": {
+       "activities": "A"
+      }
+     },
+     "sam": {
+      "max": 200,
+      "hard": [
+       "celiac"
+      ],
+      "top_priority": "food"
+     },
+     "ines": {
+      "max": 300,
+      "hard": [],
+      "top_priority": "lodging"
+     },
+     "tom": {
+      "max": 150,
+      "hard": [],
+      "top_priority": "food"
+     }
+    },
+    "unknown": {
+     "hana": [],
+     "kofi": [],
+     "lena": [],
+     "raj": [],
+     "mei": [],
+     "sam": [],
+     "ines": [],
+     "tom": []
+    }
+   }
+  },
+  {
+   "i": 39,
+   "turn": 11,
+   "kind": "tool",
+   "actor": "lemma",
+   "to": null,
+   "text": "Exact solver on the stated facts.",
+   "data": {
+    "inputs": {
+     "money": 2600,
+     "known": {
+      "hana": {
+       "max": 400,
+       "hard": [
+        "step_free"
+       ],
+       "top_priority": "lodging"
+      },
+      "kofi": {
+       "max": 500,
+       "hard": [],
+       "top_priority": "activities"
+      },
+      "lena": {
+       "max": 350,
+       "hard": [
+        "vegan"
+       ],
+       "top_priority": "food"
+      },
+      "raj": {
+       "max": 250,
+       "hard": [
+        "no_long_drive"
+       ],
+       "top_priority": "transport",
+       "prefers": {
+        "transport": "A"
+       }
+      },
+      "mei": {
+       "max": 450,
+       "hard": [
+        "boat"
+       ],
+       "top_priority": "activities",
+       "prefers": {
+        "activities": "A"
+       }
+      },
+      "sam": {
+       "max": 200,
+       "hard": [
+        "celiac"
+       ],
+       "top_priority": "food"
+      },
+      "ines": {
+       "max": 300,
+       "hard": [],
+       "top_priority": "lodging"
+      },
+      "tom": {
+       "max": 150,
+       "hard": [],
+       "top_priority": "food"
+      }
+     },
+     "hard_stated": [
+      "boat",
+      "celiac",
+      "no_long_drive",
+      "step_free",
+      "vegan"
+     ],
+     "caps_stated": {
+      "hana": 400,
+      "kofi": 500,
+      "lena": 350,
+      "raj": 250,
+      "mei": 450,
+      "sam": 200,
+      "ines": 300,
+      "tom": 150
+     },
+     "musts_stated": {},
+     "prefers_stated": {
+      "raj": {
+       "transport": "A"
+      },
+      "mei": {
+       "activities": "A"
+      }
+     }
+    },
+    "n_candidates": 81,
+    "n_feasible": 1,
+    "plan": {
+     "choices": {
+      "lodging": "B",
+      "transport": "A",
+      "food": "A",
+      "activities": "B"
+     },
+     "labels": {
+      "lodging": "4 hotel rooms, step-free",
+      "transport": "train",
+      "food": "restaurants every meal (gluten-free and vegan menus)",
+      "activities": "boat tour only"
+     },
+     "cost": 2520,
+     "shares": {
+      "hana": 400.0,
+      "kofi": 435.0,
+      "lena": 350.0,
+      "raj": 250.0,
+      "mei": 435.0,
+      "sam": 200.0,
+      "ines": 300.0,
+      "tom": 150.0
+     }
+    },
+    "score": 8.081,
+    "why": "Highest Nash product (7106243574528) among 1 of 81 combinations that fit $2,600 and 5 stated hard constraints.",
+    "alternatives": [],
+    "unmet_musts": [],
+    "tool": "solver"
+   }
+  },
+  {
+   "i": 40,
+   "turn": 11,
+   "kind": "message",
+   "actor": "lemma",
+   "to": null,
+   "text": "The plan on the table still fits everything stated so far.",
+   "data": {}
+  },
+  {
+   "i": 41,
+   "turn": 11,
+   "kind": "message",
+   "actor": "tom",
+   "to": null,
+   "text": "I'm okay with Plan 1, the food option is great and I'm glad it includes gluten-free and vegan menus, which should cover everyone's needs",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 42,
+   "turn": 12,
+   "kind": "poll",
+   "actor": "lemma",
+   "to": null,
+   "text": "Private poll on plan 1: does it work for you, yes or no?",
+   "data": {
+    "members": [
+     "hana",
+     "kofi",
+     "sam",
+     "ines"
+    ],
+    "plan_id": 1
+   }
+  },
+  {
+   "i": 43,
+   "turn": 12,
+   "kind": "poll_reply",
+   "actor": "hana",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "hard": [
+      "step_free"
+     ],
+     "top_priority": "lodging",
+     "prefers": {
+      "lodging": "A"
+     }
+    },
+    "private_message": "I prefer lodging tier A, but this plan is acceptable as it meets my hard constraint of step-free lodging and is within my budget.",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 44,
+   "turn": 12,
+   "kind": "state",
+   "actor": "lemma",
+   "to": null,
+   "text": "Hana stated a fact in the poll.",
+   "data": {
+    "known": {
+     "hana": {
+      "max": 400,
+      "hard": [
+       "step_free"
+      ],
+      "top_priority": "lodging",
+      "prefers": {
+       "lodging": "A"
+      }
+     },
+     "kofi": {
+      "max": 500,
+      "hard": [],
+      "top_priority": "activities"
+     },
+     "lena": {
+      "max": 350,
+      "hard": [
+       "vegan"
+      ],
+      "top_priority": "food"
+     },
+     "raj": {
+      "max": 250,
+      "hard": [
+       "no_long_drive"
+      ],
+      "top_priority": "transport",
+      "prefers": {
+       "transport": "A"
+      }
+     },
+     "mei": {
+      "max": 450,
+      "hard": [
+       "boat"
+      ],
+      "top_priority": "activities",
+      "prefers": {
+       "activities": "A"
+      }
+     },
+     "sam": {
+      "max": 200,
+      "hard": [
+       "celiac"
+      ],
+      "top_priority": "food"
+     },
+     "ines": {
+      "max": 300,
+      "hard": [],
+      "top_priority": "lodging"
+     },
+     "tom": {
+      "max": 150,
+      "hard": [],
+      "top_priority": "food"
+     }
+    },
+    "unknown": {
+     "hana": [],
+     "kofi": [],
+     "lena": [],
+     "raj": [],
+     "mei": [],
+     "sam": [],
+     "ines": [],
+     "tom": []
+    }
+   }
+  },
+  {
+   "i": 45,
+   "turn": 12,
+   "kind": "poll_reply",
+   "actor": "kofi",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "activities",
+     "prefers": {
+      "activities": "A"
+     }
+    },
+    "private_message": "I'd prefer activities tier A, but I can live with the current plan.",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 46,
+   "turn": 12,
+   "kind": "state",
+   "actor": "lemma",
+   "to": null,
+   "text": "Kofi stated a fact in the poll.",
+   "data": {
+    "known": {
+     "hana": {
+      "max": 400,
+      "hard": [
+       "step_free"
+      ],
+      "top_priority": "lodging",
+      "prefers": {
+       "lodging": "A"
+      }
+     },
+     "kofi": {
+      "max": 500,
+      "hard": [],
+      "top_priority": "activities",
+      "prefers": {
+       "activities": "A"
+      }
+     },
+     "lena": {
+      "max": 350,
+      "hard": [
+       "vegan"
+      ],
+      "top_priority": "food"
+     },
+     "raj": {
+      "max": 250,
+      "hard": [
+       "no_long_drive"
+      ],
+      "top_priority": "transport",
+      "prefers": {
+       "transport": "A"
+      }
+     },
+     "mei": {
+      "max": 450,
+      "hard": [
+       "boat"
+      ],
+      "top_priority": "activities",
+      "prefers": {
+       "activities": "A"
+      }
+     },
+     "sam": {
+      "max": 200,
+      "hard": [
+       "celiac"
+      ],
+      "top_priority": "food"
+     },
+     "ines": {
+      "max": 300,
+      "hard": [],
+      "top_priority": "lodging"
+     },
+     "tom": {
+      "max": 150,
+      "hard": [],
+      "top_priority": "food"
+     }
+    },
+    "unknown": {
+     "hana": [],
+     "kofi": [],
+     "lena": [],
+     "raj": [],
+     "mei": [],
+     "sam": [],
+     "ines": [],
+     "tom": []
+    }
+   }
+  },
+  {
+   "i": 47,
+   "turn": 12,
+   "kind": "poll_reply",
+   "actor": "sam",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "hard": [
+      "celiac"
+     ],
+     "top_priority": "food"
+    },
+    "private_message": "I'm good with the plan, it meets my food needs with gluten-free options and fits my budget.",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 48,
+   "turn": 12,
+   "kind": "poll_reply",
+   "actor": "ines",
+   "to": "lemma",
+   "text": "yes",
+   "data": {
+    "accept": "yes",
+    "stated": {
+     "top_priority": "lodging"
+    },
+    "private_message": "I'd prefer a better lodging option, but this plan doesn't break any of my constraints.",
+    "answer": "yes"
+   }
+  },
+  {
+   "i": 49,
+   "turn": 12,
+   "kind": "consent",
+   "actor": "lemma",
+   "to": null,
+   "text": "All 8 members accepted plan 1.",
+   "data": {
+    "accepted": [
+     "hana",
+     "kofi",
+     "lena",
+     "raj",
+     "mei",
+     "sam",
+     "ines",
+     "tom"
+    ],
+    "plan_id": 1
+   }
+  },
+  {
+   "i": 50,
+   "turn": 12,
+   "kind": "close",
+   "actor": "lemma",
+   "to": null,
+   "text": "Plan 1 is agreed by everyone. Closing.",
+   "data": {}
+  }
+ ],
+ "private": {
+  "hana": {
+   "max": 400,
+   "hard": "uses a wheelchair (step-free lodging)",
+   "top_priority": "lodging"
+  },
+  "kofi": {
+   "max": 500,
+   "hard": "none",
+   "top_priority": "activities"
+  },
+  "lena": {
+   "max": 350,
+   "hard": "is vegan",
+   "top_priority": "food"
+  },
+  "raj": {
+   "max": 250,
+   "hard": "gets carsick on long drives",
+   "top_priority": "transport"
+  },
+  "mei": {
+   "max": 450,
+   "hard": "needs the boat tour",
+   "top_priority": "activities"
+  },
+  "sam": {
+   "max": 200,
+   "hard": "has celiac disease (restaurants only)",
+   "top_priority": "food"
+  },
+  "ines": {
+   "max": 300,
+   "hard": "none",
+   "top_priority": "lodging"
+  },
+  "tom": {
+   "max": 150,
+   "hard": "none",
+   "top_priority": "food"
+  }
+ },
+ "outcome": {
+  "agreed": true,
+  "unanimous": true,
+  "plan": {
+   "choices": {
+    "lodging": "B",
+    "transport": "A",
+    "food": "A",
+    "activities": "B"
+   },
+   "labels": {
+    "lodging": "4 hotel rooms, step-free",
+    "transport": "train",
+    "food": "restaurants every meal (gluten-free and vegan menus)",
+    "activities": "boat tour only"
+   },
+   "cost": 2520,
+   "shares": {
+    "hana": 400.0,
+    "kofi": 435.0,
+    "lena": 350.0,
+    "raj": 250.0,
+    "mei": 435.0,
+    "sam": 200.0,
+    "ines": 300.0,
+    "tom": 150.0
+   },
+   "id": 1
+  },
+  "violations": [],
+  "fairness": 0.9953,
+  "min_utility": 7.2,
+  "moderator_actions": 13,
+  "turns": 12,
+  "member_utility": {
+   "hana": 7.4,
+   "kofi": 7.6,
+   "lena": 8.4,
+   "raj": 8.6,
+   "mei": 7.4,
+   "sam": 8.2,
+   "ines": 7.2,
+   "tom": 8.6
+  }
+ }
+}

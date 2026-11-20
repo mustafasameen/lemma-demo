@@ -1,0 +1,1025 @@
+{
+ "meta": {
+  "scenario": "p4",
+  "arm": "rule",
+  "arm_title": "Scripted rule",
+  "seed": 1,
+  "title": "Eight friends, $2,600",
+  "short": "Eight friends, long weekend",
+  "prompt": "Eight friends are planning a long weekend with a total budget of $2,600. Each person has a private limit on what they can pay and some things they cannot do, and nobody has said them yet. Can you moderate the discussion, gather everyone's constraints, and reach a plan and a split that all eight members can accept?",
+  "context": "Eight friends (Hana, Kofi, Lena, Raj, Mei, Sam, Ines, Tom) are planning a long weekend with a total budget of $2,600. Nobody has said what they can contribute or what they need.",
+  "kind": "budget",
+  "members": [
+   {
+    "id": "hana",
+    "name": "Hana",
+    "color_index": 0
+   },
+   {
+    "id": "kofi",
+    "name": "Kofi",
+    "color_index": 1
+   },
+   {
+    "id": "lena",
+    "name": "Lena",
+    "color_index": 2
+   },
+   {
+    "id": "raj",
+    "name": "Raj",
+    "color_index": 3
+   },
+   {
+    "id": "mei",
+    "name": "Mei",
+    "color_index": 4
+   },
+   {
+    "id": "sam",
+    "name": "Sam",
+    "color_index": 5
+   },
+   {
+    "id": "ines",
+    "name": "Ines",
+    "color_index": 6
+   },
+   {
+    "id": "tom",
+    "name": "Tom",
+    "color_index": 7
+   }
+  ],
+  "options": {
+   "money": 2600,
+   "original_budget": 2600,
+   "categories": [
+    {
+     "key": "lodging",
+     "label": "Lodging",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "lake house, 5 bedrooms, step-free",
+       "cost": 1100,
+       "satisfies": [
+        "step_free"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "4 hotel rooms, step-free",
+       "cost": 800,
+       "satisfies": [
+        "step_free"
+       ]
+      },
+      {
+       "tier": "C",
+       "label": "campground cabins (steps, gravel paths)",
+       "cost": 420,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "transport",
+     "label": "Transport",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "train",
+       "cost": 640,
+       "satisfies": [
+        "no_long_drive"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "two rental cars, 4-hour drive",
+       "cost": 380,
+       "satisfies": []
+      },
+      {
+       "tier": "C",
+       "label": "one 12-seat van, 4-hour drive",
+       "cost": 300,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "food",
+     "label": "Food",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "restaurants every meal (gluten-free and vegan menus)",
+       "cost": 800,
+       "satisfies": [
+        "vegan",
+        "celiac"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "cook + 2 dinners out (vegan options)",
+       "cost": 480,
+       "satisfies": [
+        "vegan"
+       ]
+      },
+      {
+       "tier": "C",
+       "label": "cook every meal (shared grill plan)",
+       "cost": 260,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "activities",
+     "label": "Activities",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "boat tour + concert",
+       "cost": 560,
+       "satisfies": [
+        "boat"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "boat tour only",
+       "cost": 280,
+       "satisfies": [
+        "boat"
+       ]
+      },
+      {
+       "tier": "C",
+       "label": "free trails",
+       "cost": 0,
+       "satisfies": []
+      }
+     ]
+    }
+   ],
+   "hard_constraints": {
+    "step_free": {
+     "member": "hana",
+     "category": "lodging",
+     "label": "uses a wheelchair (step-free lodging)",
+     "mention": "wheelchair|step.free|steps|stairs|accessib|ramp"
+    },
+    "vegan": {
+     "member": "lena",
+     "category": "food",
+     "label": "is vegan",
+     "mention": "vegan|plant.based|animal|meat|dairy"
+    },
+    "no_long_drive": {
+     "member": "raj",
+     "category": "transport",
+     "label": "gets carsick on long drives",
+     "mention": "carsick|car sick|motion|long drive|4.hour|four.hour|nause|queasy|drive|train"
+    },
+    "boat": {
+     "member": "mei",
+     "category": "activities",
+     "label": "needs the boat tour",
+     "mention": "boat|lake tour|cruise|on the water"
+    },
+    "celiac": {
+     "member": "sam",
+     "category": "food",
+     "label": "has celiac disease (restaurants only)",
+     "mention": "celiac|coeliac|gluten|wheat|cross.contact|kitchen|restaurant"
+    }
+   }
+  },
+  "model": "llama-3.3-70b-instruct",
+  "policy": "rule",
+  "max_member_turns": 36,
+  "created": "2026-11-20T00:11:18",
+  "dry": false,
+  "fact_labels": {
+   "max": "Max contribution",
+   "hard": "Hard constraint",
+   "top_priority": "Top priority",
+   "arrive_by": "Arrive by",
+   "leave_at": "Leaves work",
+   "flex_min": "Flexibility (min)",
+   "dislikes_bus": "Dislikes the bus",
+   "appt_start": "Appointment starts",
+   "appt_end": "Appointment ends",
+   "no_transit": "Cannot take bus or walk"
+  },
+  "contract": "app-v1"
+ },
+ "events": [
+  {
+   "i": 0,
+   "turn": 0,
+   "kind": "tool",
+   "actor": "rule",
+   "to": null,
+   "text": "Solver on the public information only.",
+   "data": {
+    "inputs": {
+     "money": 2600,
+     "known": {
+      "hana": {},
+      "kofi": {},
+      "lena": {},
+      "raj": {},
+      "mei": {},
+      "sam": {},
+      "ines": {},
+      "tom": {}
+     },
+     "hard_stated": [],
+     "caps_stated": {
+      "hana": null,
+      "kofi": null,
+      "lena": null,
+      "raj": null,
+      "mei": null,
+      "sam": null,
+      "ines": null,
+      "tom": null
+     },
+     "musts_stated": {},
+     "prefers_stated": {}
+    },
+    "n_candidates": 81,
+    "n_feasible": 75,
+    "plan": {
+     "choices": {
+      "lodging": "A",
+      "transport": "A",
+      "food": "C",
+      "activities": "A"
+     },
+     "labels": {
+      "lodging": "lake house, 5 bedrooms, step-free",
+      "transport": "train",
+      "food": "cook every meal (shared grill plan)",
+      "activities": "boat tour + concert"
+     },
+     "cost": 2560,
+     "shares": {
+      "hana": 320.0,
+      "kofi": 320.0,
+      "lena": 320.0,
+      "raj": 320.0,
+      "mei": 320.0,
+      "sam": 320.0,
+      "ines": 320.0,
+      "tom": 320.0
+     }
+    },
+    "score": 8.25,
+    "why": "Highest Nash product (1406408618241) among 75 of 81 combinations that fit $2,600 and 0 stated hard constraints; 3 tied, the larger spend was kept.",
+    "alternatives": [
+     {
+      "tiers": {
+       "lodging": "A",
+       "transport": "A",
+       "food": "A",
+       "activities": "C"
+      },
+      "cost": 2540,
+      "score": 1406408618241
+     },
+     {
+      "tiers": {
+       "lodging": "C",
+       "transport": "A",
+       "food": "A",
+       "activities": "A"
+      },
+      "cost": 2420,
+      "score": 1406408618241
+     },
+     {
+      "tiers": {
+       "lodging": "A",
+       "transport": "B",
+       "food": "A",
+       "activities": "B"
+      },
+      "cost": 2560,
+      "score": 1099511627776
+     }
+    ],
+    "unmet_musts": [],
+    "tool": "solver"
+   }
+  },
+  {
+   "i": 1,
+   "turn": 0,
+   "kind": "propose",
+   "actor": "rule",
+   "to": null,
+   "text": "Plan 1: lodging lake house, 5 bedrooms, step-free, transport train, food cook every meal (shared grill plan), activities boat tour + concert.\nHana pays $320.\nKofi pays $320.\nLena pays $320.\nRaj pays $320.\nMei pays $320.\nSam pays $320.\nInes pays $320.\nTom pays $320.\nTotal $2,560 of $2,600. (Computed from the public information only.)",
+   "data": {
+    "plan": {
+     "choices": {
+      "lodging": "A",
+      "transport": "A",
+      "food": "C",
+      "activities": "A"
+     },
+     "labels": {
+      "lodging": "lake house, 5 bedrooms, step-free",
+      "transport": "train",
+      "food": "cook every meal (shared grill plan)",
+      "activities": "boat tour + concert"
+     },
+     "cost": 2560,
+     "shares": {
+      "hana": 320.0,
+      "kofi": 320.0,
+      "lena": 320.0,
+      "raj": 320.0,
+      "mei": 320.0,
+      "sam": 320.0,
+      "ines": 320.0,
+      "tom": 320.0
+     },
+     "id": 1
+    },
+    "plan_id": 1,
+    "reason": "Highest Nash product (1406408618241) among 75 of 81 combinations that fit $2,600 and 0 stated hard constraints; 3 tied, the larger spend was kept."
+   }
+  },
+  {
+   "i": 2,
+   "turn": 0,
+   "kind": "message",
+   "actor": "lena",
+   "to": null,
+   "text": "I'm not sure about the food plan, I'd really like some vegan options and cook every meal might not work for me",
+   "data": {
+    "accept": null,
+    "stated": {
+     "hard": [
+      "vegan"
+     ]
+    }
+   }
+  },
+  {
+   "i": 3,
+   "turn": 1,
+   "kind": "message",
+   "actor": "tom",
+   "to": null,
+   "text": "I think we should consider upgrading the food plan to include more options, like restaurants with gluten-free and vegan menus, it would make the trip more enjoyable for everyone",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 4,
+   "turn": 2,
+   "kind": "message",
+   "actor": "kofi",
+   "to": null,
+   "text": "I think the current activities plan is great, let's keep the boat tour and concert",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 5,
+   "turn": 3,
+   "kind": "message",
+   "actor": "mei",
+   "to": null,
+   "text": "I'm happy with the activities plan, the boat tour and concert sound like a lot of fun",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 6,
+   "turn": 4,
+   "kind": "message",
+   "actor": "ines",
+   "to": null,
+   "text": "I'm happy with the current lodging choice, it's my top priority and the lake house sounds perfect",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 7,
+   "turn": 5,
+   "kind": "message",
+   "actor": "hana",
+   "to": null,
+   "text": "I'm glad we have the lake house, it's really important to me that our lodging is step-free. I also think the train is a good choice for transport.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging",
+     "hard": [
+      "step_free"
+     ]
+    }
+   }
+  },
+  {
+   "i": 8,
+   "turn": 6,
+   "kind": "message",
+   "actor": "raj",
+   "to": null,
+   "text": "I'm comfortable with the current plan, especially the train for transport, but I do think we should consider Lena's concerns about food options.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "transport"
+    }
+   }
+  },
+  {
+   "i": 9,
+   "turn": 7,
+   "kind": "message",
+   "actor": "sam",
+   "to": null,
+   "text": "I'm concerned about the food plan, I need gluten-free options and cooking every meal might not be safe for me",
+   "data": {
+    "accept": null,
+    "stated": {
+     "hard": [
+      "celiac"
+     ],
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 10,
+   "turn": 8,
+   "kind": "message",
+   "actor": "lena",
+   "to": null,
+   "text": "I really think we should consider upgrading to food tier A, it would make a huge difference for me and Sam, and Tom mentioned it would be more enjoyable for everyone",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 11,
+   "turn": 9,
+   "kind": "message",
+   "actor": "tom",
+   "to": null,
+   "text": "I completely agree with Lena, upgrading to food tier A would be a great idea, it's my top priority and I think it would make the trip more enjoyable for everyone",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 12,
+   "turn": 10,
+   "kind": "message",
+   "actor": "kofi",
+   "to": null,
+   "text": "I'm happy with the current activities plan, but I think we should consider Tom's suggestion to upgrade the food plan to include more options, it might make the trip more enjoyable for everyone",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 13,
+   "turn": 11,
+   "kind": "message",
+   "actor": "mei",
+   "to": null,
+   "text": "I'm happy with the current activities plan, but I think we should consider upgrading the food plan to include more options, it might make the trip more enjoyable for everyone. The boat tour is the main reason I'm going, so I'm glad that's still part of the plan.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 14,
+   "turn": 12,
+   "kind": "message",
+   "actor": "ines",
+   "to": null,
+   "text": "I'm happy with the current lodging choice, and I think we should prioritize it, but I'm open to adjusting other categories to make sure everyone is comfortable",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 15,
+   "turn": 13,
+   "kind": "message",
+   "actor": "hana",
+   "to": null,
+   "text": "I'm glad we're discussing the food plan, but let's not forget that lodging is my top priority and I'm happy with the lake house choice. I also think the train is a good choice for transport.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 16,
+   "turn": 14,
+   "kind": "message",
+   "actor": "raj",
+   "to": null,
+   "text": "I'm comfortable with the current plan, but I think we should consider upgrading the food plan to include more options, as Lena and Tom suggested. I also want to reiterate that the train is a good choice for transport, it's my top priority.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "transport"
+    }
+   }
+  },
+  {
+   "i": 17,
+   "turn": 15,
+   "kind": "message",
+   "actor": "sam",
+   "to": null,
+   "text": "I completely agree with Lena and Tom, upgrading to food tier A would be a huge relief for me, I need gluten-free options and cooking every meal might not be safe for me",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 18,
+   "turn": 16,
+   "kind": "message",
+   "actor": "lena",
+   "to": null,
+   "text": "I really think we should prioritize food options that cater to both vegan and gluten-free diets, it would make a huge difference for me and Sam",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 19,
+   "turn": 17,
+   "kind": "message",
+   "actor": "tom",
+   "to": null,
+   "text": "I'm glad we're discussing the food plan, I think upgrading to tier A would make a big difference for everyone, especially since it's my top priority",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 20,
+   "turn": 18,
+   "kind": "message",
+   "actor": "kofi",
+   "to": null,
+   "text": "I'm glad we're discussing the food plan, but let's not forget that activities are my top priority and I'm happy with the boat tour and concert",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 21,
+   "turn": 19,
+   "kind": "message",
+   "actor": "mei",
+   "to": null,
+   "text": "I'm glad we're discussing the food plan, but I want to emphasize that the boat tour is a must for me, so let's make sure that stays in the plan",
+   "data": {
+    "accept": null,
+    "stated": {
+     "hard": [
+      "boat"
+     ]
+    }
+   }
+  },
+  {
+   "i": 22,
+   "turn": 20,
+   "kind": "message",
+   "actor": "ines",
+   "to": null,
+   "text": "I'm happy with the current lodging choice and I think we should prioritize it, but I'm open to adjusting other categories to make sure everyone is comfortable",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 23,
+   "turn": 21,
+   "kind": "message",
+   "actor": "hana",
+   "to": null,
+   "text": "I'm glad we're discussing the food plan, but I want to reiterate that our current lodging choice is perfect for me, it's step-free and that's really important. I also think we should consider the cost of upgrading the food plan, we don't want to go over budget.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging",
+     "hard": [
+      "step_free"
+     ]
+    }
+   }
+  },
+  {
+   "i": 24,
+   "turn": 22,
+   "kind": "message",
+   "actor": "raj",
+   "to": null,
+   "text": "I'm glad we're discussing the food plan, but let's not forget about our transport, I really prefer the train and it's working well for me.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "transport",
+     "prefers": {
+      "transport": "A"
+     }
+    }
+   }
+  },
+  {
+   "i": 25,
+   "turn": 23,
+   "kind": "message",
+   "actor": "sam",
+   "to": null,
+   "text": "I really need gluten-free options, so I'd love it if we could upgrade to food tier A, it's my top priority and I don't feel safe with the current cook every meal plan",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food",
+     "hard": [
+      "celiac"
+     ]
+    }
+   }
+  },
+  {
+   "i": 26,
+   "turn": 24,
+   "kind": "message",
+   "actor": "lena",
+   "to": null,
+   "text": "I'm glad we're discussing the food plan, but I want to reiterate that having vegan options is crucial for me. I would really appreciate it if we could upgrade to food tier A, which includes restaurants with vegan menus.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "hard": [
+      "vegan"
+     ],
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 27,
+   "turn": 25,
+   "kind": "message",
+   "actor": "tom",
+   "to": null,
+   "text": "I think we should definitely consider upgrading the food plan to tier A, it's my top priority and I believe it would make a big difference for everyone, especially those with dietary restrictions",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 28,
+   "turn": 26,
+   "kind": "message",
+   "actor": "kofi",
+   "to": null,
+   "text": "I'm happy with the current activities plan, but I think we should consider upgrading the food plan to include more options, it might make the trip more enjoyable for everyone. My top priority is activities, and I'm glad the boat tour and concert are still part of the plan.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 29,
+   "turn": 27,
+   "kind": "message",
+   "actor": "mei",
+   "to": null,
+   "text": "I'm glad we're discussing the food plan, but I want to reiterate that activities are my top priority and the boat tour is a must for me. I'd be willing to consider other options as long as the boat tour stays in the plan.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities",
+     "hard": [
+      "boat"
+     ]
+    }
+   }
+  },
+  {
+   "i": 30,
+   "turn": 28,
+   "kind": "message",
+   "actor": "ines",
+   "to": null,
+   "text": "I'm happy with the current lodging choice, but I think we should consider adjusting other categories to make sure everyone is comfortable. I'm open to changing the food plan to include more options, as long as it doesn't compromise our lodging choice.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 31,
+   "turn": 29,
+   "kind": "message",
+   "actor": "hana",
+   "to": null,
+   "text": "I'm glad we're discussing the food plan, but I want to reiterate that our current lodging choice is perfect for me, it's step-free and that's really important. I also think we should consider the cost of upgrading the food plan, we don't want to go over budget.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging",
+     "hard": [
+      "step_free"
+     ]
+    }
+   }
+  },
+  {
+   "i": 32,
+   "turn": 30,
+   "kind": "message",
+   "actor": "raj",
+   "to": null,
+   "text": "I'm comfortable with the current plan, but I think we should consider upgrading the food plan to include more options, as Lena and Tom suggested. I also want to reiterate that the train is a good choice for transport, it's my top priority.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "transport"
+    }
+   }
+  },
+  {
+   "i": 33,
+   "turn": 31,
+   "kind": "message",
+   "actor": "sam",
+   "to": null,
+   "text": "I really need gluten-free options, so I'd love it if we could upgrade to food tier A. Cooking every meal might not be safe for me.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "hard": [
+      "celiac"
+     ],
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 34,
+   "turn": 32,
+   "kind": "message",
+   "actor": "lena",
+   "to": null,
+   "text": "I'm glad we're discussing the food plan, but I want to reiterate that having vegan options is crucial for me. I would really appreciate it if we could upgrade to food tier A, which includes restaurants with vegan menus.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food",
+     "hard": [
+      "vegan"
+     ]
+    }
+   }
+  },
+  {
+   "i": 35,
+   "turn": 33,
+   "kind": "message",
+   "actor": "tom",
+   "to": null,
+   "text": "I think we should really consider upgrading to food tier A, it's my top priority and I believe it would make a big difference for everyone, especially those with dietary restrictions",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 36,
+   "turn": 34,
+   "kind": "message",
+   "actor": "kofi",
+   "to": null,
+   "text": "I'm glad we're discussing the food plan, but let's not forget that activities are my top priority and I'm happy with the boat tour and concert. I think we should consider upgrading the food plan to include more options, it might make the trip more enjoyable for everyone.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 37,
+   "turn": 35,
+   "kind": "message",
+   "actor": "mei",
+   "to": null,
+   "text": "I'm glad we're discussing the food plan, but I want to reiterate that activities are my top priority and the boat tour is a must for me. I'd be willing to consider other options as long as the boat tour stays in the plan.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities",
+     "hard": [
+      "boat"
+     ]
+    }
+   }
+  },
+  {
+   "i": 38,
+   "turn": 36,
+   "kind": "close",
+   "actor": "system",
+   "to": null,
+   "text": "Stopped after 36 member turns without everyone accepting.",
+   "data": {
+    "reason": "turn limit"
+   }
+  }
+ ],
+ "private": {
+  "hana": {
+   "max": 400,
+   "hard": "uses a wheelchair (step-free lodging)",
+   "top_priority": "lodging"
+  },
+  "kofi": {
+   "max": 500,
+   "hard": "none",
+   "top_priority": "activities"
+  },
+  "lena": {
+   "max": 350,
+   "hard": "is vegan",
+   "top_priority": "food"
+  },
+  "raj": {
+   "max": 250,
+   "hard": "gets carsick on long drives",
+   "top_priority": "transport"
+  },
+  "mei": {
+   "max": 450,
+   "hard": "needs the boat tour",
+   "top_priority": "activities"
+  },
+  "sam": {
+   "max": 200,
+   "hard": "has celiac disease (restaurants only)",
+   "top_priority": "food"
+  },
+  "ines": {
+   "max": 300,
+   "hard": "none",
+   "top_priority": "lodging"
+  },
+  "tom": {
+   "max": 150,
+   "hard": "none",
+   "top_priority": "food"
+  }
+ },
+ "outcome": {
+  "agreed": false,
+  "unanimous": false,
+  "plan": {
+   "choices": {
+    "lodging": "A",
+    "transport": "A",
+    "food": "C",
+    "activities": "A"
+   },
+   "labels": {
+    "lodging": "lake house, 5 bedrooms, step-free",
+    "transport": "train",
+    "food": "cook every meal (shared grill plan)",
+    "activities": "boat tour + concert"
+   },
+   "cost": 2560,
+   "shares": {
+    "hana": 320.0,
+    "kofi": 320.0,
+    "lena": 320.0,
+    "raj": 320.0,
+    "mei": 320.0,
+    "sam": 320.0,
+    "ines": 320.0,
+    "tom": 320.0
+   },
+   "id": 1
+  },
+  "violations": [
+   {
+    "member": "lena",
+    "fact": "is vegan"
+   },
+   {
+    "member": "raj",
+    "fact": "share $320 is over their maximum $250"
+   },
+   {
+    "member": "sam",
+    "fact": "has celiac disease (restaurants only)"
+   },
+   {
+    "member": "sam",
+    "fact": "share $320 is over their maximum $200"
+   },
+   {
+    "member": "ines",
+    "fact": "share $320 is over their maximum $300"
+   },
+   {
+    "member": "tom",
+    "fact": "share $320 is over their maximum $150"
+   }
+  ],
+  "fairness": 0.375,
+  "min_utility": 0.0,
+  "moderator_actions": 1,
+  "turns": 36,
+  "member_utility": {
+   "hana": 8.6,
+   "kofi": 8.6,
+   "lena": 0.0,
+   "raj": 0.0,
+   "mei": 8.6,
+   "sam": 0.0,
+   "ines": 0.0,
+   "tom": 0.0
+  }
+ }
+}

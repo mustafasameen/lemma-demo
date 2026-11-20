@@ -1,0 +1,694 @@
+{
+ "meta": {
+  "scenario": "p3",
+  "arm": "none",
+  "arm_title": "No moderator",
+  "seed": 2,
+  "title": "Six friends, $1,800",
+  "short": "Six friends, weekend trip",
+  "prompt": "Six friends are planning a weekend trip with a total budget of $1,800. Each person has different preferences regarding accommodation, transportation, food, and activities, but nobody has fully disclosed their priorities or maximum contribution. Can you moderate the discussion, gather everyone's constraints, and help negotiate a fair budget allocation that all six members can accept?",
+  "context": "Six friends (Maya, Leo, Sofia, Omar, Priya, Theo) are planning a weekend trip with a total budget of $1,800. Nobody has said what they can contribute or what they need.",
+  "kind": "budget",
+  "members": [
+   {
+    "id": "maya",
+    "name": "Maya",
+    "color_index": 0
+   },
+   {
+    "id": "leo",
+    "name": "Leo",
+    "color_index": 1
+   },
+   {
+    "id": "sofia",
+    "name": "Sofia",
+    "color_index": 2
+   },
+   {
+    "id": "omar",
+    "name": "Omar",
+    "color_index": 3
+   },
+   {
+    "id": "priya",
+    "name": "Priya",
+    "color_index": 4
+   },
+   {
+    "id": "theo",
+    "name": "Theo",
+    "color_index": 5
+   }
+  ],
+  "options": {
+   "money": 1800,
+   "original_budget": 1800,
+   "categories": [
+    {
+     "key": "lodging",
+     "label": "Lodging",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "house with 4 rooms",
+       "cost": 780,
+       "satisfies": [
+        "own_room"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "2 hotel rooms + 1 single",
+       "cost": 690,
+       "satisfies": [
+        "own_room"
+       ]
+      },
+      {
+       "tier": "C",
+       "label": "hostel dorm",
+       "cost": 360,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "transport",
+     "label": "Transport",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "train",
+       "cost": 480,
+       "satisfies": [
+        "no_long_drive"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "two rental cars, 5-hour drive",
+       "cost": 300,
+       "satisfies": []
+      },
+      {
+       "tier": "C",
+       "label": "one van, 5-hour drive",
+       "cost": 240,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "food",
+     "label": "Food",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "restaurants every meal",
+       "cost": 600,
+       "satisfies": [
+        "vegetarian"
+       ]
+      },
+      {
+       "tier": "B",
+       "label": "cook + 2 dinners out (vegetarian-friendly)",
+       "cost": 380,
+       "satisfies": [
+        "vegetarian"
+       ]
+      },
+      {
+       "tier": "C",
+       "label": "cook every meal (shared barbecue plan)",
+       "cost": 220,
+       "satisfies": []
+      }
+     ]
+    },
+    {
+     "key": "activities",
+     "label": "Activities",
+     "tiers": [
+      {
+       "tier": "A",
+       "label": "guided hike + concert",
+       "cost": 420,
+       "satisfies": []
+      },
+      {
+       "tier": "B",
+       "label": "concert only",
+       "cost": 240,
+       "satisfies": []
+      },
+      {
+       "tier": "C",
+       "label": "free trails",
+       "cost": 0,
+       "satisfies": []
+      }
+     ]
+    }
+   ],
+   "hard_constraints": {
+    "vegetarian": {
+     "member": "priya",
+     "category": "food",
+     "label": "is vegetarian",
+     "mention": "vegetarian|vegan|meat|veg\\b"
+    },
+    "no_long_drive": {
+     "member": "omar",
+     "category": "transport",
+     "label": "gets carsick on long drives",
+     "mention": "carsick|car sick|motion|long drive|5.hour|five.hour|nause|queasy|drive|train"
+    },
+    "own_room": {
+     "member": "sofia",
+     "category": "lodging",
+     "label": "needs her own room",
+     "mention": "own room|private room|own space|room to myself|privacy|dorm|hostel|sharing|share a room|my own"
+    }
+   }
+  },
+  "model": "llama-3.3-70b-instruct",
+  "policy": "none",
+  "max_member_turns": 30,
+  "created": "2026-11-16T23:04:58",
+  "dry": false,
+  "fact_labels": {
+   "max": "Max contribution",
+   "hard": "Hard constraint",
+   "top_priority": "Top priority",
+   "arrive_by": "Arrive by",
+   "leave_at": "Leaves work",
+   "flex_min": "Flexibility (min)",
+   "dislikes_bus": "Dislikes the bus",
+   "appt_start": "Appointment starts",
+   "appt_end": "Appointment ends",
+   "no_transit": "Cannot take bus or walk"
+  },
+  "contract": "app-v1"
+ },
+ "events": [
+  {
+   "i": 0,
+   "turn": 0,
+   "kind": "message",
+   "actor": "sofia",
+   "to": null,
+   "text": "I think we should prioritize lodging, it's really important to me. Has anyone considered the house with 4 rooms?",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 1,
+   "turn": 1,
+   "kind": "message",
+   "actor": "leo",
+   "to": null,
+   "text": "I think we should focus on getting there comfortably, transport is key for me. What about the train?",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "transport"
+    }
+   }
+  },
+  {
+   "i": 2,
+   "turn": 2,
+   "kind": "message",
+   "actor": "maya",
+   "to": null,
+   "text": "I think we should focus on activities, it's what I'm most excited about. How about the guided hike and concert?",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 3,
+   "turn": 3,
+   "kind": "message",
+   "actor": "priya",
+   "to": null,
+   "text": "I'm excited about the guided hike and concert, it sounds like a great way to spend our weekend. Let's prioritize activities!",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 4,
+   "turn": 4,
+   "kind": "message",
+   "actor": "theo",
+   "to": null,
+   "text": "I think food is the most important aspect for me, let's not forget about that. I'd love to have restaurants every meal.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 5,
+   "turn": 5,
+   "kind": "message",
+   "actor": "omar",
+   "to": null,
+   "text": "I'm with Theo, food is a big deal for me, let's make sure we get that right. How about we consider the restaurants every meal option?",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 6,
+   "turn": 6,
+   "kind": "message",
+   "actor": "sofia",
+   "to": null,
+   "text": "I still think the house with 4 rooms is our best bet for lodging, it would be so much more comfortable for everyone. Let's try to make that work.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 7,
+   "turn": 7,
+   "kind": "message",
+   "actor": "leo",
+   "to": null,
+   "text": "I think the train is our best option for transport, it's the most comfortable way to get there",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "transport"
+    }
+   }
+  },
+  {
+   "i": 8,
+   "turn": 8,
+   "kind": "message",
+   "actor": "maya",
+   "to": null,
+   "text": "I think we should prioritize activities, it's what I'm most excited about. How about the guided hike and concert?",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 9,
+   "turn": 9,
+   "kind": "message",
+   "actor": "priya",
+   "to": null,
+   "text": "I think we should focus on activities, it's what I'm most excited about. The guided hike and concert sound amazing!",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 10,
+   "turn": 10,
+   "kind": "message",
+   "actor": "theo",
+   "to": null,
+   "text": "I think we should prioritize food, it's crucial for me. Let's consider the restaurants every meal option.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 11,
+   "turn": 11,
+   "kind": "message",
+   "actor": "omar",
+   "to": null,
+   "text": "I think we should prioritize food, it's crucial for me. Let's consider the restaurants every meal option. I'd be happy to contribute to make it work.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 12,
+   "turn": 12,
+   "kind": "message",
+   "actor": "sofia",
+   "to": null,
+   "text": "I really think we should consider the house with 4 rooms for lodging, it's my top priority and I'd be willing to contribute a significant amount to make it work.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 13,
+   "turn": 13,
+   "kind": "message",
+   "actor": "leo",
+   "to": null,
+   "text": "I still think the train is our best bet for transport, it's the most comfortable way to get there and I'd be willing to contribute to make it work.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "transport"
+    }
+   }
+  },
+  {
+   "i": 14,
+   "turn": 14,
+   "kind": "message",
+   "actor": "maya",
+   "to": null,
+   "text": "I think we should focus on activities, it's what I'm most excited about. How about the guided hike and concert?",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 15,
+   "turn": 15,
+   "kind": "message",
+   "actor": "priya",
+   "to": null,
+   "text": "I'm excited about the guided hike and concert, let's make activities our top priority! I think we should consider option A for activities.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 16,
+   "turn": 16,
+   "kind": "message",
+   "actor": "theo",
+   "to": null,
+   "text": "I think we should prioritize food, it's crucial for me. Let's consider the restaurants every meal option.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 17,
+   "turn": 17,
+   "kind": "message",
+   "actor": "omar",
+   "to": null,
+   "text": "I think we should prioritize food, it's crucial for me. Let's consider the restaurants every meal option. I'd be happy to contribute up to $250 to make it work.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 250,
+     "top_priority": "food",
+     "prefers": {
+      "food": "A"
+     }
+    }
+   }
+  },
+  {
+   "i": 18,
+   "turn": 18,
+   "kind": "message",
+   "actor": "sofia",
+   "to": null,
+   "text": "I'd like to reiterate that lodging is my top priority, and I think the house with 4 rooms would be ideal. I'm willing to contribute a significant amount to make it work.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 19,
+   "turn": 19,
+   "kind": "message",
+   "actor": "leo",
+   "to": null,
+   "text": "I think we should focus on transport, it's my top priority and I'd be willing to contribute to make the train work",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "transport"
+    }
+   }
+  },
+  {
+   "i": 20,
+   "turn": 20,
+   "kind": "message",
+   "actor": "maya",
+   "to": null,
+   "text": "I think we should prioritize activities, it's what I'm most excited about. How about the guided hike and concert?",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 21,
+   "turn": 21,
+   "kind": "message",
+   "actor": "priya",
+   "to": null,
+   "text": "I think we should prioritize activities, it's what I'm most excited about. Let's consider option A for activities, the guided hike and concert sound amazing!",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 22,
+   "turn": 22,
+   "kind": "message",
+   "actor": "theo",
+   "to": null,
+   "text": "I think we should consider a plan that includes food option A, restaurants every meal, it's my top priority and I'd be willing to contribute up to $150 to make it work.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 150,
+     "top_priority": "food",
+     "prefers": {
+      "food": "A"
+     }
+    }
+   }
+  },
+  {
+   "i": 23,
+   "turn": 23,
+   "kind": "message",
+   "actor": "omar",
+   "to": null,
+   "text": "I think we should prioritize food, it's crucial for me. Let's consider the restaurants every meal option. I'd be happy to contribute up to $250 to make it work.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 250,
+     "top_priority": "food",
+     "prefers": {
+      "food": "A"
+     }
+    }
+   }
+  },
+  {
+   "i": 24,
+   "turn": 24,
+   "kind": "message",
+   "actor": "sofia",
+   "to": null,
+   "text": "I'd like to propose a plan that prioritizes lodging, specifically the house with 4 rooms. I think it's essential for a comfortable trip.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "lodging"
+    }
+   }
+  },
+  {
+   "i": 25,
+   "turn": 25,
+   "kind": "message",
+   "actor": "leo",
+   "to": null,
+   "text": "I still think we should prioritize transport, the train is our best bet for a comfortable trip. Let's consider that as we move forward.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "transport"
+    }
+   }
+  },
+  {
+   "i": 26,
+   "turn": 26,
+   "kind": "message",
+   "actor": "maya",
+   "to": null,
+   "text": "I think we should focus on activities, it's what I'm most excited about. How about the guided hike and concert?",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 27,
+   "turn": 27,
+   "kind": "message",
+   "actor": "priya",
+   "to": null,
+   "text": "I think we should prioritize activities, specifically option A, the guided hike and concert. It sounds like an amazing experience and I'd love to make it happen.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "activities"
+    }
+   }
+  },
+  {
+   "i": 28,
+   "turn": 28,
+   "kind": "message",
+   "actor": "theo",
+   "to": null,
+   "text": "I think we should consider a plan that includes food option A, restaurants every meal, it's my top priority. Let's make sure we prioritize food in our planning.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "top_priority": "food"
+    }
+   }
+  },
+  {
+   "i": 29,
+   "turn": 29,
+   "kind": "message",
+   "actor": "omar",
+   "to": null,
+   "text": "I think we should prioritize food, it's crucial for me. Let's consider the restaurants every meal option. I'd be happy to contribute up to $250 to make it work.",
+   "data": {
+    "accept": null,
+    "stated": {
+     "max": 250,
+     "top_priority": "food",
+     "prefers": {
+      "food": "A"
+     }
+    }
+   }
+  },
+  {
+   "i": 30,
+   "turn": 30,
+   "kind": "close",
+   "actor": "system",
+   "to": null,
+   "text": "Stopped after 30 member turns without everyone accepting.",
+   "data": {
+    "reason": "turn limit"
+   }
+  }
+ ],
+ "private": {
+  "maya": {
+   "max": 450,
+   "hard": "none",
+   "top_priority": "activities"
+  },
+  "leo": {
+   "max": 400,
+   "hard": "none",
+   "top_priority": "transport"
+  },
+  "sofia": {
+   "max": 350,
+   "hard": "needs her own room",
+   "top_priority": "lodging"
+  },
+  "omar": {
+   "max": 250,
+   "hard": "gets carsick on long drives",
+   "top_priority": "food"
+  },
+  "priya": {
+   "max": 200,
+   "hard": "is vegetarian",
+   "top_priority": "activities"
+  },
+  "theo": {
+   "max": 150,
+   "hard": "none",
+   "top_priority": "food"
+  }
+ },
+ "outcome": {
+  "agreed": false,
+  "unanimous": false,
+  "plan": null,
+  "violations": [],
+  "fairness": 0.0,
+  "min_utility": 0.0,
+  "moderator_actions": 0,
+  "turns": 30,
+  "member_utility": {
+   "maya": 0.0,
+   "leo": 0.0,
+   "sofia": 0.0,
+   "omar": 0.0,
+   "priya": 0.0,
+   "theo": 0.0
+  }
+ }
+}

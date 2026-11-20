@@ -1,0 +1,484 @@
+{
+ "generated": "2026-11-20T05:35:49.072Z",
+ "scenarios": [
+  {
+   "id": "p1",
+   "title": "The $250 gap",
+   "kind": "budget",
+   "arms": [
+    {
+     "arm": "none",
+     "seeds": [
+      {
+       "seed": 0,
+       "file": "runs/p1/none_s0.json"
+      },
+      {
+       "seed": 1,
+       "file": "runs/p1/none_s1.json"
+      },
+      {
+       "seed": 2,
+       "file": "runs/p1/none_s2.json"
+      }
+     ]
+    },
+    {
+     "arm": "rule",
+     "seeds": [
+      {
+       "seed": 0,
+       "file": "runs/p1/rule_s0.json"
+      },
+      {
+       "seed": 1,
+       "file": "runs/p1/rule_s1.json"
+      },
+      {
+       "seed": 2,
+       "file": "runs/p1/rule_s2.json"
+      }
+     ]
+    },
+    {
+     "arm": "lemma",
+     "seeds": [
+      {
+       "seed": 0,
+       "file": "runs/p1/lemma_s0.json"
+      },
+      {
+       "seed": 1,
+       "file": "runs/p1/lemma_s1.json"
+      },
+      {
+       "seed": 2,
+       "file": "runs/p1/lemma_s2.json"
+      }
+     ]
+    },
+    {
+     "arm": "general",
+     "seeds": [
+      {
+       "seed": 0,
+       "file": "runs/p1/general_s0.json"
+      },
+      {
+       "seed": 1,
+       "file": "runs/p1/general_s1.json"
+      },
+      {
+       "seed": 2,
+       "file": "runs/p1/general_s2.json"
+      }
+     ]
+    },
+    {
+     "arm": "muse24k",
+     "seeds": [
+      {
+       "seed": 0,
+       "file": "runs/p1/muse24k_s0.json"
+      },
+      {
+       "seed": 1,
+       "file": "runs/p1/muse24k_s1.json"
+      },
+      {
+       "seed": 2,
+       "file": "runs/p1/muse24k_s2.json"
+      }
+     ]
+    },
+    {
+     "arm": "muse",
+     "seeds": [
+      {
+       "seed": 0,
+       "file": "runs/p1/muse_s0.json"
+      },
+      {
+       "seed": 1,
+       "file": "runs/p1/muse_s1.json"
+      },
+      {
+       "seed": 2,
+       "file": "runs/p1/muse_s2.json"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p2",
+   "title": "One car, two roommates",
+   "kind": "car",
+   "arms": [
+    {
+     "arm": "none",
+     "seeds": [
+      {
+       "seed": 0,
+       "file": "runs/p2/none_s0.json"
+      },
+      {
+       "seed": 1,
+       "file": "runs/p2/none_s1.json"
+      },
+      {
+       "seed": 2,
+       "file": "runs/p2/none_s2.json"
+      }
+     ]
+    },
+    {
+     "arm": "rule",
+     "seeds": [
+      {
+       "seed": 0,
+       "file": "runs/p2/rule_s0.json"
+      },
+      {
+       "seed": 1,
+       "file": "runs/p2/rule_s1.json"
+      },
+      {
+       "seed": 2,
+       "file": "runs/p2/rule_s2.json"
+      }
+     ]
+    },
+    {
+     "arm": "lemma",
+     "seeds": [
+      {
+       "seed": 0,
+       "file": "runs/p2/lemma_s0.json"
+      },
+      {
+       "seed": 1,
+       "file": "runs/p2/lemma_s1.json"
+      },
+      {
+       "seed": 2,
+       "file": "runs/p2/lemma_s2.json"
+      }
+     ]
+    },
+    {
+     "arm": "general",
+     "seeds": [
+      {
+       "seed": 0,
+       "file": "runs/p2/general_s0.json"
+      },
+      {
+       "seed": 1,
+       "file": "runs/p2/general_s1.json"
+      },
+      {
+       "seed": 2,
+       "file": "runs/p2/general_s2.json"
+      }
+     ]
+    },
+    {
+     "arm": "muse24k",
+     "seeds": [
+      {
+       "seed": 0,
+       "file": "runs/p2/muse24k_s0.json"
+      },
+      {
+       "seed": 1,
+       "file": "runs/p2/muse24k_s1.json"
+      },
+      {
+       "seed": 2,
+       "file": "runs/p2/muse24k_s2.json"
+      }
+     ]
+    },
+    {
+     "arm": "muse",
+     "seeds": [
+      {
+       "seed": 0,
+       "file": "runs/p2/muse_s0.json"
+      },
+      {
+       "seed": 1,
+       "file": "runs/p2/muse_s1.json"
+      },
+      {
+       "seed": 2,
+       "file": "runs/p2/muse_s2.json"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p3",
+   "title": "Six friends, $1,800",
+   "kind": "budget",
+   "arms": [
+    {
+     "arm": "none",
+     "seeds": [
+      {
+       "seed": 0,
+       "file": "runs/p3/none_s0.json"
+      },
+      {
+       "seed": 1,
+       "file": "runs/p3/none_s1.json"
+      },
+      {
+       "seed": 2,
+       "file": "runs/p3/none_s2.json"
+      }
+     ]
+    },
+    {
+     "arm": "rule",
+     "seeds": [
+      {
+       "seed": 0,
+       "file": "runs/p3/rule_s0.json"
+      },
+      {
+       "seed": 1,
+       "file": "runs/p3/rule_s1.json"
+      },
+      {
+       "seed": 2,
+       "file": "runs/p3/rule_s2.json"
+      }
+     ]
+    },
+    {
+     "arm": "lemma",
+     "seeds": [
+      {
+       "seed": 0,
+       "file": "runs/p3/lemma_s0.json"
+      },
+      {
+       "seed": 1,
+       "file": "runs/p3/lemma_s1.json"
+      },
+      {
+       "seed": 2,
+       "file": "runs/p3/lemma_s2.json"
+      }
+     ]
+    },
+    {
+     "arm": "general",
+     "seeds": [
+      {
+       "seed": 0,
+       "file": "runs/p3/general_s0.json"
+      },
+      {
+       "seed": 1,
+       "file": "runs/p3/general_s1.json"
+      },
+      {
+       "seed": 2,
+       "file": "runs/p3/general_s2.json"
+      }
+     ]
+    },
+    {
+     "arm": "muse24k",
+     "seeds": [
+      {
+       "seed": 0,
+       "file": "runs/p3/muse24k_s0.json"
+      },
+      {
+       "seed": 1,
+       "file": "runs/p3/muse24k_s1.json"
+      },
+      {
+       "seed": 2,
+       "file": "runs/p3/muse24k_s2.json"
+      }
+     ]
+    },
+    {
+     "arm": "muse",
+     "seeds": [
+      {
+       "seed": 0,
+       "file": "runs/p3/muse_s0.json"
+      },
+      {
+       "seed": 1,
+       "file": "runs/p3/muse_s1.json"
+      },
+      {
+       "seed": 2,
+       "file": "runs/p3/muse_s2.json"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "p4",
+   "title": "Eight friends, $2,600",
+   "kind": "budget",
+   "arms": [
+    {
+     "arm": "none",
+     "seeds": [
+      {
+       "seed": 0,
+       "file": "runs/p4/none_s0.json"
+      },
+      {
+       "seed": 1,
+       "file": "runs/p4/none_s1.json"
+      },
+      {
+       "seed": 2,
+       "file": "runs/p4/none_s2.json"
+      }
+     ]
+    },
+    {
+     "arm": "rule",
+     "seeds": [
+      {
+       "seed": 0,
+       "file": "runs/p4/rule_s0.json"
+      },
+      {
+       "seed": 1,
+       "file": "runs/p4/rule_s1.json"
+      },
+      {
+       "seed": 2,
+       "file": "runs/p4/rule_s2.json"
+      }
+     ]
+    },
+    {
+     "arm": "lemma",
+     "seeds": [
+      {
+       "seed": 0,
+       "file": "runs/p4/lemma_s0.json"
+      },
+      {
+       "seed": 1,
+       "file": "runs/p4/lemma_s1.json"
+      },
+      {
+       "seed": 2,
+       "file": "runs/p4/lemma_s2.json"
+      }
+     ]
+    },
+    {
+     "arm": "general",
+     "seeds": [
+      {
+       "seed": 0,
+       "file": "runs/p4/general_s0.json"
+      },
+      {
+       "seed": 1,
+       "file": "runs/p4/general_s1.json"
+      },
+      {
+       "seed": 2,
+       "file": "runs/p4/general_s2.json"
+      }
+     ]
+    },
+    {
+     "arm": "muse24k",
+     "seeds": [
+      {
+       "seed": 0,
+       "file": "runs/p4/muse24k_s0.json"
+      },
+      {
+       "seed": 1,
+       "file": "runs/p4/muse24k_s1.json"
+      },
+      {
+       "seed": 2,
+       "file": "runs/p4/muse24k_s2.json"
+      }
+     ]
+    },
+    {
+     "arm": "muse",
+     "seeds": [
+      {
+       "seed": 0,
+       "file": "runs/p4/muse_s0.json"
+      },
+      {
+       "seed": 1,
+       "file": "runs/p4/muse_s1.json"
+      },
+      {
+       "seed": 2,
+       "file": "runs/p4/muse_s2.json"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "household",
+   "title": "A real household",
+   "kind": "household",
+   "arms": [
+    {
+     "arm": "none",
+     "seeds": [
+      {
+       "seed": 0,
+       "file": "runs/household/none_s0.json"
+      }
+     ]
+    },
+    {
+     "arm": "rule",
+     "seeds": [
+      {
+       "seed": 0,
+       "file": "runs/household/rule_s0.json"
+      }
+     ]
+    },
+    {
+     "arm": "rule_first",
+     "seeds": [
+      {
+       "seed": 0,
+       "file": "runs/household/rule_first_s0.json"
+      }
+     ]
+    },
+    {
+     "arm": "trained",
+     "seeds": [
+      {
+       "seed": 0,
+       "file": "runs/household/trained_s0.json"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}
