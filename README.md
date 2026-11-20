@@ -4,7 +4,7 @@ LEMMA is a moderator agent for group decisions. It asks each member for the limi
 
 **Live site:** https://mustafasameen.github.io/lemma-demo/
 
-The site replays saved runs, so it makes no model calls. Each scenario runs with several moderators side by side: no moderator, a one-time rule, Muse (a general agent prompted to moderate the same chat with no tools) and LEMMA. The Outcome tab checks every final plan against each member's private facts, not against what members said.
+The home page explains the problem, how LEMMA works and how it compares with five other moderators; every number on it is read from the saved runs. The scenario pages replay those runs, so the site makes no model calls. Each scenario runs with several moderators side by side: no moderator, a one-time rule, Muse (a general agent prompted to moderate the same chat with no tools) and LEMMA. The Outcome tab checks every final plan against each member's private facts, not against what members said.
 
 | Scenario | What it tests |
 |---|---|
