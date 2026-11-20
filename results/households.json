@@ -1,0 +1,114 @@
+{
+ "households": 128,
+ "seeds": 5,
+ "rows": [
+  {
+   "arm": "none",
+   "title": "No moderator",
+   "fidelity": 0.6992,
+   "fidelity_ci": [
+    0.6655,
+    0.7305
+   ],
+   "acceptance": 0.4059,
+   "acceptance_ci": [
+    0.3811,
+    0.431
+   ],
+   "rids": [
+    "R-325",
+    "R-324"
+   ]
+  },
+  {
+   "arm": "promediate",
+   "title": "ProMediate",
+   "fidelity": 0.7114,
+   "fidelity_ci": [
+    0.6798,
+    0.7411
+   ],
+   "acceptance": 0.4194,
+   "acceptance_ci": [
+    0.3935,
+    0.445
+   ],
+   "rids": [
+    "R-325b",
+    "R-324b"
+   ]
+  },
+  {
+   "arm": "habermas",
+   "title": "Habermas Machine",
+   "fidelity": 0.7407,
+   "fidelity_ci": [
+    0.7119,
+    0.7669
+   ],
+   "acceptance": 0.4661,
+   "acceptance_ci": [
+    0.4405,
+    0.4913
+   ],
+   "rids": [
+    "R-325c",
+    "R-324c"
+   ]
+  },
+  {
+   "arm": "gptoss",
+   "title": "gpt-oss-120b, prompted",
+   "fidelity": 0.7572,
+   "fidelity_ci": [
+    0.7283,
+    0.7846
+   ],
+   "acceptance": 0.5486,
+   "acceptance_ci": [
+    0.5168,
+    0.5788
+   ],
+   "rids": [
+    "R-325d",
+    "R-324d"
+   ]
+  },
+  {
+   "arm": "muse",
+   "title": "Muse Glimmer 30B, prompted",
+   "fidelity": 0.7428,
+   "fidelity_ci": [
+    0.7116,
+    0.7707
+   ],
+   "acceptance": 0.5844,
+   "acceptance_ci": [
+    0.5505,
+    0.6168
+   ],
+   "rids": [
+    "R-325e",
+    "R-324e"
+   ]
+  },
+  {
+   "arm": "lemma",
+   "title": "LEMMA (trained)",
+   "fidelity": 0.7855,
+   "fidelity_ci": [
+    0.7529,
+    0.8152
+   ],
+   "acceptance": 0.7506,
+   "acceptance_ci": [
+    0.7162,
+    0.7819
+   ],
+   "rids": [
+    "R-325f",
+    "R-324f"
+   ]
+  }
+ ]
+}
