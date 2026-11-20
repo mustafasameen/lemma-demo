@@ -439,7 +439,7 @@
   },
   {
    "id": "household",
-   "title": "A real household",
+   "title": "A survey household",
    "kind": "household",
    "arms": [
     {
